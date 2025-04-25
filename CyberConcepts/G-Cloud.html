@@ -1,0 +1,2869 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+    .faq {
+        width: 100%;
+        margin: 20px auto;
+      }
+
+      .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+            gap: 10px; /* Space between columns */
+        }
+
+        .q {
+            background-color: #f9f9f9;
+            cursor: pointer;
+            font-weight: normal !important;
+            padding: 2px;
+            border: 1px solid #ccc;
+        }
+
+        .q b, .q strong {
+            font-weight: normal !important;
+            font-style: normal !important;
+        }
+
+        .q::first-letter {
+            font-size: 1.5em;
+        }
+
+        .a {
+            display: none;
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin: 5px 0;
+            border: 3px solid #2fc036;
+            width: 100%; /* Take full width */
+            grid-column: span 3; /* Make it span across all 3 columns when visible */
+        }
+
+        .q:hover {
+            background-color: #13c307;
+        }
+
+        /* For better responsiveness on small screens */
+        @media (max-width: 850px) {
+            .container {
+                grid-template-columns: 1fr; /* Stack them vertically on smaller screens */
+            }
+        }
+      
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+                  <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
+                  <li><a href="my_attacks.html">My Attacks Examples</a></li>
+                </li>
+	            </ul>
+	          </li>
+
+
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="G-Cloud.html">G-Cloud</a></li>
+                <li><a href="ISO27001.html">ISO 27001</a></li>
+                <li><a href="Software_Arquiteturas.html">Software</a></li>
+
+
+                <li><a href="Others.html">Others</a></li>
+
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+              <ul class="list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+            
+	        </ul>
+    	</nav>
+
+        <!-- Page Content -->
+
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+              <div class="q"> Google Cloud Platform</div>
+              <div class="a">
+
+         
+                  <strong>GCP</strong> of cloud computing services that lets users run applications, store data, manage networks and perform big data analysis
+                  <p><strong>GCP over AWS or Azure:</strong> Big query data analystics (BigQuery); global low-latency</p>
+  
+                <strong>Features:</strong>
+                <ul>
+                  <li>The ability to create your own machine types, complete with arbitrary configurations for the CPU, RAM, and storage devices.</li>
+                  <li>When resizing a disk in place, there is no requirement for maintenance or downtime.</li>
+                  <li>Many different tools are pre-installed with GCP to manage a wide variety of operations.</li>
+                  <li>There are two web hosting options available:
+                    <ul>
+                      <li><strong>App Engine</strong>: Platform as a Service (PaaS)</li>
+                      <li><strong>Compute Engine</strong>: Infrastructure as a Service (IaaS)</li>
+                    </ul>
+                  </li>
+                </ul>
+
+     
+                <h4>G-Cloud advantages</h4>
+                  <ul>
+                    <li><strong>High Performance:</strong> Google’s global network ensures fast and reliable connectivity worldwide.</li>
+                    <li><strong>Scalability:</strong> Resources can scale automatically based on demand — no manual intervention needed.</li>
+                    <li><strong>Security:</strong> Built-in security features like encryption at rest and in transit, Identity and Access Management (IAM), and compliance with major standards (GDPR, HIPAA).</li>
+                    <li><strong>Cost Efficiency:</strong> Pay-as-you-go pricing, committed use discounts, and sustained usage discounts help reduce costs.</li>
+                    <li><strong>Innovation:</strong> Access to advanced AI/ML tools, data analytics, and cutting-edge cloud technologies.</li>
+                    <li><strong>Flexibility:</strong> Supports hybrid and multi-cloud architectures; easily integrate on-premises systems.</li>
+                    <li><strong>Global Infrastructure:</strong> Presence in multiple regions and zones improves redundancy and minimizes latency.</li>
+                    <li><strong>Fully Managed Services:</strong> Focus on application development without worrying about underlying infrastructure (like with App Engine, Cloud Functions, BigQuery, etc.).</li>
+                    <li><strong>Open Source Friendly:</strong> Strong support for Kubernetes (GKE), TensorFlow, and other open technologies.</li>
+                    <li><strong>Reliability:</strong> High availability guarantees (SLA) and built-in disaster recovery options.</li>
+                  </ul>
+
+              <h4>Types of Cloud</h4>
+
+              <p> strategies that might be utilized when developing cloud computing</p>
+              <ul>
+                <li><strong>Public Cloud</strong>: Everyone can use the service via a public subscription model. Users access the operating system, CPU, memory, and storage.</li>
+                <li><strong>Private Cloud</strong>: Accessible only to a single organization and its employees. Also known as internal or corporate cloud within a company's network.</li>
+                <li><strong>Hybrid Cloud</strong>: Combines public and private cloud services, offering greater scalability and management flexibility.</li>
+                <li><strong>Community Cloud</strong>: Multiple organizations share the same cloud infrastructure and storage space.</li>
+              </ul>
+              
+            
+                  
+              </div>
+
+              <div class="q">G-cloud Best Practices </div>
+              <div class="a">
+                <table border="1">
+                  <thead>
+                      <tr>
+                          <th><strong>Practice</strong></th>
+                          <th><strong>Key Points</strong></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td><strong>Identity and Access Management (IAM)</strong></td>
+                          <td>Use IAM for least privilege access, MFA, and service account security.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Data Encryption</strong></td>
+                          <td>Encrypt data at rest and in transit using Google Cloud’s built-in encryption and Cloud KMS.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Vulnerability Scanning</strong></td>
+                          <td>Use Google Security Command Center and Container Analysis for vulnerability scanning and threat detection.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Network Security</strong></td>
+                          <td>Use VPC, firewall rules, Cloud Armor, and Private Google Access for network isolation and protection.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Logging and Monitoring</strong></td>
+                          <td>Enable Cloud Logging, Cloud Monitoring, and Cloud Audit Logs for activity tracking and real-time monitoring.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Security Incident Response Plan</strong></td>
+                          <td>Develop an incident response plan and use Google’s Operations Suite for detection and alerts.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Compliance and Regulatory Standards</strong></td>
+                          <td>Leverage Google Cloud compliance tools to meet regulations like GDPR, HIPAA, SOC 2, and ISO 27001.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Backup and Disaster Recovery</strong></td>
+                          <td>Use Google Cloud Storage and Cloud SQL backups, and implement multi-region replication for disaster recovery.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Container and Kubernetes Security</strong></td>
+                          <td>Use GKE with RBAC, network policies, and Binary Authorization for secure container management.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>API Security</strong></td>
+                          <td>Secure APIs with Google API Gateway, OAuth 2.0, and Identity-Aware Proxy (IAP) for access control.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Cloud Identity Security</strong></td>
+                          <td>Use Google Cloud Identity for centralized identity management and IAP for secure app access.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Cost and Resource Management</strong></td>
+                          <td>Monitor and control cloud resources using Google Cloud Resource Manager, Budgeting, and Cost Management tools.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Third-Party Risk Management</strong></td>
+                          <td>Vet third-party services via Google Cloud Marketplace and manage third-party access through IAM.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Security Health Analytics</strong></td>
+                          <td>Use Security Command Center’s Health Analytics for assessing security risks and best practices.</td>
+                      </tr>
+                      <tr>
+                          <td><strong>Automated Security Checks</strong></td>
+                          <td>Enable Cloud Security Scanner to check for vulnerabilities in web applications hosted on Google Cloud.</td>
+                      </tr>
+                  </tbody>
+              </table>
+              
+              </div>
+
+
+              <div class="q">🔐<span style="color:red"> Security Command Center (SCC)</span> </div>
+              <div class="a">
+                <div class="q"><strong>What is it?</strong></div>
+                <div class="a">
+                  Google Cloud Security Command Center (SCC) is a security management platform that provides visibility, threat detection, vulnerability management, and compliance monitoring for Google Cloud resources. It helps detect threats, identify vulnerabilities, and automate responses, enhancing cloud security.
+                </div>
+                <div class="q"><strong>How to detect and respond to threats with SCC</strong></div>
+<div class="a">
+  <p>SCC detects threats and vulnerabilities. It includes:</p>
+  <ul>
+    <li><strong>Event Threat Detection</strong>: Detects known patterns (e.g., brute force, malware downloads).</li>
+    <li><strong>Cloud Anomaly Detection</strong>: Uses machine learning to find unusual behaviors (e.g., leaked credentials, spikes in traffic).</li>
+  </ul>
+  <p>Other detectors:</p>
+  <ul>
+    <li><strong>Security Health Analytics</strong>: Finds misconfigurations based on best practices (CIS, NIST).</li>
+    <li><strong>Qualys Cloud Security for SCC</strong>: Assesses OS-level and app vulnerabilities.</li>
+    <li><strong>Cloud DLP</strong>: Detects sensitive data (e.g., PII, PCI) across GCP services.</li>
+    <li><strong>Cloud Security Scanner</strong>: Scans for vulnerabilities in web apps (e.g., XSS, outdated libraries).</li>
+  </ul>
+</div>
+
+<div class="q"><strong>Response Process</strong></div>
+<div class="a">
+  <ul>
+    <li><strong>1. Activate SCC</strong>: Set up SCC for your projects or entire organization. Ensure proper IAM roles are configured.</li>
+    <li><strong>2. Enable Threat Detectors</strong>: Turn on detectors like Event Threat Detection, Cloud Anomaly Detection, and Qualys Cloud Security.</li>
+    <li><strong>3. Monitoring Findings</strong>: SCC scans and generates findings based on active detectors. These include severity and the Attack Exposure Score (AE Score).</li>
+    <li><strong>4. Automated Response with Cloud Functions</strong>: Findings trigger automated responses like isolating a VM or removing risky firewall rules using Cloud Functions via Pub/Sub.</li>
+    <li><strong>5. Alert Notifications</strong>: SCC sends alerts through email, Slack, or SIEM systems to notify the security team of critical findings.</li>
+    <li><strong>6. Incident Tracking</strong>: Log and track incidents in systems like Jira or ServiceNow for analysis and prioritization.</li>
+    <li><strong>7. Remediation</strong>: Apply fixes, remove vulnerabilities, and update security policies regularly based on findings.</li>
+    <li><strong>8. Compliance and Reporting</strong>: Ensure compliance with standards like CIS, NIST, and ISO 27001. Generate reports and export findings for analysis in BigQuery or Looker.</li>
+  </ul>
+</div>
+
+<h4>Examples</h4>
+
+<div class="q"><strong>SCC detects a VM with SSH open to the internet</strong></div>
+<div class="a">
+  <ul>
+    <li>1. SCC generates a critical finding: OPEN_FIREWALL.</li>
+    <li>2. Finding sent to Pub/Sub.</li>
+    <li>3. Cloud Function removes the risky firewall rule or isolates the VM.</li>
+    <li>4. Notification sent to team (email, Slack, SIEM).</li>
+    <li>5. Team analyzes, documents the issue, and adjusts policy.</li>
+  </ul>
+  <p>Automated response: SCC → Pub/Sub → Cloud Function → Response</p>
+</div>
+
+<div class="q"><strong>Public Cloud Storage Bucket</strong></div>
+<div class="a">
+  <p>Response: Remove public access or block with policy.</p>
+  <ul>
+    <li>SCC detects bucket with public access (e.g., <code>allUsers</code>).</li>
+    <li>Cloud Function removes public access using <code>gcloud storage buckets update</code>.</li>
+    <li>Apply policy: <code>constraints/storage.publicAccessPrevention</code>.</li>
+    <li>Notify the security team (Slack, Email).</li>
+  </ul>
+</div>
+
+<div class="q"><strong>Over-privileged Service Account</strong></div>
+<div class="a">
+  <p>Response: Revoke excessive permissions or alert IAM admin.</p>
+  <ul>
+    <li>SCC finds over-privileged service account (e.g., Owner, Editor).</li>
+    <li>Cloud Function removes risky IAM roles using <code>gcloud projects remove-iam-policy-binding</code>.</li>
+    <li>Alert sent to IAM admin for further action.</li>
+  </ul>
+</div>
+
+<div class="q"><strong>Critical Container CVE</strong></div>
+<div class="a">
+  <p>Response: Block image deployment via Cloud Build policy.</p>
+  <ul>
+    <li>SCC detects a critical CVE in a container image.</li>
+    <li>Image deployment is blocked using Binary Authorization or Build Policy.</li>
+    <li>Alert sent to security team with CVE details.</li>
+  </ul>
+</div>
+
+<div class="q"><strong>Malware in VM</strong></div>
+<div class="a">
+  <p>Response: Isolate VM by stopping or removing NIC.</p>
+  <ul>
+    <li>SCC detects malware in a VM (via Event Threat Detection or VirusTotal).</li>
+    <li>Cloud Function stops the VM or detaches the network interface.</li>
+    <li>Alert sent to security team for investigation.</li>
+  </ul>
+</div>
+
+<div class="q"><strong>Open Firewall Rules</strong></div>
+<div class="a">
+  <p>Response: Automatically remove or restrict open firewall rules.</p>
+  <ul>
+    <li>SCC detects an open firewall rule (e.g., <code>0.0.0.0/0</code> on port 22).</li>
+    <li>Cloud Function deletes or restricts the rule.</li>
+    <li>Logs the change and notifies the security team.</li>
+  </ul>
+</div>
+
+              </div>
+
+                
+          <div class="q">🔐 Identity and Access Management (<span style="color:red">IAM</span>)</div>
+          <div class="a">
+
+            <h1>IAM in GCP</h1>
+            <p>Controls <span class="highlight">who</span> (<span class="highlight">identity</span>) can do <span class="highlight">what</span> (<span class="highlight">roles</span>) on which <span class="highlight">resource</span> in GCP</p>
+            <p>Has the principle of <span class="important">Least Privilege</span> (*nobody should have more permissions than they need*) and <span class="important">Role-Based Access Control (RBAC)</span> is a method of managing access to resources based on the roles assigned to users, groups, or service accounts.</p>
+        
+            <h2>How it works</h2>
+            <ul>
+                <li><strong>Authentication:</strong> GCP checks <span class="highlight">who</span> (user login, service account key, etc.) you are and then gives you <strong>authorization</strong> by checking <span class="highlight">what</span> <strong>IAM policies</strong> are attached to a resource and checks what are the <strong>roles</strong> assigned to you.</li>
+            </ul>
+        
+            <h3><span class="highlight">who</span> - Identity</h3>
+            <ul>
+                <li><strong>Users:</strong> google accounts (`user@gmail.com`)</li>
+                <li><strong>Service Accounts</strong> (svc account): Represent <span class="important">non-human entities</span>: applications, virtual machines (VMs), etc. that need to <em>authenticate and interact with Google Cloud resources</em> programmatically.</li>
+                <li><strong>Groups:</strong> Collections of users (`engineers@domain.com`)</li>
+                <li><strong>External Identities:</strong> Identities from external identity providers (e.g., Azure AD, custom identity providers)</li>
+                <li><strong>Principals:</strong> Abstract representation of entities (`allUsers`, `allAuthenticatedUsers`, custom service account)</li>
+            </ul>
+            <p><em>The recommendation is always to work with groups where possible as individual users might leave the company, change teams, etc.</em></p>
+        
+            <h3><span class="highlight">what</span> - Access</h3>
+            <p><strong>Roles</strong> = <span class="highlight">1 or more permissions</span>. Roles are attached to identities. They define what type of actions an identity can do.</p>
+            <p>A user can have <strong>multiple roles</strong> for a <strong>single resource</strong>. When a user has multiple roles, the effective permissions are the <strong>union</strong> of the permissions granted by each role.</p>
+        
+            <h4 class="roles">Types of Roles</h4>
+            <ul>
+                <li><strong>Primitive Roles:</strong>
+                    <ul>
+                        <li><strong>Owner:</strong> Full access to all resources, including managing IAM policies.</li>
+                        <li><strong>Editor:</strong> Can edit resources <span class="important">but cannot manage IAM policies.</span></li>
+                        <li><strong>Viewer:</strong> Read-only access to resources.</li>
+                    </ul>
+                </li>
+                <li><strong>Predefined Roles:</strong> Contain permissions for specific services and tasks.
+                    <ul>
+                        <li><strong>Storage Admin:</strong> Full control over Cloud Storage resources. `roles/storage.admin`</li>
+                        <li><strong>Compute Admin:</strong> Full control over Compute Engine resources. `roles/compute.instanceAdmin`</li>
+                        <li><strong>BigQuery Data Editor:</strong> Full access to BigQuery datasets and tables `roles/bigquery.dataEditor`</li>
+                        <li><strong>Kubernetes Engine Cluster Viewer:</strong> Read-only access to Kubernetes Engine clusters `roles/container.clusterViewer`</li>
+                    </ul>
+                </li>
+                <li><strong>Custom Roles:</strong> Use when predefined roles do not precisely match the access needs of your organization or project.</li>
+            </ul>
+            <p><em>E.g. Compute Admin role will give you the permissions to create virtual machines, networks, etc.</em> `roles/compute.admin`</p>
+        
+            <h3><span class="highlight">where</span> - Management</h3>
+            <p><strong>Resources or IAM Objects</strong> are accessed by <strong>identities</strong> based on <strong>roles</strong> assigned to those identities.</p>
+            <p>GCP resources are organized in a <strong>strict resource hierarchy</strong>. Every resource must have a project => projects creation is mandatory.</p>
+
+            <h1><span style="color:rgb(236, 111, 9)">IAM Policy</span></h1>
+            <p><strong>IAM Policy</strong> = <strong>list of rules</strong> called <strong>bindings</strong></p>
+            <ul>
+                <li>Each <strong>binding</strong> connects 1 or more identities (domain, user, group, svc account) to a specific <strong>role</strong> (contains permissions) on a specific <strong>resource</strong> (project, bucket, VM, etc.)</li>
+                <li><strong>Policies</strong> can be defined at <strong>resource</strong> level, <strong>project</strong> level, <strong>folder</strong> level or <strong>organization</strong> level, depending on the type of resource.</li>
+                <li>IAM policies are inherited from parent resources to child resources in GCP. 
+                    <ul>
+                        <li><em>E.g. if you set an IAM policy at the project level, all resources within that project inherit that policy unless explicitly overridden.</em></li>
+                    </ul>
+                </li>
+            </ul>
+            <pre>
+        {
+          "bindings": [
+            {
+              "role": "roles/storage.objectViewer",
+              "members": [
+                "user:alice@example.com",
+                "group:dev-team@example.com"
+              ]
+            },
+            {
+              "role": "roles/compute.admin",
+              "members": [
+                "serviceAccount:my-service-account@project.iam.gserviceaccount.com"
+              ]
+            }
+          ]
+        }
+            </pre>
+            <ul>
+                <li><strong>roles/storage.objectViewer:</strong> Grants <strong>read-only</strong> access to objects in <strong>Cloud Storage</strong>. Users can view and download objects but cannot create, modify, or delete them.</li>
+                <li><strong>roles/compute.admin:</strong> Grants <strong>full administrative</strong> access to <strong>Compute Engine</strong> resources, including the ability to create, modify, and delete VMs, networks, and disks.</li>
+            </ul>
+        
+            <h3><span style="color:rgb(236, 111, 9)">IAM Conditions</span></h3>
+            <ul>
+                <li>Make <strong>IAM role bindings</strong> more <strong>granular</strong> by adding <strong>"if..." rules</strong> to permissions.</li>
+                <li>Instead of simply saying "<strong>User X has Role Y</strong>", you can say "<strong>User X has Role Y _only if_ Condition Z is true.</strong>"</li>
+            </ul>
+        
+            <table border="1">
+                <tr>
+                    <th><strong>Type</strong></th>
+                    <th><strong>Example</strong></th>
+                </tr>
+                <tr>
+                    <td><strong>Resource-based</strong></td>
+                    <td>Only access objects in a specific Cloud Storage bucket path.</td>
+                </tr>
+                <tr>
+                    <td><strong>Request-based</strong></td>
+                    <td>Only allow access from a certain IP address.</td>
+                </tr>
+                <tr>
+                    <td><strong>Time-based</strong></td>
+                    <td>Only allow access before a certain date (e.g., temporary access).</td>
+                </tr>
+            </table>
+        
+            <pre>
+        "condition": {
+          "title": "MondayAccess",
+          "description": "Allow access only on Mondays",
+          "expression": "request.time.getDayOfWeek() == DayOfWeek.MONDAY"
+        }
+            </pre>
+        
+            <h2>Questions</h2>
+            <table border="1">
+                <tr>
+                    <th><strong>Topic</strong></th>
+                    <th><strong>Summary</strong></th>
+                </tr>
+                <tr>
+                    <td><strong>3 Core Components</strong></td>
+                    <td><span class="highlight">Identities</span>, <span class="highlight">Roles</span>, and <span class="highlight">Policies</span> (link identities to roles and define what actions can be performed on resources).</td>
+                </tr>
+                <tr>
+                    <td><strong>Granting Permissions</strong></td>
+                    <td>Attach a role to an identity using GCP Console or <code>gcloud</code> CLI; roles can be granted at <span class="important">folder</span>, <span class="important">project</span>, or <span class="important">resource</span> levels.</td>
+                </tr>
+                <tr>
+                    <td><strong>Hierarchy of Roles</strong></td>
+                    <td><strong>Primitive</strong> Roles (Owner, Editor, Viewer) <br> <strong>Predefined</strong> Roles (more specific) <br> <strong>Custom</strong> Roles (created by users).</td>
+                </tr>
+                <tr>
+                    <td><strong>Auditing IAM Activity</strong></td>
+                    <td>Use <span class="highlight">Google Cloud Audit Logs</span> (Admin Activity, Data Access, Access Transparency) to monitor changes and actions.</td>
+                </tr>
+                <tr>
+                    <td><strong>Manage Storage Access with IAM</strong></td>
+                    <td>Grant roles like <code>Storage Object Viewer/Creator</code> to identities for buckets or objects.</td>
+                </tr>
+                <tr>
+                    <td><strong>IAM vs Resource Manager</strong></td>
+                    <td><strong>IAM</strong> manages access (who can do what); <br><br> <strong>Resource Manager</strong> organizes projects and their lifecycle.</td>
+                </tr>
+                <tr>
+                    <td><strong>Policy Hierarchy</strong></td>
+                    <td>Organization → Folder → Project → Resource; <br><br>Policies are inherited down the hierarchy.</td>
+                </tr>
+                <tr>
+                    <td><strong>Authentication vs Authorization</strong></td>
+                    <td><strong>Authentication</strong> verifies identity; <br><br> <strong>Authorization</strong> defines allowed actions.</td>
+                </tr>
+                <tr>
+                    <td><strong>Implement Least Privilege</strong></td>
+                    <td>Grant only the minimum permissions necessary for a user's tasks, limiting risk.</td>
+                </tr>
+                <tr>
+                    <td><strong>IAM Policies vs Organization Policies</strong></td>
+                    <td><strong>Organization policies</strong> control settings org-wide; <br><br> <strong>IAM policies</strong> control access to specific resources.</td>
+                </tr>
+                <tr>
+                    <td><strong>Handling Predefined Role Gaps</strong></td>
+                    <td>Create <span class="roles">Custom Roles</span> to match specific access needs.</td>
+                </tr>
+                <tr>
+                    <td><strong>Troubleshoot Access Issues</strong></td>
+                    <td>Check user’s roles, permissions, conflicts, and authentication status.</td>
+                </tr>
+                <tr>
+                    <td><strong>IAM Recommender</strong></td>
+                    <td>Suggests optimizations to improve security and manage access better.</td>
+                </tr>
+                <tr>
+                    <td><strong>User Access to Specific Bucket</strong></td>
+                    <td>Assign Storage roles (e.g., Viewer/Creator) directly on the bucket.</td>
+                </tr>
+                <tr>
+                    <td><strong>IAM vs Cloud Identity</strong></td>
+                    <td><strong>IAM</strong> manages GCP resource access; <br><br> <strong>Cloud Identity</strong> manages Workspace (Google apps) access.</td>
+                </tr>
+                <tr>
+                    <td><strong>Review IAM Changes</strong></td>
+                    <td>Use Audit Logs to track role and policy modifications.</td>
+                </tr>
+                <tr>
+                    <td><strong>User Modifying Own IAM Roles</strong></td>
+                    <td><span class="important">Not allowed</span>; only administrators can change IAM roles.</td>
+                </tr>
+                <tr>
+                    <td><strong>IAM Policy vs Bucket ACL</strong></td>
+                    <td><strong>IAM Policies</strong> = resource-wide control; <br><br> <strong>ACLs</strong> = object-level control (legacy)!</td>
+                </tr>
+                <tr>
+                    <td><strong>MFA for IAM Users</strong></td>
+                    <td>Enable MFA via <span class="important">Cloud Identity</span> settings for extra protection.</td>
+                </tr>
+                <tr>
+                    <td><strong>Service Account Key</strong></td>
+                    <td>Private key file for service accounts, allowing external apps to authenticate with GCP.</td>
+                </tr>
+                <tr>
+                    <td><strong>Restrict Cloud Functions Access</strong></td>
+                    <td>Grant roles like Cloud Functions Developer/Viewer to control who can manage functions.</td>
+                </tr>
+                <tr>
+                    <td><strong>Grant Resource Access Without Sharing Credentials</strong></td>
+                    <td>Use Service Accounts + appropriate roles + keys.</td>
+                </tr>
+                <tr>
+                    <td><strong>IAM and Compliance</strong></td>
+                    <td>IAM supports compliance (e.g., GDPR, HIPAA) through access control and least privilege enforcement.</td>
+                </tr>
+            </table>
+          </div>
+
+  
+  
+            
+          <div class="q">🔐 Cloud Armor </div>
+          <div class="a">
+            <h4>Cloud Armor - Protecting Applications on Google Cloud Platform</h4>
+            <p><strong>Cloud Armor</strong> is a security service provided by Google Cloud Platform (GCP) that helps protect applications from a variety of threats, particularly those from malicious web traffic. Its primary role is to safeguard applications deployed in GCP by filtering and blocking malicious requests before they reach the application.</p>
+            
+            <h2>Key Features and Role of Cloud Armor:</h2>
+            
+            <ul>
+                <li><strong>DDoS Protection</strong>: 
+                    <p>Cloud Armor provides Distributed Denial of Service (DDoS) protection to safeguard applications against large-scale attacks aimed at overwhelming resources. It leverages Google's global infrastructure to absorb and mitigate attacks at the network edge before they can reach the application.</p>
+                </li>
+                
+                <li><strong>Web Application Firewall (WAF)</strong>: 
+                    <p>Cloud Armor integrates a WAF to protect applications from common web application attacks, such as SQL injection, cross-site scripting (XSS), and other OWASP Top 10 threats. Users can define custom rules to block or allow traffic based on specific conditions like IP address, region, or request types.</p>
+                </li>
+                
+                <li><strong>Access Control</strong>: 
+                    <p>Cloud Armor allows users to set rules based on various attributes, such as IP address, geography (region-based filtering), and request headers. This enables granular control over who can access the applications and helps ensure that only authorized traffic is allowed.</p>
+                </li>
+                
+                <li><strong>Scalability</strong>: 
+                    <p>The service is designed to scale automatically with your application’s needs. As the application grows or faces traffic spikes, Cloud Armor ensures that the level of protection adapts without requiring manual intervention.</p>
+                </li>
+                
+                <li><strong>Integration with Google Cloud Load Balancer</strong>: 
+                    <p>Cloud Armor works seamlessly with Google Cloud's HTTP(S) Load Balancer to protect both global and regional applications deployed in GCP. This integration enables traffic to be filtered before it reaches the backend servers, ensuring that malicious traffic does not compromise the application.</p>
+                </li>
+                
+                <li><strong>Logging and Monitoring</strong>: 
+                    <p>Cloud Armor provides detailed logs that track incoming requests, which help with security auditing, compliance, and troubleshooting. Integration with Google Cloud's operations suite (formerly Stackdriver) allows for real-time monitoring and alerting on suspicious activity.</p>
+                </li>
+            </ul>
+          </div>
+
+              
+            <div class="q"> <span style="color:red">Logging</span>  Tools</div>
+            <div class="a">
+              <ul>
+                <li>         Ajudam a ver quem <strong>who did what, where, and when</strong> in your environment. They're critical for <strong>security</strong>, <strong>compliance</strong>, and <strong>troubleshooting</strong>.
+                </li>
+                <li> Logs are used to descrive and event that takes place in our system.</li>
+                <li> Allows searching, monitoring and alerting capabilities </li>
+                <li>Estrutura: timestamp, payload, metadata (resource: location, project id)</li>
+
+                <li>GCP emits Auditing logs and troubleshooting purposes enabled by default and cannot be disabled directly</li>
+                <li> Podemos definir "Eclusion Logs"; Export Logs to BigQuery, Cloud Logging, Cloud Storage, Cloud Pub/Sub, Splunk, Custom Destionation</li>
+              </ul>
+            
+            
+              <h4>GCP Logging Tools</h4>
+              <ul>
+                <li><strong>Cloud Logging</strong>: Collects, stores, and analyzes logs from services and applications on GCP.</li>
+                <li><strong>Log Explorer</strong>: Allows searching and filtering logs with custom queries. <br>
+                Severity: Default, Info, Error, Notice, Warning
+                <pre>resource.type="gcs_bucket" AND resource.labels.bucket_name="xxx" AND http_request.status >=500 AND protoPayload.method_name="get" NOT ...</pre>
+                </li>
+                <li><strong>Log-based Metrics</strong>: Automatically creates metrics based on patterns in logs.</li>
+                <li><strong>Cloud Audit Logs</strong>: Records administrative actions and access for auditing purposes.</li>
+                <li><strong>Cloud Monitoring</strong>: Monitors systems and generates alerts based on logs.</li>
+                <li><strong>Cloud Pub/Sub Export</strong>: Exports logs in real time to external systems.</li>
+                <li><strong>BigQuery Export</strong>: Exports large volumes of logs for advanced analysis in BigQuery.</li>
+              </ul>
+              
+            
+            
+              <h2>Best Practices</h2>
+              <ul>
+                <li>Controlo de Acesso aos logs: IAM; Log Views (controls what type of logs to view)</li>
+                <li>Only enable Data Access logging where needed to reduce noise.</li>
+                <li>Prioritize logging for critical resources.</li>
+                <li>Export logs to Cloud Storage or BigQuery for analytics.</li>
+                <li>Set up log-based alerts.</li>
+                <li>Maintain a retention policy of 30 days.</li>
+                <li>Separate Admin Activity logs from Data Access logs.</li>
+              </ul>
+            
+              <h2>Log Types</h2>
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th><strong>Categoria</strong></th>
+                    <th><strong>Tipo de Log</strong></th>
+                    <th><strong>Descrição</strong></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Platform Logs -->
+                  <tr>
+                    <td rowspan="5"><strong>Platform Logs</strong></td>
+                    <td>Admin Activity Logs</td>
+                    <td>Ações administrativas em recursos.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Access Logs</td>
+                    <td>Acessos a dados sensíveis.</td>
+                  </tr>
+                  <tr>
+                    <td>System Event Logs</td>
+                    <td>Eventos automáticos do sistema.</td>
+                  </tr>
+                  <tr>
+                    <td>Policy Denied Logs</td>
+                    <td>Atividades bloqueadas por políticas.</td>
+                  </tr>
+                  <tr>
+                    <td>Audit Logs</td>
+                    <td>Atividades de auditoria.</td>
+                  </tr>
+              
+                  <!-- Custom Logs -->
+                  <tr>
+                    <td rowspan="2"><strong>Custom Logs</strong></td>
+                    <td>Application Logs</td>
+                    <td>Logs gerados pela aplicação.</td>
+                  </tr>
+                  <tr>
+                    <td>Cloud Function Logs</td>
+                    <td>Execução de funções serverless.</td>
+                  </tr>
+              
+                  <!-- Network Logs -->
+                  <tr>
+                    <td rowspan="3"><strong>Network Logs</strong></td>
+                    <td>VPC Flow Logs</td>
+                    <td>Tráfego de rede entre instâncias.</td>
+                  </tr>
+                  <tr>
+                    <td>Firewall Rules Logs</td>
+                    <td>Decisões de firewall (permitido/bloqueado).</td>
+                  </tr>
+                  <tr>
+                    <td>Load Balancer Logs</td>
+                    <td>Pedidos ao Load Balancer.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            
+              <h2>Important Points about Audit Logs</h2>
+              <ul>
+                <li>Audit logs can be configured to capture Admin Read, Data Read, and Data Write activities.</li>
+                <li>Audit log entries are distinguished by the <span style="color:rgb(192, 0, 0)">protoPayload</span> field.</li>
+              </ul>
+            
+              <h2>Example of an Audit Log Entry</h2>
+            
+              <pre style="background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto;">
+            {
+              "protoPayload": {
+                "@type": "type.googleapis.com/google.cloud.audit.AuditLog",
+                "authenticationInfo": {
+                  "principalEmail": "admin@example.com"
+                },
+                "serviceName": "compute.googleapis.com",
+                "methodName": "v1.compute.instances.insert",
+                "resourceName": "projects/my-project/zones/us-central1-a/instances/example-instance",
+                "request": {
+                  "name": "example-instance",
+                  "machineType": "zones/us-central1-a/machineTypes/n1-standard-1",
+                  "disks": [ /* disk config */ ],
+                  "networkInterfaces": [ /* network config */ ]
+                },
+                "response": { /* details of the created instance */ }
+              },
+              "resource": {
+                "type": "gce_instance",
+                "labels": {
+                  "instance_id": "1234567890123456789",
+                  "zone": "us-central1-a",
+                  "project_id": "my-project"
+                }
+              },
+              "timestamp": "2025-04-18T12:34:56.789Z",
+              "severity": "NOTICE",
+              "logName": "projects/my-project/logs/cloudaudit.googleapis.com%2Factivity",
+              "operation": {
+                "id": "operation-1234567890",
+                "producer": "compute.googleapis.com",
+                "first": true,
+                "last": true
+              },
+              "receiveTimestamp": "2025-04-18T12:35:01.123Z"
+            }
+              </pre>
+            
+              <h2>Summary of Key Fields</h2>
+              <ul>
+                <li><strong>Who:</strong> <code>admin@example.com</code></li>
+                <li><strong>What:</strong> <code>v1.compute.instances.insert</code> (creating a VM instance)</li>
+                <li><strong>Where:</strong> Project <code>my-project</code> in zone <code>us-central1-a</code></li>
+                <li><strong>Resource:</strong> New VM named <code>example-instance</code></li>
+                <li><strong>When:</strong> <code>2025-04-18T12:34:56.789Z</code></li>
+                <li><strong>Service:</strong> <code>compute.googleapis.com</code> (Compute Engine)</li>
+              </ul>
+            
+            </div>
+
+          
+
+          <div class="q">Google Cloud VPC <span style="color:red">Design Patterns</span></div>
+          <div class="a">  
+            <table border="1" cellpadding="10">
+              <tr>
+                <th><strong>Design Pattern Type</strong></th>
+                <th><strong>What it Includes</strong></th>
+                <th><strong>Real-World Example</strong></th>
+              </tr>
+              <tr>
+                <td><strong>Simple VPC Design</strong></td>
+                <td>Single VPC, one region, minimal setup, one subnet.</td>
+                <td>A small startup deploying a single web application in one region.</td>
+              </tr>
+              <tr>
+                <td><strong>Multi-Region VPC</strong></td>
+                <td>Single VPC spanning multiple regions, global load balancing, redundancy.</td>
+                <td>A global e-commerce platform using multiple regions for high availability.</td>
+              </tr>
+              <tr>
+                <td><strong>Shared VPC</strong></td>
+                <td>A central VPC shared across multiple projects, centralized network management.</td>
+                <td>A large enterprise using a Shared VPC across multiple projects for finance, HR, and marketing teams.</td>
+                <img src="images/shared_VPC.png" alt="" width="800" >
+
+              </tr>
+              <tr>
+                <td><strong>Hub-and-Spoke</strong></td>
+                <td>Central VPC (hub) and isolated VPCs (spokes), secure communication.</td>
+                <td>A SaaS company with different customer services isolated in separate spoke VPCs.</td>
+                <img src="images/hub_and_spoke.png" alt="" width="800" >
+              </tr>
+              <tr>
+                <td><strong>VPN & Interconnect</strong></td>
+                <td>VPN or Interconnect for secure, low-latency connection to on-premises network.</td>
+                <td>A company using VPN for secure connections and Interconnect for low-latency communication between on-premises and cloud.</td>
+              </tr>
+              <tr>
+                <td><strong>Isolated Environment</strong></td>
+                <td>Private VPC, no internet access, strict security controls.</td>
+                <td>A healthcare provider storing patient data in a private VPC with no internet access.</td>
+              </tr>
+              <tr>
+                <td><strong>High-Availability</strong></td>
+                <td>Multiple zones for redundancy, global load balancing, auto-scaling.</td>
+                <td>A media company with a live streaming platform using multi-zone redundancy and global load balancing.</td>
+              </tr>
+              <tr>
+                <td><strong>Security-Focused</strong></td>
+                <td>Zero Trust model, VPC Service Controls, strict IAM policies.</td>
+                <td>A financial institution implementing Zero Trust with VPC Service Controls and strict IAM policies.</td>
+              </tr>
+              <tr>
+                <td><strong>Service Mesh</strong></td>
+                <td>Service Mesh for microservices communication, monitoring, and security.</td>
+                <td>A microservices-based application using Anthos Service Mesh for monitoring and secure communication.</td>
+              </tr>
+              <tr>
+                <td><strong>Multi-Tenant</strong></td>
+                <td>Separate VPCs for each client (tenant), secure communication, isolated resources.</td>
+                <td>A SaaS provider with separate VPCs for each client, ensuring data isolation and secure communication.</td>
+              </tr>
+            </table>
+            
+            
+          </div>
+            
+
+
+            <div class="q">Architecture - good design</div>
+            <div class="a">
+              <h4>Designing a Highly Available and Scalable Architecture in GCP</h4>
+              <p>Creating a scalable and highly available architecture in Google Cloud Platform (GCP) involves using a combination of best practices and services. Below is a summarized approach:</p>
+          
+              <h4>Key Steps for a Highly Available and Scalable Architecture:</h4>
+              <ul>
+                  <li><strong>Global Load Balancer:</strong> Use a global load balancer to distribute traffic across multiple regions, ensuring high availability and reduced latency.</li>
+                  <li><strong>Auto-Scaling Virtual Machines:</strong> Deploy virtual machine instances across multiple locations and regions with auto-scaling enabled to handle variable workloads efficiently.</li>
+                  <li><strong>Managed Backend Services:</strong> Utilize GCP's managed services like Cloud SQL, BigQuery, and Firebase to handle backend operations, reducing maintenance overhead and increasing scalability.</li>
+                  <li><strong>Content Delivery:</strong> Use Cloud Storage in combination with the Cloud Content Delivery Network (CDN) to deliver content globally, improving performance and scalability.</li>
+                  <li><strong>Monitoring and Logging:</strong> Implement Cloud Logging and Cloud Monitoring for routine upkeep, to continuously monitor the infrastructure, and to proactively address any performance issues.</li>
+              </ul>
+          
+              <p>By leveraging these services, you can ensure that your GCP infrastructure is both scalable and highly available, meeting the demands of modern applications.</p>
+
+            </div>
+
+        
+            <div class="q">🌐 Virtual Private Cloud (<span style="color:red">VPC</span>)</div>
+            <div class="a">   
+              VPC permite configurar várias subnets created across multiple regions. </br>
+              
+
+              <p><strong>VPC (Virtual Private Cloud)</strong> is a secure, private and isolated network within Google Cloud.</p>
+              E.g. 1 subnet to hospedate the website (public subnte) => configurar a virtual network gateway and the other one (private subnet) to hospedate the database (has sensitive information, should not be accessed from outside) . </br>
+              <h4>Allows to </h4>
+              <ul>
+                <li>Deploy and connect resources (VMs, containers, databases, etc.)</li>
+                <li>Create network traffic with firewalls rules, routes and peering</li>
+                <li>Define IP address ranges and subnets</li>
+              </ul>
+
+              <h4>Features</h4>
+              <ul>
+                <li>Subnetes (regional IP range to organize and isolate resources)</li>
+                <li>Global Scope - 1 VPN can span multiple regions</li>
+                <li>Custom routes: Control how traffic flows internally and externally                </li>
+                <li>Firewall rules: Allow/deny traffic based on IPs, ports, tags, or service accounts                </li>
+                <li>Peering: Connect VPCs privately (same org or cross-org) </li>
+                <li>Shared VPC: Share a VPC network across multiple projects for centralized control</li>
+                <li><strong>VPN:</strong> Connect securely to on-premises networks.</li>
+                <li><strong>NAT:</strong> Allows internet access with private IPs.</li>
+                <li><strong>Security</strong> Data and applications are isolated from the clients on the public cloud.</li>
+                <li><strong>Scalability</strong> Can dynamic change quickly.</li>
+                <li><strong>Cost effective</strong> No need to spend money in hardware</li>
+
+                <li><strong>High Availability:</strong> Ensure fault tolerance across zones.</li>
+              </ul>
+
+              <h4>Acesso seguro à G-cloud</h4>
+              <ul>
+                <li>Authorized user accounts with IAM permissions</li>
+                <li>2FA</li>
+                <li>Avoid public networds </li>
+                <li>Use service account with low privileges</li>
+              </ul>
+
+              <h3>VPC Best Practices (Summarized)</h3>
+
+              <table border="1" cellpadding="10">
+                <tr>
+                  <th><strong>Best Practice</strong></th>
+                  <th><strong>Details</strong></th>
+                </tr>
+                <tr>
+                  <td><strong>Use Custom Subnet Mode</strong></td>
+                  <td>Choose <strong>custom subnet mode</strong> for better control over IP ranges and network segmentation.</td>
+                </tr>
+                <tr>
+                  <td><strong>Plan IP Addressing</strong></td>
+                  <td>Plan IP ranges carefully to avoid conflicts and ensure scalability.</td>
+                </tr>
+                <tr>
+                  <td><strong>Use Regional VPCs</strong></td>
+                  <td>Prefer <strong>regional VPCs</strong> for better performance and reduced latency.</td>
+                </tr>
+                <tr>
+                  <td><strong>Restrict Internet Access</strong></td>
+                  <td>Configure <strong>firewall rules</strong> to limit internet access to only necessary services.</td>
+                </tr>
+                <tr>
+                  <td><strong>Enable Private Google Access</strong></td>
+                  <td>Enable <strong>Private Google Access</strong> for private connections to Google services.</td>
+                </tr>
+                <tr>
+                  <td><strong>Segment Networks Using Subnets</strong></td>
+                  <td>Use <strong>subnets</strong> based on function (e.g., public/private) for better isolation.</td>
+                </tr>
+                <tr>
+                  <td><strong>Use Shared VPC</strong></td>
+                  <td>Implement <strong>Shared VPC</strong> for multi-project VPC sharing and centralized management.</td>
+                </tr>
+                <tr>
+                  <td><strong>Enable VPC Flow Logs</strong></td>
+                  <td>Enable <strong>VPC Flow Logs</strong> for network traffic monitoring and diagnostics.</td>
+                </tr>
+                <tr>
+                  <td><strong>Use Private IPs Internally</strong></td>
+                  <td>Use <strong>private IPs</strong> for internal communications to reduce exposure.</td>
+                </tr>
+                <tr>
+                  <td><strong>VPC Peering</strong></td>
+                  <td>Use <strong>VPC Peering</strong> for secure, private communication between VPCs.</td>
+                </tr>
+                <tr>
+                  <td><strong>Use IAP for Access Control</strong></td>
+                  <td>Implement <strong>Identity-Aware Proxy (IAP)</strong> for secure, private access to apps.</td>
+                </tr>
+                <tr>
+                  <td><strong>Integrate with SCC</strong></td>
+                  <td>Use <strong>Security Command Center (SCC)</strong> to monitor and improve network security posture.</td>
+                </tr>
+                <tr>
+                  <td><strong>Use Cloud DNS</strong></td>
+                  <td>Use <strong>Cloud DNS</strong> for internal service discovery and routing.</td>
+                </tr>
+                <tr>
+                  <td><strong>Consider VPN/Interconnect</strong></td>
+                  <td>For hybrid environments, use <strong>VPN</strong> or <strong>Interconnect</strong> for secure connectivity.</td>
+                </tr>
+                <tr>
+                  <td><strong>Use IAM for Network Access Control</strong></td>
+                  <td>Implement <strong>IAM policies</strong> to manage access to VPC resources.</td>
+                </tr>
+              </table>
+              
+
+
+             
+
+              <h5>Como criar?</h5>
+
+              <table border="1" cellpadding="10">
+                <tr>
+                  <th><strong>Step</strong></th>
+                  <th><strong>Details</strong></th>
+                </tr>
+                <tr>
+                  <td><strong>1. Creating the VPC</strong></td>
+                  <td>To create a VPC in GCP, I can either use the Console or the <strong>`gcloud` CLI</strong>.</td>
+                </tr>
+                <tr>
+                  <td><strong>2. CLI for Automation</strong></td>
+                  <td>I usually prefer the CLI for <strong>automation and reproducibility</strong>. First, I create the VPC with <strong>`gcloud compute networks create`</strong>, using <strong>custom subnet mode</strong> so I have full control over <strong>IP ranges</strong> and can optimize for my network architecture.</td>
+                </tr>
+                <tr>
+                  <td><strong>3. Creating Subnets</strong></td>
+                  <td>Then, I create <strong>subnets in specific regions</strong> with <strong>`gcloud compute networks subnets create`</strong>, defining <strong>CIDR ranges</strong> that don’t overlap with other networks or VPNs.</td>
+                </tr>
+                <tr>
+                  <td><strong>4. Configuring Firewall Rules</strong></td>
+                  <td>I also configure <strong>firewall rules</strong> to allow essential access like <strong>SSH</strong> or <strong>HTTP</strong> using <strong>`gcloud compute firewall-rules create`</strong>.</td>
+                </tr>
+                <tr>
+                  <td><strong>5. Enabling VPC Flow Logs</strong></td>
+                  <td>Once the VPC is set up, I enable <strong>VPC Flow Logs</strong> for monitoring the <strong>network traffic</strong> in and out of the VPC, helping with both <strong>performance</strong> and <strong>security audits</strong>. VPC Flow Logs are invaluable for troubleshooting and identifying any unexpected traffic patterns.</td>
+                </tr>
+                <tr>
+                  <td><strong>6. Security Command Center (SCC)</strong></td>
+                  <td>If there are specific <strong>security requirements</strong>, I use <strong>Google Cloud's Security Command Center (SCC)</strong> to monitor the network. SCC helps me assess the <strong>security posture</strong> of the VPC by detecting potential vulnerabilities, such as <strong>misconfigured firewall rules</strong> or <strong>exposed resources</strong>.</td>
+                </tr>
+                <tr>
+                  <td><strong>7. Automations from SCC Findings</strong></td>
+                  <td>Additionally, I integrate <strong>SCC findings</strong> into the broader security workflow, using it to create <strong>alerts</strong> and <strong>automations</strong>. This can involve sending findings to <strong>Pub/Sub</strong>, triggering responses via <strong>Cloud Functions</strong> to <strong>remediate issues</strong> like <strong>closing exposed ports</strong> or <strong>adjusting firewall settings automatically</strong>.</td>
+                </tr>
+                <tr>
+                  <td><strong>8. Ensuring Security & Compliance</strong></td>
+                  <td>All of these steps ensure that the network is <strong>secure</strong>, <strong>scalable</strong>, and <strong>compliant</strong> with our organization's <strong>architecture</strong> and <strong>security standards</strong>. It also helps maintain <strong>visibility over traffic</strong> and potential security threats in real-time.”</td>
+                </tr>
+              </table>
+
+
+              <h3>Shared VPC network</h5>
+              Allows multiple  projects to share the same Virtual Private Cloud (VPC) network centrally and securely.
+              <ul>
+                <li>The network is created in a <strong>host project</strong>, and other  <strong>service projects</strong> can use it to deploy their resources (VMs, containers, etc.)</li>
+              </ul>
+
+              <h6>Benefits of a Shared VPC in Google Cloud</h6>
+            <ul>
+              <li><strong>Centralized network management</strong> – All VPC resources like subnets, firewall rules, and routes are managed in a single host project.</li>
+              <li><strong>Improved security</strong> – Central control over IAM, firewall rules, and monitoring reduces misconfigurations and security gaps.</li>
+              <li><strong>Separation of concerns</strong> – Teams can work in separate service projects while sharing the same secure network infrastructure.</li>
+              <li><strong>Better scalability</strong> – Easily scale your cloud environment across teams and departments using a shared network.</li>
+              <li><strong>Cost efficiency</strong> – Shared networking avoids duplication of resources and makes cost tracking per project easier.</li>
+              <li><strong>Compliance & audit readiness</strong> – Easier to enforce and track security/compliance policies centrally (e.g., firewall audits, traffic logging).</li>
+              <li><strong>Simplified VPC peering</strong> – Reduces the need for complex VPC peering between projects by using a single shared network.</li>
+            </ul>
+
+          </div>
+
+          <div class="q">🌐 Load balancing</div>
+          <div class="a">
+            Cloud-based Load Balancing automatically distributes incoming network traffic or application requests across multiple servers (or resources) that are running in a cloud environment.
+            The main goal is to ensure reliability, scalability, and high performance.
+
+            <table border="1" cellpadding="5" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>HTTP(S) Load Balancer</strong></td>
+                  <td>For web traffic; supports URL-based routing, SSL offloading, and content-based load balancing.</td>
+                </tr>
+                <tr>
+                  <td><strong>TCP/SSL Proxy Load Balancer</strong></td>
+                  <td>For non-HTTP workloads; distributes TCP and SSL traffic across backend instances.</td>
+                </tr>
+                <tr>
+                  <td><strong>UDP Load Balancer</strong></td>
+                  <td>For handling UDP traffic; used for lightweight protocols like DNS or video streaming.</td>
+                </tr>
+                <tr>
+                  <td><strong>Internal Load Balancer</strong></td>
+                  <td>For balancing traffic inside a Virtual Private Cloud (VPC); not accessible from the internet.</td>
+                </tr>
+              </tbody>
+            </table>
+        
+          </div>
+
+          <div class="q">🌐 Cloud DNS</div>
+          <div class="a">
+            <ul>
+              <li>Fully managed, high-performance DNS service.</li>
+              <li>Global, low-latency DNS resolution.</li>
+              <li>Scalable and reliable for both small and large applications.</li>
+              <li>Supports DNSSEC for secure DNS lookups.</li>
+              <li>Easy integration with Google Cloud services.</li>
+              <li>Custom DNS zones for domain management.</li>
+            </ul>
+          </div>
+
+          <div class="q">🌐 Cloud Interconnect</div>
+          <div class="a">
+            <ul>
+              <li>Private connection between your network and Google Cloud.</li>
+              <li>Faster and more secure than the public internet.</li>
+              <li>Two types: Dedicated (physical) and Partner (via provider).</li>
+              <li>Supports high bandwidth (up to 100 Gbps).</li>
+              <li>Uses Cloud Router for dynamic routing (BGP).</li>
+              <li>Ideal for large data transfers and low latency needs.</li>
+            </ul>
+          </div>
+
+          <div class="q">🌐 Cloud CDN</div>
+          <div class="a">
+            <ul>
+              <li>Delivers content via Google's global edge network.</li>
+              <li>Reduces latency by caching content closer to users.</li>
+              <li>Integrated with HTTP(S) Load Balancing (easy setup).</li>
+              <li>Ideal for static assets like HTML, JS, CSS, images, and video.</li>
+              <li>Origin can be Cloud Storage, Compute Engine, or external backends.</li>
+              <li>Supports HTTP/2, Brotli, and Gzip compression.</li>
+              <li>Customizable cache TTLs and fast invalidation options.</li>
+              <li>Fully integrated with Cloud Armor, Cloud Logging, and Monitoring.</li>
+            </ul>
+          </div>
+
+            <div class="q">🗄️ Cloud Storage</div>
+            <div class="a">
+              <ul>
+                <li>Object storage for unstructured data (images, videos, backups).</li>
+                <li>Highly durable and scalable (multi-region options).</li>
+                <li>Supports lifecycle rules, versioning, and encryption.</li>
+                <li>Public or private file access with signed URLs.</li>
+              </ul>
+
+              <p>It allows you to store and retrieve any amount of data, at any time, from anywhere on the web.              </p>
+
+              <strong>Key Features</strong>
+              <ul>
+                <li><strong>Object Storage:</strong> Stores data as objects inside buckets (not traditional file systems).</li>
+                <li><strong>Scalability:</strong> Handles from a few bytes to petabytes easily without user intervention.</li>
+                <li><strong>Durability:</strong> 99.999999999% (11 9’s) durability by replicating data across multiple locations.</li>
+                <li><strong>Security:</strong> Integrated IAM, bucket policies, data encryption at rest and in transit.</li>
+                <li><strong>Classes for Cost Optimization:</strong> Choose between Standard, Nearline, Coldline, and Archive based on access frequency and cost needs.</li>
+                <li><strong>Global Access:</strong> Access your data from anywhere in the world, thanks to Google's global network.</li>
+                <li><strong>Lifecycle Management:</strong> Automatically transition or delete objects based on rules you set (ex: move to Coldline after 30 days).</li>
+                <li><strong>Data Consistency:</strong> Strong consistency for object creation, updates, and deletions.</li>
+              </ul>
+
+              <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Storage Class</th>
+                    <th>Use Case</th>
+                    <th>Access Frequency</th>
+                    <th>Cost</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Standard</strong></td>
+                    <td>Frequently accessed data</td>
+                    <td>High</td>
+                    <td>Higher cost</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Nearline</strong></td>
+                    <td>Data accessed about once a month</td>
+                    <td>Medium</td>
+                    <td>Lower cost</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Coldline</strong></td>
+                    <td>Data accessed a few times per year</td>
+                    <td>Low</td>
+                    <td>Very low cost</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Archive</strong></td>
+                    <td>Long-term storage and archival</td>
+                    <td>Very rare</td>
+                    <td>Cheapest</td>
+                  </tr>
+                </tbody>
+              </table> 
+            </div>
+            
+            <div class="q">🗄️ Cloud SQL</div>
+            <div class="a">
+              <ul>
+                <li>Managed relational databases (MySQL, PostgreSQL, SQL Server).</li>
+                <li>Backups, high availability, replication out of the box.</li>
+                <li>Ideal for existing apps needing SQL structure.</li>
+                <li>Integrated IAM and VPC network connectivity.</li>
+              </ul>
+
+              <h2>Steps:</h2>
+              <ol>
+                <li><strong>Go to Google Cloud Console</strong>
+                  <ul>
+                    <li>Access: <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a>.</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Enable the Cloud SQL Admin API</strong>
+                  <ul>
+                    <li>Make sure the Cloud SQL API is enabled for your project.</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Create a New Instance</strong>
+                  <ul>
+                    <li>Navigate to <strong>SQL</strong> in the left sidebar.</li>
+                    <li>Click <strong>Create Instance</strong>.</li>
+                    <li>Select your database type: <strong>MySQL</strong>, <strong>PostgreSQL</strong>, or <strong>SQL Server</strong>.</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Configure Instance Details</strong>
+                  <ul>
+                    <li>Set a name for the instance.</li>
+                    <li>Choose a region and zone for better performance and availability.</li>
+                    <li>Set root password (or database user credentials).</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Configure Machine Type and Storage</strong>
+                  <ul>
+                    <li>Choose the amount of CPU, memory, and storage needed.</li>
+                    <li>Optionally enable automatic backups and high availability.</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Create the Instance</strong>
+                  <ul>
+                    <li>Click <strong>Create</strong> and wait a few minutes for the instance to be ready.</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Connect to Your Database</strong>
+                  <ul>
+                    <li>Use IP address or Cloud SQL Auth Proxy for secure access.</li>
+                    <li>Connect via Cloud Console, <code>gcloud</code> CLI, or a database client.</li>
+                  </ul>
+                </li>
+              </ol>
+            
+            </div>
+            
+            <div class="q">🗄️ Firestore</div>
+            <div class="a">
+              <ul>
+                <li>Serverless NoSQL document database (collection/doc model).</li>
+                <li>Real-time data sync for web/mobile apps.</li>
+                <li>Offline support, strong consistency.</li>
+                <li>Granular security via Firestore rules + IAM.</li>
+              </ul>
+            </div>
+            
+            <div class="q">🗄️ Cloud Spanner</div>
+            <div class="a">
+              <ul>
+                <li>Globally distributed relational DB with horizontal scaling.</li>
+                <li>Strong consistency + SQL support.</li>
+                <li>High availability (99.999% SLA).</li>
+                <li>Best for enterprise systems with complex transactions.</li>
+              </ul>
+            </div>
+            
+            <div class="q">🗄️ Bigtable</div>
+            <div class="a">
+              <ul>
+                <li>NoSQL wide-column database, very fast for big data.</li>
+                <li>Handles billions of rows, low latency.</li>
+                <li>Ideal for time-series, analytics, and IoT data.</li>
+                <li>Integrates with Apache tools (HBase API, Dataflow).</li>
+              </ul>
+            </div>
+            
+            <div class="q">🗄️ BigQuery</div>
+            <div class="a">
+              <ul>
+                <li>Serverless data warehouse for massive-scale SQL analytics.</li>
+                <li>Pay per query or flat-rate pricing.</li>
+                <li>Supports federated queries, ML models, and BI tools.</li>
+                <li>Integrated with Looker, Data Studio, and Sheets.</li>
+              </ul>
+            </div>
+            
+            <div class="q">🗄️ Cloud Memorystore</div>
+            <div class="a">
+              <ul>
+                <li>Managed Redis or Memcached for low-latency caching.</li>
+                <li>Ideal for speeding up web apps and reducing DB load.</li>
+                <li>High availability options with failover.</li>
+                <li>Fully integrated with GCP VPC and IAM.</li>
+              </ul>
+            </div>
+            
+            <div class="q">🗄️ Filestore</div>
+            <div class="a">
+              <ul>
+                <li>Managed file storage with POSIX compliance.</li>
+                <li>High throughput and IOPS for performance apps.</li>
+                <li>Supports GKE and Compute Engine VMs.</li>
+                <li>Best for apps that need traditional filesystem APIs.</li>
+              </ul>
+            </div>
+            
+            <div class="q">🗄️ AlloyDB</div>
+            <div class="a">
+              <ul>
+                <li>Enterprise-grade PostgreSQL-compatible database.</li>
+                <li>High performance with smart caching and analytics integration.</li>
+                <li>Great for modernizing legacy PostgreSQL apps.</li>
+                <li>Deep GCP integration, managed backups, HA.</li>
+              </ul>
+            </div>
+
+            <div class="q">⚙️ Compute Engine (GCE)</div>
+            <div class="a">
+              <ul>
+                <li>Provides Infrastructure as a Service (IaaS).</li>
+                <li>Full control over virtual machines (OS, network, hardware).</li>
+                <li>Suitable for customized or complex system configurations.</li>
+                <li>User is responsible for scaling, patching, and maintenance (unless automated).</li>
+                <li>Supports any language or runtime through manual setup.</li>
+              </ul>
+
+              Compute Engine and Google App Engine can be used together, where GCE offers custom infrastructure and GAE simplifies application scaling and management.
+              
+            </div>
+
+            <div class="q"><strong>⚙️ Cloud Functions</strong></div>
+            <div class="a">
+              <p>
+                <strong>Google Cloud Functions</strong> are lightweight, single-purpose functions that run in response to events. 
+                They are serverless, meaning you don't manage any servers — just write code and deploy.
+              </p>
+            
+              <h3>When Would You Use Them?</h3>
+              <ul>
+                <li><strong>Respond to Events:</strong> Automatically trigger code from events like file uploads, database changes, or HTTP requests.</li>
+                <li><strong>Build APIs:</strong> Easily create small web APIs without server management.</li>
+                <li><strong>Process Data:</strong> Handle background tasks like image processing or data transformation.</li>
+                <li><strong>Automation:</strong> Automate workflows across Google Cloud services.</li>
+              </ul>
+            </div>
+
+            <div class="q">⚙️ App Engine (GAE)</div>
+            <div class="a">
+              <ul>
+                <li>Provides Platform as a Service (PaaS).</li>
+                <li>Focuses on deploying code without managing the infrastructure.</li>
+                <li>Automatic scaling, load balancing, patching, and maintenance handled by Google.</li>
+                <li>Supports multiple programming languages (Python, Java, Node.js, PHP, etc.).</li>
+                <li>Flexible environment available for custom runtimes if needed.</li>
+              </ul>
+              
+            </div>
+
+            <div class="q">⚙️ Cloud RUN</div>
+            <div class="a">
+              <ul>
+                <li>Fully managed platform to run containerized applications.</li>
+                <li>Serverless – no need to manage infrastructure.</li>
+                <li>Automatic scaling based on incoming traffic.</li>
+                <li>Supports any programming language in a container.</li>
+                <li>Integrates seamlessly with Google Cloud services.</li>
+                <li>Pay only for what you use (billing based on request time).</li>
+              </ul>
+
+            </div>
+
+            <div class="q">⚙️ Kubernetes Engine</div>
+            <div class="a">
+              <p><strong>Google Kubernetes Engine (GKE)</strong> is a managed service by Google Cloud for deploying, managing, and scaling containerized applications with <strong>Kubernetes</strong>.</p>
+
+              <h3>Purpose of GKE</h3>
+              <ul>
+                <li>Automates container deployment, scaling, and operations.</li>
+                <li>Provides a secure and reliable platform for containerized apps.</li>
+                <li>Simplifies Kubernetes infrastructure management.</li>
+              </ul>
+              
+              <h3>Key Features</h3>
+              <ul>
+                <li><strong>Managed Kubernetes:</strong> Google handles the Kubernetes control plane.</li>
+                <li><strong>Scalability:</strong> Auto-scales based on load.</li>
+                <li><strong>Load Balancing:</strong> Integrated with GCP load balancing.</li>
+                <li><strong>CI/CD Integration:</strong> Supports DevOps tools for continuous deployment.</li>
+                <li><strong>Security:</strong> Built-in IAM, network policies, and automatic updates.</li>
+                <li><strong>Autopilot Mode:</strong> Fully managed infrastructure for app focus.</li>
+              </ul>
+              
+              <h3>Use Cases</h3>
+              <ul>
+                <li>Microservices architectures</li>
+                <li>Web/mobile backends</li>
+                <li>Batch processing and data analytics</li>
+                <li>Hybrid/multi-cloud deployments</li>
+              </ul>
+              
+            </div>
+
+            <div class="q">🔎 Cloud Monitoring – Metrics & Dashboards</div>
+<div class="a">
+  <ul>
+    <li>Monitor performance and health of applications and infrastructure.</li>
+    <li>Create custom dashboards for real-time visibility.</li>
+    <li>Set up alerts based on specific metrics or thresholds.</li>
+  </ul>
+</div>
+
+<div class="q">🔎 Cloud Logging – Centralized Logs for Analysis</div>
+<div class="a">
+  <ul>
+    <li>Collect and store logs from all GCP resources in one place.</li>
+    <li>Search, filter, and analyze logs easily.</li>
+    <li>Integrated with Cloud Monitoring for better insights.</li>
+  </ul>
+</div>
+
+<div class="q">🔎 Cloud Trace – Latency Tracking</div>
+<div class="a">
+  <ul>
+    <li>Track and analyze latency of requests in your applications.</li>
+    <li>Identify bottlenecks and optimize performance.</li>
+    <li>Provide detailed trace data for improved troubleshooting.</li>
+  </ul>
+</div>
+
+<div class="q">🔎 Cloud Profiler – Code Performance Insights</div>
+<div class="a">
+  <ul>
+    <li>Analyze and profile the performance of your code.</li>
+    <li>Gain insights into CPU usage, memory usage, and more.</li>
+    <li>Optimize resource usage and reduce costs.</li>
+  </ul>
+</div>
+
+<div class="q">🔎 Cloud Deployment Manager – Infrastructure as Code</div>
+<div class="a">
+  <ul>
+    <li>Manage GCP resources using configuration files (YAML/JSON).</li>
+    <li>Automate the creation and management of infrastructure.</li>
+    <li>Ensure repeatable and consistent deployments.</li>
+  </ul>
+</div>
+
+
+
+            <div class="q"> Application migration to G-Cloud</div>
+            <div class="a">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Step</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Assessment and Planning</td>
+                    <td>Analyze the existing application architecture, performance specifications, and dependencies. Plan the migration strategy, considering options like replatforming, rehosting, and refactoring.</td>
+                  </tr>
+                  <tr>
+                    <td>Provisioning GCP Resources</td>
+                    <td>Build the necessary infrastructure on GCP, including Virtual Machines (Compute Engine), Google Kubernetes Engine (GKE), or App Engine. Configure networks, storage, and databases.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Migration</td>
+                    <td>Transfer data from on-premises storage to GCP using services like Database Migration Service or Google Cloud Storage Transfer Service.</td>
+                  </tr>
+                  <tr>
+                    <td>Application Deployment</td>
+                    <td>After setting up and optimizing the cloud environment, deploy the application in GCP.</td>
+                  </tr>
+                  <tr>
+                    <td>Testing and Optimization</td>
+                    <td>Test the application thoroughly in the GCP environment, monitor performance, and make necessary changes to optimize for security, scalability, and cost-effectiveness.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+            
+
+
+            
+
+
+
+
+
+            <div class="q"> API</div>
+            <div class="a">
+              <p>Application Programming Interface (API)</p>
+              <p>is a set of tools, protocols, and definitions that allow different software applications to interact with Google Cloud services. </p>
+              <p>APIs allow developers to access, manage, and manipulate resources in Google Cloud without needing to manually interact with the user interface.</p>
+
+            </div>
+            
+
+
+            <div class="q">Autoscaling</div>
+            <div class="a">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dynamic Adjustment</td>
+                    <td>Automatically increases or decreases the number of VMs based on load metrics (e.g., CPU, HTTP request count, custom metrics).</td>
+                  </tr>
+                  <tr>
+                    <td>Cost Efficiency</td>
+                    <td>Helps save costs by reducing the number of VMs during periods of low demand.</td>
+                  </tr>
+                  <tr>
+                    <td>Horizontal Scaling</td>
+                    <td>Autoscaling adds or removes VMs to maintain desired performance instead of resizing individual VMs (vertical scaling).</td>
+                  </tr>
+                  <tr>
+                    <td>High Availability</td>
+                    <td>Ensures your application remains available and performs optimally by scaling with demand, without manual intervention.</td>
+                  </tr>
+                  <tr>
+                    <td>Health Checks</td>
+                    <td>If a VM instance becomes unhealthy, autoscaling replaces it with a healthy one to maintain application stability.</td>
+                  </tr>
+                  <tr>
+                    <td>Instance Groups</td>
+                    <td>Works within managed instance groups, consisting of identical VMs that scale based on demand.</td>
+                  </tr>
+                  <tr>
+                    <td>Scaling Triggers</td>
+                    <td>Triggered by predefined scaling policies based on metrics like CPU utilization or load balancer traffic.</td>
+                  </tr>
+                  <tr>
+                    <td>Custom Metrics</td>
+                    <td>Supports scaling based on custom application-specific metrics in addition to basic metrics like CPU and memory usage.</td>
+                  </tr>
+                  <tr>
+                    <td>Common Use Cases</td>
+                    <td>
+                      <ul>
+                        <li>Web applications during high traffic periods.</li>
+                        <li>Batch processing for large volumes of tasks.</li>
+                        <li>Microservices with varying resource demands.</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              <h1>How to Configure Autoscaling in GCP</h1>
+              <ol>
+                <li><strong>Go to</strong> the <strong>Google Cloud Console</strong>.</li>
+                <li><strong>Navigate</strong> to <strong>Compute Engine ➔ Instance Groups</strong>.</li>
+                <li><strong>Create</strong> or <strong>select</strong> a <strong>Managed Instance Group</strong>.</li>
+                <li><strong>Enable Autoscaling</strong>:
+                  <ul>
+                    <li>Click <strong>"Edit"</strong> and <strong>turn on</strong> the <strong>Autoscaling</strong> option.</li>
+                  </ul>
+                </li>
+                <li><strong>Set the Scaling Policy</strong>:
+                  <ul>
+                    <li><strong>Choose a metric</strong> to scale on, such as:
+                      <ul>
+                        <li>CPU utilization</li>
+                        <li>Load balancing capacity</li>
+                        <li>Stackdriver Monitoring metrics</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li><strong>Define limits</strong>:
+                  <ul>
+                    <li>Set <strong>minimum</strong> and <strong>maximum</strong> number of instances.</li>
+                  </ul>
+                </li>
+                <li><strong>Save</strong> your configuration.</li>
+              </ol>
+            </div>
+
+            
+            <div class="q"> Bucket</div>
+            <div class="a">
+              <strong>What is the Function of a Bucket in Google Cloud Storage?</strong>
+     
+                    In Google Cloud Storage, a <strong>bucket</strong> is the fundamental container to store data. It holds objects like files and metadata. <br><br>
+                    <strong>Key functions:</strong>
+                    <ul>
+                      <li>Stores objects (files, backups, media, etc.)</li>
+                      <li>Requires a globally unique name</li>
+                      <li>Controls access via IAM, ACLs, Signed URLs</li>
+                      <li>Allows choosing storage classes (Standard, Nearline, Coldline, Archive)</li>
+                      <li>Defines region/location for data storage</li>
+                      <li>Supports lifecycle management rules</li>
+                      <li>Enables object versioning</li>
+                    </ul>
+                    <strong>Use cases:</strong> website hosting, backups, log storage, media storage.
+            </div>
+
+
+            
+
+            <div class="q">Binary Authorization</div>
+            <div class="a">
+              Security feature that ensures only trusted and verified container images are deployed to your Kubernetes clusters (GKE).
+
+              It enforces signature-based policies, meaning containers must be reviewed, approved, and signed before deployment, helping prevent the execution of unverified or unsafe software.
+            </div>
+
+            
+
+            <div class="q"> Cloud</div>
+            <div class="a">A computer system that has a network, hardware, storage, and an application programming interface</div>
+
+            
+
+            <div class="q">Cloud Router and VPN tunnels</div>
+            <div class="a">
+              <p><strong>Cloud Router</strong> is a managed service in Google Cloud Platform (GCP) that automatically exchanges route information between your Virtual Private Cloud (VPC) network and your on-premises network using dynamic routing protocols like BGP (Border Gateway Protocol).</p>
+    
+              <h2>Key Functions of Cloud Router:</h2>
+              <ul>
+                  <li><strong>Dynamic Routing:</strong> 
+                      <p>Automatically learns and shares route information with on-premises networks through BGP, ensuring that your network stays updated without manual configuration.</p>
+                  </li>
+                  
+                  <li><strong>High Availability:</strong> 
+                      <p>Cloud Router supports redundant configurations to maintain connectivity even during failures, ensuring reliable hybrid and multi-cloud environments.</p>
+                  </li>
+                  
+                  <li><strong>Scaling:</strong> 
+                      <p>It scales automatically to handle the growth of your network without needing manual intervention or hardware upgrades.</p>
+                  </li>
+                  
+                  <li><strong>Integration with VPN and Interconnect:</strong> 
+                      <p>Cloud Router works with Cloud VPN and Dedicated Interconnect to manage hybrid connections dynamically and securely.</p>
+                  </li>
+                  
+                  <li><strong>Reduced Manual Effort:</strong> 
+                      <p>Eliminates the need to manually update routes when your network grows or changes, reducing the risk of errors and operational burden.</p>
+                  </li>
+              </ul>
+    
+              <h2>VPN Tunnels</h2>
+              <p>
+                  A <strong>VPN Tunnel</strong> securely connects your on-premises network or another cloud environment 
+                  to your Google Cloud VPC over the public Internet using encrypted communication.
+              </p>
+          
+              <ul>
+                  <li>Encrypts traffic between sites securely.</li>
+                  <li>Can be <strong>Static</strong> (manual routes) or <strong>Dynamic</strong> (with Cloud Router and BGP).</li>
+                  <li>Commonly used for hybrid cloud or multi-cloud networking.</li>
+              </ul>
+          
+              <h2>How They Work Together</h2>
+              <ul>
+                  <li><strong>Without Cloud Router:</strong> VPN uses static routes; manual updates needed.</li>
+                  <li><strong>With Cloud Router:</strong> VPN tunnels use dynamic routing (BGP), automatic route exchange.</li>
+                  <li>Improves network flexibility and simplifies management.</li>
+              </ul>
+            </div>
+            
+           
+            <div class="q">Cloud computing vs virtualization </div>
+            <div class="a">
+              <p>Cloud computing: Creates virtual versions of physical hardware (servers, storage, networks) using software. Goal: To maximize hardware usage by running multiple virtual machines (VMs) on a single physical machine.  Cloud computing enables ad hoc utilization by allowing users to quickly and easily provision resources (like servers, storage, databases) on-demand, without needing to buy or set up physical hardware.</p>
+              <p>Virtualization: Delivers computing services (servers, storage, databases, networking, software) over the internet. Goal: To provide scalable, on-demand access to computing resources without managing physical hardware.</p>
+            </div>
+
+            <div class="q">CI / CD</div>
+            <div class="a">
+
+
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>Step</th>
+                              <th>Tools & Services</th>
+                              <th>Description</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>1. Source Code Repository</td>
+                              <td>Cloud Source Repositories, GitHub, Bitbucket</td>
+                              <td>Store your source code in a version-controlled repository.</td>
+                          </tr>
+                          <tr>
+                              <td>2. Continuous Integration (CI)</td>
+                              <td>Cloud Build, Jenkins</td>
+                              <td>Automate builds and tests when code changes are pushed to the repository.</td>
+                          </tr>
+                          <tr>
+                              <td>3. Continuous Delivery (CD)</td>
+                              <td>GKE, App Engine, Compute Engine</td>
+                              <td>Deploy the built code to staging or production environments.</td>
+                          </tr>
+                          <tr>
+                              <td>4. Automated Testing</td>
+                              <td>JUnit, Selenium</td>
+                              <td>Run unit, integration, and acceptance tests as part of the pipeline.</td>
+                          </tr>
+                          <tr>
+                              <td>5. Deployment</td>
+                              <td>GKE, App Engine, Cloud Functions</td>
+                              <td>Automatically deploy the code to a production environment.</td>
+                          </tr>
+                          <tr>
+                              <td>6. Rollback (Optional)</td>
+                              <td>GKE</td>
+                              <td>Automatically rollback to a previous version in case of failure.</td>
+                          </tr>
+                          <tr>
+                              <td>7. Monitoring & Logging</td>
+                              <td>Cloud Monitoring, Cloud Logging</td>
+                              <td>Track application health and logs to ensure performance.</td>
+                          </tr>
+                      </tbody>
+                  </table>
+
+
+
+            </div>
+
+            <div class="q">Cloud Spanner </div>
+            <div class="a">
+              <p>
+                <strong>Cloud Spanner</strong> is a fully managed, scalable, and globally distributed relational database service by Google Cloud.
+                It combines the benefits of traditional relational databases (SQL, strong consistency) with the scalability of NoSQL databases.
+              </p>
+            
+              <h2>Key Features</h2>
+              <ul>
+                <li><strong>Horizontal Scalability:</strong> Scales automatically across regions and nodes.</li>
+                <li><strong>Strong Consistency:</strong> Global transactions with strong consistency guarantees.</li>
+                <li><strong>SQL Support:</strong> Supports ANSI SQL with extensions for distributed data.</li>
+                <li><strong>High Availability:</strong> Offers up to 99.999% availability SLA.</li>
+                <li><strong>Global Distribution:</strong> Data can be automatically replicated across regions.</li>
+                <li><strong>Managed Service:</strong> Google handles backups, replication, and patching.</li>
+              </ul>
+            
+              <h2>How to Configure Cloud Spanner</h2>
+              <ol>
+                <li><strong>Create an Instance:</strong> 
+                  <ul>
+                    <li>Go to the Google Cloud Console.</li>
+                    <li>Navigate to <em>Spanner > Instances > Create Instance</em>.</li>
+                    <li>Set a name, instance ID, and select an instance configuration (regional or multi-region).</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Create a Database:</strong> 
+                  <ul>
+                    <li>After creating an instance, select it and click <em>Create Database</em>.</li>
+                    <li>Define your schema using DDL statements (e.g., create tables and indexes).</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Connect and Use:</strong> 
+                  <ul>
+                    <li>Use the <code>gcloud</code> CLI, client libraries (Java, Python, Go, etc.), or JDBC to connect.</li>
+                    <li>Start inserting, querying, and managing data via SQL commands.</li>
+                  </ul>
+                </li>
+              </ol>
+            
+            </div>
+
+
+
+            <div class="q">Data Compliance</div>
+            <div class="a">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Aspect</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Compliance Certifications and Standards</td>
+                    <td>ISO 27001, GDPR, HIPAA, SOC 2, PCI-DSS, FedRAMP, CCPA, and others.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Location and Residency</td>
+                    <td>Control over where data is stored, with options to select specific regions.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Encryption</td>
+                    <td>Encryption at rest and in transit, with options to manage encryption keys using GCP's Cloud Key Management Service (CMEK).</td>
+                  </tr>
+                  <tr>
+                    <td>Access Control (IAM)</td>
+                    <td>Role-based access management, assigning roles to users, groups, or service accounts. Least Privilege principle.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Loss Prevention (DLP)</td>
+                    <td>DLP tools to identify, classify, and protect sensitive data in GCP resources like Cloud Storage and BigQuery.</td>
+                  </tr>
+                  <tr>
+                    <td>Monitoring and Auditing</td>
+                    <td>Google Cloud Audit Logs and tools like Cloud Security Command Center for continuous monitoring and compliance management.</td>
+                  </tr>
+                  <tr>
+                    <td>Incident Response</td>
+                    <td>Tools for security incident response, such as real-time alerts via Stackdriver and integrations with the Security Command Center.</td>
+                  </tr>
+                  <tr>
+                    <td>Privacy by Design</td>
+                    <td>GCP is designed to protect personal data from the infrastructure layer, ensuring security and compliance with global regulations.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Retention and Deletion Policies</td>
+                    <td>Define retention and secure data deletion policies based on legal and regulatory requirements, such as GDPR.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+
+            <div class="q">Data pipelines</div>
+            <div class="a">
+              <p>involves a series of steps and services that help ingest, process, analyze, and visualize data. </p>
+              <table border="1">
+                <tr>
+                  <th>Step</th>
+                  <th>GCP Service</th>
+                  <th>Purpose</th>
+                </tr>
+                <tr>
+                  <td>1. Data Ingestion</td>
+                  <td>Cloud Pub/Sub, Cloud Storage, Data Transfer Services</td>
+                  <td>Ingest real-time, batch, or streaming data into the system. Cloud Pub/Sub allows you to stream data, while Cloud Storage enables the transfer of large files. Data Transfer Services provide tools to migrate data from on-premises or other cloud platforms.</td>
+                </tr>
+                <tr>
+                  <td>2. Data Processing</td>
+                  <td>Dataflow, Dataproc, BigQuery</td>
+                  <td>Once data is ingested, it needs to be processed. Dataflow allows you to process and transform data in real-time or batch, using Apache Beam. Dataproc provides managed Hadoop and Spark for big data processing. BigQuery is used for serverless data analytics and large-scale querying.</td>
+                </tr>
+                <tr>
+                  <td>3. Data Storage</td>
+                  <td>Cloud Storage, BigQuery, Cloud SQL, Bigtable</td>
+                  <td>After processing, data needs to be stored. Cloud Storage is ideal for unstructured data (images, videos, etc.). BigQuery is a serverless data warehouse that handles structured data and large datasets for analytics. Cloud SQL offers relational database solutions, while Bigtable is suited for NoSQL data and large-scale applications.</td>
+                </tr>
+                <tr>
+                  <td>4. Orchestration</td>
+                  <td>Cloud Composer, Cloud Functions</td>
+                  <td>Orchestration is necessary to automate the flow of data from ingestion to processing. Cloud Composer (based on Apache Airflow) allows you to schedule and monitor workflows, while Cloud Functions can automate specific tasks triggered by events in the pipeline.</td>
+                </tr>
+                <tr>
+                  <td>5. Monitoring</td>
+                  <td>Stackdriver, Cloud Monitoring, Cloud Logging</td>
+                  <td>Monitoring and logging help you keep track of the pipeline’s health and performance. Stackdriver provides monitoring, error reporting, and log analysis for your services, helping ensure they work as expected and identifying any issues.</td>
+                </tr>
+                <tr>
+                  <td>6. Analysis & Visualization</td>
+                  <td>BigQuery, Looker, Data Studio</td>
+                  <td>Once data is processed and stored, analysis and visualization are key steps. BigQuery allows you to run SQL-like queries on your data. Looker and Data Studio are visualization tools that help generate reports and dashboards for data analysis and insights.</td>
+                </tr>
+                <tr>
+                  <td>7. Security</td>
+                  <td>IAM, Encryption, Audit Logs</td>
+                  <td>Data security is essential. Identity and Access Management (IAM) ensures only authorized users can access resources. Encryption protects data at rest and in transit. Audit logs track who accessed your data and what actions they performed to ensure compliance and security.</td>
+                </tr>
+              </table>
+              
+            </div>
+
+            <div class="q">Data Security</div>
+            <div class="a">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Data Encryption</td>
+                    <td>Encrypting data at rest (stored data) and in transit (data in transit) ensures unauthorized users cannot access or read the data. By default all data stored in Google Cloud Storage, Google Compute Engine, Google Cloud SQL, Google BigQuery is encrypted (AES-256)</td>
+                  </tr>
+                  <tr>
+                    <td>Identity and Access Management (IAM)</td>
+                    <td>Use Multi-Factor Authentication (MFA), enforce role-based access controls, and apply the principle of least privilege to limit access to only those who need it.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Backup and Redundancy</td>
+                    <td>Regularly back up data and use geographical redundancy to ensure that data is safe in case of hardware failure, natural disasters, or other incidents.</td>
+                  </tr>
+                  <tr>
+                    <td>Firewalls and Security Groups</td>
+                    <td>Implement virtual cloud firewalls and security groups to filter inbound and outbound traffic to and from cloud resources, protecting them from unauthorized access.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Loss Prevention (DLP)</td>
+                    <td>Use DLP tools to scan for sensitive data and prevent unauthorized sharing or exposure of such data, especially personal information.</td>
+                  </tr>
+                  <tr>
+                    <td>Security Monitoring and Logging</td>
+                    <td>Set up monitoring and logging for all cloud resources to detect suspicious activity. Use SIEM systems for centralized log management and threat analysis.</td>
+                  </tr>
+                  <tr>
+                    <td>Security Patches and Updates</td>
+                    <td>Ensure both cloud infrastructure and software applications are regularly updated with the latest security patches to mitigate vulnerabilities.</td>
+                  </tr>
+                  <tr>
+                    <td>Secure APIs</td>
+                    <td>Use strong API security practices, including OAuth, API keys, rate-limiting, and continuous monitoring to protect cloud-based APIs from attacks.</td>
+                  </tr>
+                  <tr>
+                    <td>Network Segmentation</td>
+                    <td>Use Virtual Private Cloud (VPC) and private endpoints to segment sensitive resources from the rest of the network, enhancing security by isolating critical components.</td>
+                  </tr>
+                  <tr>
+                    <td>Security Best Practices</td>
+                    <td>Conduct regular security audits, ensure compliance with industry standards and regulations (e.g., GDPR, HIPAA), and provide security awareness training for employees.</td>
+                  </tr>
+                  <tr>
+                    <td>Advanced Threat Protection</td>
+                    <td>Leverage machine learning-based security tools to detect anomalous behavior and advanced threats such as ransomware or malware.</td>
+                  </tr>
+                  <tr>
+                    <td>Incident Response Plan</td>
+                    <td>Have a clear incident response plan for data breaches or security incidents, including identifying, containing, and recovering from the breach. Ensure you have a disaster recovery plan in place.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+
+            <div class="q">Disaster Recovery</div>
+            <div class="a">
+              <table>
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Description</th>
+                        <th>Tools/Services</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. Data Backup Strategies</td>
+                        <td>Use Google Cloud Storage for backups and automatic snapshots for persistent disks and Cloud SQL. Ensure redundancy and availability with multi-region buckets.</td>
+                        <td>Cloud Storage, Compute Engine Snapshots, Cloud SQL Backups, BigQuery Exports</td>
+                    </tr>
+                    <tr>
+                        <td>2. Disaster Recovery Strategies</td>
+                        <td>Set up multi-region replication for critical resources. Use Managed Instance Groups (MIGs) for automatic scaling. Ensure automated failover with global load balancing.</td>
+                        <td>Global Load Balancing, Managed Instance Groups (MIGs), Cloud VPN</td>
+                    </tr>
+                    <tr>
+                        <td>3. RPO and RTO</td>
+                        <td>Define Recovery Point Objective (RPO) and Recovery Time Objective (RTO) based on backup frequency and recovery time. Automate recovery for minimal downtime.</td>
+                        <td>Compute Engine, Cloud SQL, Global Load Balancer</td>
+                    </tr>
+                    <tr>
+                        <td>4. Automated Failover and Backup Verification</td>
+                        <td>Ensure automated failover using Global Load Balancer and periodically verify backup data. Implement failover tests and recovery drills.</td>
+                        <td>Cloud Monitoring, Cloud Logging, Global Load Balancer</td>
+                    </tr>
+                    <tr>
+                        <td>5. Data Encryption and Compliance</td>
+                        <td>Encrypt backup data in transit and at rest. Follow industry compliance standards (e.g., GDPR, HIPAA) to ensure security and regulatory adherence.</td>
+                        <td>Cloud Storage Encryption, IAM, Compliance Tools</td>
+                    </tr>
+                    <tr>
+                        <td>6. Testing and Documentation</td>
+                        <td>Regularly test the disaster recovery plan and maintain documentation of the recovery steps. Use cloud resources to manage and automate backup verification.</td>
+                        <td>Cloud Documentation, Cloud Deployment Manager</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+
+            <div class="q">Disk - Persistent vs Local </div>
+            <div class="a">
+              <table border="1" cellpadding="8" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Feature</th>
+                    <th>Persistent Disk</th>
+                    <th>Local SSD</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Durability</td>
+                    <td>Highly durable and redundant (data is stored across multiple locations).</td>
+                    <td>Temporary storage — data is lost if the VM is stopped or crashes.</td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td>Good for general workloads with steady performance.</td>
+                    <td>Very high IOPS and low latency — ideal for high-performance applications.</td>
+                  </tr>
+                  <tr>
+                    <td>Persistence</td>
+                    <td>Data persists across VM restarts and stops.</td>
+                    <td>Data does NOT persist if the VM is stopped or restarted.</td>
+                  </tr>
+                  <tr>
+                    <td>Cost</td>
+                    <td>Cost-effective for long-term storage needs.</td>
+                    <td>More expensive, best for short-term, high-speed access needs.</td>
+                  </tr>
+                  <tr>
+                    <td>Usage</td>
+                    <td>Databases, backups, VM boot disks, etc.</td>
+                    <td>In-memory databases, caches, high-speed scratch space.</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            </div>
+
+            <div class="q">Eucalyptus </div>
+            <div class="a">
+              Eucalyptus is an open-source platform for building cloud computing environments. It supports public, private, and hybrid clouds and helps connect applications to computing resources, offering a flexible IaaS solution.
+
+            </div>
+
+            <div class="q">Elasticity and Scalability </div>
+            <div class="a">
+              Elasticity refers to the ability of a system to automatically adjust its resources. It's dynamic and automatic. </br>
+              Scalability is more about the system's capacity to grow in response to increased demand  without impacting performance.
+            </div>
+
+            <div class="q">🔥 Firewall</div>
+            <div class="a">
+              <h1>What is a Firewall Rule in GCP?</h1>
+
+              <p>A <strong>firewall rule</strong> in Google Cloud Platform (GCP) is a set of conditions used to control the inbound and outbound traffic to and from <strong>Virtual Machine (VM) instances</strong> within a <strong>VPC (Virtual Private Cloud)</strong> network.</p>
+            
+              <h2>Key Points:</h2>
+              <div class="key-points">
+                <ul>
+                  <li><strong>Traffic Control:</strong> Firewall rules control which traffic is allowed or denied to VM instances based on defined parameters like IP address, port, and protocol.</li>
+                  <li><strong>Direction:</strong> Rules apply to either incoming traffic (<em>ingress</em>) or outgoing traffic (<em>egress</em>).</li>
+                  <li><strong>Scope:</strong> Can be applied to specific instances or all instances in a network.</li>
+                  <li><strong>Evaluation:</strong> GCP evaluates the rules top-down; the first matching rule is applied.</li>
+                </ul>
+              </div>
+            
+              <h2>Common Components of Firewall Rules:</h2>
+              <ul>
+                <li><strong>Source/Destination IP:</strong> Defines the source or destination IP addresses allowed for traffic.</li>
+                <li><strong>Ports and Protocols:</strong> Specifies which ports (e.g., 80, 443) and protocols (e.g., TCP, UDP) are allowed.</li>
+                <li><strong>Action:</strong> Can be <strong>allow</strong> or <strong>deny</strong> traffic matching the rule.</li>
+                <li><strong>Priority:</strong> Each rule has a priority number; lower numbers have higher priority.</li>
+              </ul>
+            
+              <h2>Example:</h2>
+              <p>A firewall rule that allows HTTP traffic (port 80) from any source (0.0.0.0/0) to your VMs would look like this:</p>
+              <div class="key-points">
+                <ul>
+                  <li><strong>Source IP Range:</strong> 0.0.0.0/0 (any IP)</li>
+                  <li><strong>Allowed Protocol/Port:</strong> TCP port 80</li>
+                  <li><strong>Action:</strong> Allow</li>
+                </ul>
+              </div>
+            
+              <h2>How It Works:</h2>
+              <p>When a request is made to a VM instance, the firewall rule is evaluated based on the source and destination IP addresses, protocol, and port. If the rule matches and allows the traffic, it proceeds to the VM. Otherwise, the traffic is blocked.</p>
+            
+              <p><strong>Note:</strong> This control is essential for securing cloud-based resources and ensuring that only authorized traffic reaches the VM instances.</p>
+
+            </div>
+
+
+            
+            
+
+            <div class="q">GKE Autopilot </div>
+            <div class="a">
+              GKE Autopilot is a mode of operation in Google Kubernetes Engine (GKE) where Google Cloud fully manages the underlying infrastructure, including nodes, networking, and scaling.
+            </div>
+
+
+
+
+
+            <div class="q">Infrastructure as Code (IaC)</div>
+            <div class="a">
+              <h1>Infrastructure as Code (IaC) in Google Cloud</h1>
+    <p>IaC is the practice of managing cloud infrastructure using code instead of manual processes. It automates the provisioning of resources in a consistent and repeatable manner.</p>
+
+    <h2>Key Benefits:</h2>
+    <ul>
+        <li>Automation</li>
+        <li>Consistency</li>
+        <li>Scalability</li>
+        <li>Reusability</li>
+        <li>Disaster Recovery</li>
+    </ul>
+
+    <h2>IaC Tools in GCP:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Tool</th>
+                <th>Description</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Google Cloud Deployment Manager</td>
+                <td>Native GCP tool for defining and managing resources using YAML, JSON, or Python.</td>
+                <td>Use for provisioning GCP services like Compute Engine and Storage.</td>
+            </tr>
+            <tr>
+                <td>Terraform</td>
+                <td>Open-source IaC tool for multi-cloud environments, using HCL language.</td>
+                <td>Provision resources like GKE, Firewalls, and VPC networks.</td>
+            </tr>
+            <tr>
+                <td>Ansible</td>
+                <td>Configuration management and IaC tool that is agentless.</td>
+                <td>Automate setup of resources like VMs and network configurations in GCP.</td>
+            </tr>
+            <tr>
+                <td>Pulumi</td>
+                <td>IaC tool that uses general-purpose programming languages (e.g., TypeScript, Python).</td>
+                <td>Use for managing GCP resources programmatically.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Example: Terraform for GCP</h2>
+    <pre>
+provider "google" {
+  credentials = file("<YOUR-CREDENTIALS-FILE>.json")
+  project     = "<YOUR-PROJECT-ID>"
+  region      = "us-central1"
+}
+
+resource "google_compute_instance" "default" {
+  name         = "instance-1"
+  machine_type = "f1-micro"
+  zone         = "us-central1-a"
+  boot_disk {
+    initialize_params {
+      image = "debian-9-stretch-v20190904"
+    }
+  }
+  network_interface {
+    network = "default"
+    access_config {}
+  }
+}
+    </pre>
+
+    <p>IaC allows you to automate, scale, and manage cloud resources in a consistent and repeatable way, ensuring optimal infrastructure management in GCP.</p>
+
+
+            </div>
+
+            <div class="q">IaaS, PaaS, SaaS - G-cloud levels</div>
+            <div class="a">
+            <table border="1">
+              <tr>
+                <th>Tier</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td><strong>IaaS</strong> (Infrastructure as a Service)</td>
+                <td>The basic building block of cloud computing, providing virtualized hardware resources.</td>
+              </tr>
+              <tr>
+                <td><strong>PaaS</strong> (Platform as a Service)</td>
+                <td>Provides infrastructure and development tools for building, testing, and deploying applications.</td>
+              </tr>
+              <tr>
+                <td><strong>SaaS</strong> (Software as a Service)</td>
+                <td>Delivers software applications over the internet, managed by the provider.</td>
+              </tr>
+              <tr>
+                <td><strong>BPO</strong> (Business Process Outsourcing)</td>
+                <td>Outsourcing business operations and tasks to third parties, often supported by cloud technologies.</td>
+              </tr>
+            </table>
+
+            </div>
+
+
+            
+
+
+            <div class="q">Google Cloud Software Development Kit</div>
+            <div class="a">
+              Collection of tools that allows to manage, configure and interact with G-Cloud resources.
+              Command-line tools like gcloud, gsutil, and bq for managing Compute Engine, Cloud Storage, BigQuery, and more.
+
+            </div>
+
+
+
+
+            <div class="q">Managed Instance Groups (MIGs)</div>
+            <div class="a">
+              <p>
+                service that allows you to deploy and manage a group of identical virtual machine (VM) instances.
+              </p>
+              <table border="1">
+                <tr>
+                  <th>Feature</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td>Autoscaling</td>
+                  <td>Automatically adjusts the number of VM instances in response to load changes.</td>
+                </tr>
+                <tr>
+                  <td>Health Checks</td>
+                  <td>Monitors the health of instances and replaces unhealthy ones automatically.</td>
+                </tr>
+                <tr>
+                  <td>Rolling Updates</td>
+                  <td>Gradual update of instances to ensure high availability during updates.</td>
+                </tr>
+                <tr>
+                  <td>Instance Templates</td>
+                  <td>Ensures consistency by creating new instances based on predefined configurations.</td>
+                </tr>
+                <tr>
+                  <td>Load Balancing</td>
+                  <td>Integrated with Google Cloud Load Balancing to distribute traffic evenly across instances.</td>
+                </tr>
+                <tr>
+                  <td>Usage</td>
+                  <td>Ideal for applications requiring horizontal scaling and high availability (e.g., web apps).</td>
+                </tr>
+              </table>
+              
+            </div>
+
+            
+
+
+
+            <div class="q">Object</div>
+            <div class="a">
+              Object is the basic unit of data that you store. </br></br>
+              Object =  file data (your actual content: images, videos, documents, etc.) + metadata</br>
+
+              <ul>
+                <li><strong>Immutable:</strong> Once an object is created, it cannot be modified — you must upload a new version if you want changes.</li>
+                <li><strong>Metadata:</strong> Includes standard properties (like size, type, creation date) and optional custom metadata you define.</li>
+                <li><strong>Access:</strong> Controlled via Identity and Access Management (IAM) or bucket-level permissions.</li>
+                <li><strong>Object Versioning:</strong> If enabled, GCS keeps old versions of objects when they are overwritten or deleted.</li>
+                <li><strong>Public or Private:</strong> Objects can be made publicly accessible or kept private depending on your needs.</li>
+              </ul>
+            </div>
+
+            <div class="q">Pub/Sub</div>
+            <div class="a">
+              <h1>What is Google Cloud Pub/Sub?</h1>
+                  <p><strong>Google Cloud Pub/Sub</strong> is a real-time messaging service for sending and receiving messages between independent applications.</p>
+
+                  <h2>How it Works:</h2>
+                  <ul>
+                    <li><strong>Publishers</strong> send messages to a <strong>topic</strong>.</li>
+                    <li><strong>Subscribers</strong> receive messages from that topic.</li>
+                    <li>Pub/Sub ensures <strong>reliable delivery</strong> of messages, even if services are temporarily unavailable.</li>
+                    <li>It supports <strong>asynchronous communication</strong> between systems.</li>
+                  </ul>
+
+                  <h2>Key Features:</h2>
+                  <ul>
+                    <li>Real-time event distribution</li>
+                    <li>Scalable to millions of messages per second</li>
+                    <li>Automatic load balancing</li>
+                    <li>Durable message storage</li>
+                  </ul>
+
+                  <h1>How to Set Up Google Cloud Pub/Sub</h1>
+
+                  <h2>Step-by-Step:</h2>
+                  <ol>
+                    <li><strong>Enable Pub/Sub API</strong>
+                      <ul>
+                        <li>Go to the <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>.</li>
+                        <li>Enable the <strong>Pub/Sub API</strong> for your project.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Create a Topic</strong>
+                      <ul>
+                        <li>Navigate to <strong>Pub/Sub</strong> section.</li>
+                        <li>Click on <strong>Create Topic</strong>.</li>
+                        <li>Give it a name and click <strong>Create</strong>.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Create a Subscription</strong>
+                      <ul>
+                        <li>Select the created Topic.</li>
+                        <li>Click <strong>Create Subscription</strong>.</li>
+                        <li>Choose type (e.g., <strong>Pull</strong> or <strong>Push</strong>).</li>
+                        <li>Configure options and save.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Publish Messages</strong>
+                      <ul>
+                        <li>Use Console, <code>gcloud</code> CLI, or SDK to publish a message to your topic.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Receive Messages</strong>
+                      <ul>
+                        <li>Subscribers will automatically receive the messages based on the subscription settings.</li>
+                      </ul>
+                    </li>
+                  </ol>
+
+            </div>
+
+
+            <div class="q">Object Versioning</div>
+            <div class="a">
+              - Keeps multiple versions of an object (file). Every time an object is modified or overwritten,  a new version is created while the previous versions are preserved. </br>
+
+              - Enables data recovery, accidental deletions and tracking changes over time
+            </div>
+
+
+            <div class="q">Region vs Zone</div>
+            <div class="a">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Term</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Region</td>
+                    <td>A geographic area consisting of multiple zones. It allows resources to be dispersed worldwide for improved fault tolerance and high availability.</td>
+                  </tr>
+                  <tr>
+                    <td>Zone</td>
+                    <td>A separate data center within a region. Zones provide redundancy and high availability for resources by distributing them across multiple locations within a region.</td>
+                  </tr>
+                </tbody>
+              </table>              
+            </div>
+
+            <div class="q">Resources hierarchy</div>
+            <div class="a">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Level</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Organization</td>
+                    <td>Top-level entity representing a company (optional).</td>
+                  </tr>
+                  <tr>
+                    <td>Folders</td>
+                    <td>Group projects by department, team, or function (optional).</td>
+                  </tr>
+                  <tr>
+                    <td>Projects</td>
+                    <td>Contain all resources; act as the main unit for billing and permissions.</td>
+                  </tr>
+                  <tr>
+                    <td>Resources</td>
+                    <td>Individual services like VMs, storage buckets, databases, etc.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h4>Project</h4>
+
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                    <th>Usage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Project ID</td>
+                    <td>A human-readable identifier chosen by the user when creating the project.</td>
+                    <td>my-awesome-project-123</td>
+                    <td>Used in API calls, billing, and user-facing interfaces.</td>
+                  </tr>
+                  <tr>
+                    <td>Project Number</td>
+                    <td>A system-generated unique identifier assigned by Google Cloud.</td>
+                    <td>123456789012</td>
+                    <td>Used internally by Google Cloud services.</td>
+                  </tr>
+                  <tr>
+                    <td>Project Name</td>
+                    <td>A user-defined descriptive name for the project.</td>
+                    <td>My Awesome Project</td>
+                    <td>Used in UI for identification and display purposes.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Project Type</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Compute Projects</td>
+                    <td>Use services like Compute Engine and Kubernetes Engine for running applications and managing infrastructure.</td>
+                  </tr>
+                  <tr>
+                    <td>Storage Projects</td>
+                    <td>Use services like Cloud Storage and Bigtable to store and manage data.</td>
+                  </tr>
+                  <tr>
+                    <td>Data Analytics Projects</td>
+                    <td>Leverage tools like BigQuery and Dataflow to process, analyze, and gain insights from large datasets.</td>
+                  </tr>
+                  <tr>
+                    <td>Machine Learning Projects</td>
+                    <td>Utilize AI Platform and AutoML to build, train, and deploy machine learning models.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Step</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Go to <strong>console.cloud.google.com</strong> to log into the Google Cloud Console.</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Select <strong>"New Project"</strong> from the top menu.</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Select a billing account, enter the project name, and specify the location or organization.</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Click <strong>"Create"</strong> to finish setting up the new project.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+              
+              
+              
+            </div>
+
+            <div class="q">SaaS</div>
+            <div class="a">
+              SaaS (Software as a Service) is a cloud computing model where software applications are delivered over the internet.
+
+Instead of installing and maintaining software locally, users access it through a web browser. The provider hosts, maintains, updates, and secures the application. </br>
+
+Examples: Gmail, Google Docs, Salesforce, Dropbox.
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Deployment Model</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Public SaaS</td>
+                    <td>A single version of the application is used by multiple customers (multi-tenant). Hosted and managed by the SaaS provider. Example: Gmail.</td>
+                  </tr>
+                  <tr>
+                    <td>Private SaaS</td>
+                    <td>A dedicated instance of the application for a single organization. Offers more control and customization. Example: SaaS apps deployed in a company's private cloud.</td>
+                  </tr>
+                  <tr>
+                    <td>Hybrid SaaS</td>
+                    <td>Combines public and private SaaS features. Some components run in a public cloud, while sensitive data or services are handled privately.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+
+            <div class="q">Serverless computing</div>
+            <div class="a">
+              Cloud computing model where the cloud provider automatically manages the infrastructure — servers, scaling, and maintenance — so that developers can focus only on writing code.
+
+
+
+            </div>
+   
+            <div class="q">SSH tunneling</div>
+            <div class="a">
+
+<table>
+  <thead>
+      <tr>
+          <th>Use Case</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Secure Remote Access</td>
+          <td>Establish a secure connection to virtual machines and databases within GCP using SSH tunneling, ensuring safe remote access.</td>
+      </tr>
+      <tr>
+          <td>Proxying Traffic</td>
+          <td>SSH tunneling can be used to proxy traffic between a local computer and resources hosted on GCP, such as Kubernetes clusters.</td>
+      </tr>
+      <tr>
+          <td>Database Connection</td>
+          <td>SSH tunneling allows developers to securely connect to databases like Cloud SQL from their local development environments.</td>
+      </tr>
+      <tr>
+          <td>Bypassing Firewalls</td>
+          <td>It enables access to internal GCP resources from external networks by bypassing firewalls while maintaining security.</td>
+      </tr>
+      <tr>
+          <td>Secure File Transfer</td>
+          <td>Using SCP or SFTP with SSH tunneling, users can securely transfer files between local machines and GCP instances.</td>
+      </tr>
+  </tbody>
+</table>
+            </div>
+
+
+            <div class="q">Terraform</div>
+            <div class="a">
+              Permite é automatizar toda a criação e o gerenciamento de recursos dentro do Google Cloud — sem precisar usar o console web ou fazer tudo na mão.
+            <table border="1" cellpadding="5" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>What Terraform Enables on GCP</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Create Virtual Machines</td>
+                  <td>Provision VMs on Compute Engine automatically.</td>
+                </tr>
+                <tr>
+                  <td>Manage Networks and Firewalls</td>
+                  <td>Configure VPCs, subnets, and firewall rules.</td>
+                </tr>
+                <tr>
+                  <td>Provision Databases</td>
+                  <td>Create and manage Cloud SQL instances.</td>
+                </tr>
+                <tr>
+                  <td>Setup Kubernetes Clusters</td>
+                  <td>Deploy clusters using Google Kubernetes Engine (GKE).</td>
+                </tr>
+                <tr>
+                  <td>Configure Cloud Storage</td>
+                  <td>Create and manage Storage buckets.</td>
+                </tr>
+                <tr>
+                  <td>Manage IAM</td>
+                  <td>Control user roles and permissions.</td>
+                </tr>
+                <tr>
+                  <td>Automate Cloud Services</td>
+                  <td>Deploy functions, BigQuery datasets, and more.</td>
+                </tr>
+              </tbody>
+            </table>
+</div>            
+
+            <div class="q">Stackdriver</div>
+            <div class="a">
+              <p><strong>Stackdriver</strong> (now called <strong>Google Cloud Operations Suite</strong>) provides monitoring, logging, and diagnostics for applications running on Google Cloud and other environments.</p>
+
+              <h2>How to Use Stackdriver</h2>
+              <ul>
+                <li><strong>Monitoring:</strong>
+                  <ul>
+                    <li>Tracks performance of VMs, databases, applications, and more.</li>
+                    <li>Create dashboards to visualize metrics.</li>
+                    <li>Set up alerts to get notified when resources cross thresholds (e.g., CPU usage above 80%).</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Logging:</strong>
+                  <ul>
+                    <li>Collects and stores logs from GCP services and VMs.</li>
+                    <li>Use <strong>Logs Explorer</strong> to search, filter, and analyze logs.</li>
+                    <li>Create log-based metrics or alerts directly from logs.</li>
+                  </ul>
+                </li>
+              </ul>
+            
+              <h2>Steps to Set Up Stackdriver</h2>
+              <ol>
+                <li>Go to the <a href="https://console.cloud.google.com/monitoring">GCP Monitoring Console</a>.</li>
+                <li>Enable Monitoring and Logging APIs.</li>
+                <li>Install Stackdriver agents (optional for detailed VM monitoring).</li>
+                <li>Create alert policies and custom dashboards as needed.</li>
+              </ol>
+            
+              <h2>Benefits</h2>
+              <ul>
+                <li>Real-time monitoring and troubleshooting.</li>
+                <li>Centralized logging across projects and services.</li>
+                <li>Better uptime with proactive alerts.</li>
+              </ul>
+            
+            </div>
+
+            
+            
+
+            
+
+
+            
+            
+            <div class="q">Instance</div>
+            <div class="a">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>Definition of "Instance"</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Google Compute Engine (GCE)</td>
+                    <td>A virtual machine (VM) running on Google Cloud with customizable CPU, memory, and storage.</td>
+                  </tr>
+                  <tr>
+                    <td>Google Kubernetes Engine (GKE)</td>
+                    <td>A node or a running container within a Kubernetes cluster.</td>
+                  </tr>
+                  <tr>
+                    <td>Other Google Cloud Services</td>
+                    <td>An individual unit or resource, like a running instance of a database or cloud function.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+
+
+            <div class="q">Uptime Checks</div>
+            <div class="a">
+              <table border="1">
+                <tr>
+                  <th>Concept</th>
+                  <th>Description</th>
+                </tr>
+                <tr>
+                  <td><strong>Purpose</strong></td>
+                  <td>To monitor the availability and health of services or resources on GCP, simulating real-world user requests.</td>
+                </tr>
+                <tr>
+                  <td><strong>Frequency</strong></td>
+                  <td>Configured to run at specified intervals (e.g., every minute) to ensure continuous monitoring.</td>
+                </tr>
+                <tr>
+                  <td><strong>Alerting</strong></td>
+                  <td>Integrated with Cloud Monitoring to notify users when a service becomes unreachable or fails.</td>
+                </tr>
+                <tr>
+                  <td><strong>Benefits</strong></td>
+                  <td>
+                    <ul>
+                      <li>Proactive Issue Detection</li>
+                      <li>Automated Notifications</li>
+                      <li>Multi-location Checks</li>
+                      <li>Integration with Cloud Monitoring</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Use Case Example</strong></td>
+                  <td>Monitor the availability of a website, ensuring immediate notifications if the site goes down.</td>
+                </tr>
+                <tr>
+                  <td><strong>Integration</strong></td>
+                  <td>Part of Cloud Monitoring, allowing seamless monitoring and logging of services.</td>
+                </tr>
+              </table>
+            </div>
+
+
+            <div class="q"> VM Types</div>
+            <div class="a">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>VM Type</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                    <th>Pricing</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>On-Demand VMs</td>
+                    <td>Traditional VMs that are billed for the time they run. No duration limitation.</td>
+                    <td>Ideal for workloads that require high availability and cannot be interrupted.</td>
+                    <td>More expensive than Preemptible VMs, billed for active usage.</td>
+                  </tr>
+                  <tr>
+                    <td>Preemptible VMs</td>
+                    <td>Short-lived VMs that can be terminated by Google Cloud if needed.</td>
+                    <td>Perfect for fault-tolerant workloads like batch processing and big data analysis.</td>
+                    <td>Cheaper, but can be interrupted at any time with a 30-second warning.</td>
+                  </tr>
+                  <tr>
+                    <td>Spot VMs</td>
+                    <td>Similar to Preemptible VMs but may offer more flexible termination policies.</td>
+                    <td>Useful for highly fault-tolerant workloads, like data processing jobs.</td>
+                    <td>Cheaper than On-Demand VMs, but can be interrupted at any time.</td>
+                  </tr>
+                  <tr>
+                    <td>Committed Use VMs</td>
+                    <td>VMs offered at a discount in exchange for a commitment to use them for 1 or 3 years.</td>
+                    <td>Suitable for long-term, predictable workloads.</td>
+                    <td>Discounted compared to On-Demand VMs, but requires a long-term commitment.</td>
+                  </tr>
+                  <tr>
+                    <td>Reserved VMs</td>
+                    <td>Varying levels of resource reservation for longer-term use, similar to Committed Use VMs.</td>
+                    <td>Best for production environments with a predictable resource need.</td>
+                    <td>Discounted compared to On-Demand VMs, with resource reservation.</td>
+                  </tr>
+                  <tr>
+                    <td>N1, N2, E2, C2 (VM Families)</td>
+                    <td>VMs optimized for different workloads such as general-purpose, compute-intensive, budget, and high-performance computing.</td>
+                    <td>Depending on your needs for CPU, memory, and network resources, you can choose the appropriate VM family.</td>
+                    <td>Varies depending on the family, offering different price points and performance options.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+
+            <div class="q">Vertex AI</div>
+            <div class="a">
+              Vertex AI is a managed machine learning platform on Google Cloud that simplifies the ML lifecycle. It provides tools for building, training, deploying, and managing models. Features include AutoML, pre-built models, model deployment, and scalable training. Vertex AI integrates with other Google Cloud services, making it easier to manage machine learning workflows from start to finish.
+            </div>
+
+
+            <div class="q"> Proactive vs Reactive Security Practices</div>
+            <div class="a">
+              <h2>🛡️ Proactive Security Practices</h2>
+              <p><strong>Goal:</strong> Prevent incidents before they occur.</p>
+              <ul>
+                <li><strong>IAM Least Privilege:</strong> Only grant the minimum necessary permissions (e.g., use <code>Storage Viewer</code> instead of <code>Editor</code>).</li>
+                <li><strong>Continuous scanning with SCC:</strong> Detect misconfigurations like open firewalls or public buckets before they’re exploited.</li>
+                <li><strong>VPC Service Controls:</strong> Restrict data movement to reduce the risk of data exfiltration.</li>
+                <li><strong>Binary Authorization (for GKE):</strong> Enforce signed and verified container images only.</li>
+                <li><strong>Organization Policies:</strong> Prevent creation of insecure resources (e.g., public buckets, unmanaged disks).</li>
+                <li><strong>Vulnerability scanning:</strong> Scan container images for CVEs before deployment using Container Analysis.</li>
+                <li><strong>CI/CD security gates:</strong> Block code with vulnerabilities or policy violations from reaching production.</li>
+              </ul>
+            
+              <h2>🚨 Reactive Security Practices</h2>
+              <p><strong>Goal:</strong> Detect and respond to incidents when they occur.</p>
+              <ul>
+                <li><strong>SCC finding triggers automation:</strong> Use Pub/Sub and Cloud Functions to isolate VMs or remove risky firewall rules automatically.</li>
+                <li><strong>Incident response runbooks:</strong> Predefined steps for responding to security events (e.g., disable access, notify teams, collect logs).</li>
+                <li><strong>Event Threat Detection:</strong> Real-time detection of malware, port scanning, and other anomalies in GCP logs.</li>
+                <li><strong>Log analysis and forensics:</strong> Use tools like Chronicle or BigQuery to investigate suspicious activity after an incident.</li>
+                <li><strong>Audit logs and Access Transparency:</strong> Track who did what, when, and where inside your environment.</li>
+                <li><strong>Backup and disaster recovery:</strong> Recover compromised or lost data (e.g., after a ransomware attack).</li>
+              </ul>
+            
+            </div>
+
+
+
+
+          
+
+    
+
+        
+
+            </div>
+        </div>
+    </div>
+    <script>
+      // Seleciona todas as perguntas com a classe .q
+      const questions = document.querySelectorAll('.q');
+
+      // Para cada pergunta, adiciona o evento de clique
+      questions.forEach((question) => {
+        question.addEventListener('click', function() {
+          // Encontra a resposta relacionada (a próxima div com a classe .a)
+          const answer = this.nextElementSibling;
+          
+          // Alterna a visibilidade da resposta
+          if (answer && answer.classList.contains('a')) {
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+          }
+        });
+      });
+      </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

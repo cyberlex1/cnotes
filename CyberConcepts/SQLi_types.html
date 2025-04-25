@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="custom-menu">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class="fa fa-bars"></i>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+    </div>
+            <div class="p-4 pt-5">
+      <ul class="list-unstyled components mb-5">
+
+        <li class="active">
+            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+            <ul class="collapse list-unstyled" id="cyberArticles">
+            <li>
+              <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+              <li><a href="General_Questions.html">General Questions</a></li>
+
+            </li>
+        
+            </ul>
+          </li>
+
+          <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+          <ul class=" list-unstyled" id="cyberConcepts">
+            <li><a href="AD Components.html">AD Components</a></li>
+            <li><a href="AD_Authentication.html">AD Authentication</a></li>
+            <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+            <li><a href="AD_Attacks.html">AD Attacks</a></li>
+        </ul>
+          </li>
+
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+          <ul class=" list-unstyled" id="cyberConcepts">
+            <li><a href="AST_Tools.html">AS Tools</a></li>
+            <li><a href="Cookies.html">Cookies</a></li>
+            <li><a href="Concepts.html">Concepts</a></li>
+            <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+            <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+            <li><a href="Firewall.html">Firewall types</a></li>
+            <li><a href="HTTP_headers.html">HTTP headers</a></li>
+            <li><a href="Linux Commands.html">Linux Commands</a></li>
+            <li><a href="OSI model.html">OSI model</a></li>
+            <li><a href="Pentest.html">Pentest</a></li>
+            <li><a href="Protocols.html">Protocols</a></li>
+            <li><a href="SQLi_types.html">SQLi types</a></li>
+            <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+            <li><a href="XSS_types.html">XSS types</a></li>
+            <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+            <li><a href="Frameworks.html">Frameworks</a></li>
+            <li><a href="my_attacks.html">My Attacks Examples</a></li>
+        </ul>
+          </li>
+
+        <li class="active">
+            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+            <ul class=" list-unstyled" id="cyberArticles">
+            <li>
+              <li><a href="Authentication_Types.html">Authentication Types</a></li>
+              <li><a href="MFA.html">MFA</a></li>
+              <li><a href="JWT.html">JWT</a></li>
+              <li><a href="SAML.html">SAML</a></li>
+              <li><a href="OAuth.html">OAuth</a></li>
+            </li>
+  
+            </ul>
+          </li>
+        </ul>
+    </nav>
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+                <h2 class="mb-4">SQLi</h2>
+                <p><strong>Parameterized queries</strong> are SQL queries where user inputs are passed as parameters rather than being directly embedded into the query string. This prevents SQL injection by treating user input as data, not executable code. It ensures the query structure remains safe and intact.</p>
+                <!-- Table of SQLi Types -->
+
+                <img src="images/sqli_types.jpg" alt="Description of Image" width="500" height="auto">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SQLi Type</th>
+                            <th>Description</th>
+                            <th>Mitigation</th>
+                            <th>How to Detect</th>
+                            <th>Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>In-Band SQL Injection</td>
+                            <td>attacker retrieves data directly from the error messages or query results.</td>
+                            <td>- Use <b>parameterized queries</b> .<br>- Disable detailed error messages in production.</td>
+                            <td>- Unexpected behavior or errors in the application.<br>- Form fields or URL parameters.</td>
+                            <td><code>SELECT * FROM users WHERE username = 'admin' AND password = 'password';</code><br><code>Payload: admin' OR 1=1 --</code></td>
+                        </tr>
+                        <tr>
+                            <td>Blind SQL Injection</td>
+                            <td>The attacker doesn't see the query results directly but can infer data through the application’s response time or behavior.</td>
+                            <td>- Use <b>parameterized queries</b> .<br>- Implement <b>error handling</b> that does not reveal details.</td>
+                            <td>- Detect by noticing delays or changes in application behavior (e.g., different response times based on valid/invalid input).</td>
+                            <td><code>SELECT * FROM users WHERE username = 'admin' AND password = 'password';</code><br><code>admin' AND 1=1 --</code></td>
+                        </tr>
+                        <tr>
+                            <td>Union-based SQL Injection</td>
+                            <td> <code>UNION</code> operator to combine the results of multiple queries, allowing data extraction.</td>
+                            <td>- Use <b>parameterized queries</b>.<br>- Restrict database privileges for users.<br>- Implement proper input validation.</td>
+                            <td>- Responses from the application that include unexpected data.<br>- Tools like Burp Suite or SQLMap can automate detection.</td>
+                            <td><code>SELECT id, name FROM users WHERE username = 'admin' UNION SELECT username, password FROM admins;</code></td>
+                        </tr>
+                        <tr>
+                            <td>Time-based Blind SQL Injection</td>
+                            <td>The attacker can infer information based on the time it takes the application to respond, using <code>SLEEP()</code> or similar functions to delay responses.</td>
+                            <td>- Use <b>parameterized queries</b>.<br>- Implement proper error handling and timeouts for database operations.</td>
+                            <td>- Detect by measuring response times for queries that include <code>SLEEP()</code> or other time delays.<br>- Compare response time differences between queries.</td>
+                            <td><code>SELECT * FROM users WHERE username = 'admin' AND password = 'password' AND IF(1=1, SLEEP(5), 0);</code></td>
+                        </tr>
+                        <tr>
+                            <td>Out-of-Band SQL Injection</td>
+                            <td>The attacker uses an external server to retrieve data through the database, leveraging functions like <code>LOAD_FILE</code> or <code>xp_cmdshell</code>.</td>
+                            <td>- Use <b>firewalling</b> and <b>network restrictions</b>.<br>- Disable dangerous database functions like <code>xp_cmdshell</code>.</td>
+                            <td>- Detect by monitoring network traffic for unusual outbound connections.<br>- Look for abnormal data requests or unexpected DNS lookups.</td>
+                            <td><code>SELECT LOAD_FILE('/etc/passwd');</code><br><code>SELECT * FROM users WHERE id = 1; EXEC xp_cmdshell('nslookup example.com');</code></td>
+                        </tr>
+                        <tr>
+                            <td>Second-Order SQL Injection</td>
+                            <td>The attacker injects malicious SQL into an application input field, but the query is not executed immediately, allowing time for the attacker to later trigger the SQLi.</td>
+                            <td>- Use <b>parameterized queries</b>.<br>- Regularly validate and sanitize inputs.<br>- Implement strict session and state management.</td>
+                            <td>- Detect by monitoring the application for suspicious sequences or patterns in multiple queries that eventually trigger the injection.</td>
+                            <td><code>Step 1: INSERT INTO users (username, password) VALUES ('admin', 'password123');</code><br><code>Step 2: SELECT * FROM users WHERE username = 'admin' AND password = 'password123';</code></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+    .faq {
+        width: 100%;
+        margin: 20px auto;
+      }
+
+      .q {
+        background-color: #f9f9f9;
+        cursor: pointer;
+        font-weight: normal !important;
+      }
+
+      .q b,
+      .q strong {
+        font-weight: normal !important;
+        font-style: normal !important;
+      }
+      .q::first-letter {
+        font-size: 1.5em;
+      }
+
+      .a {
+        display: none;
+        padding: 10px;
+        background-color: #f9f9f9;
+        margin: 5px 0;
+        border: 3px solid #2fc036;
+      }
+
+      .q:hover {
+        background-color: #13c307;
+      }
+      
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+                  <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
+                  <li><a href="my_attacks.html">My Attacks Examples</a></li>
+                </li>
+	            </ul>
+	          </li>
+
+
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="G-Cloud.html">G-Cloud</a></li>
+                <li><a href="ISO27001.html">ISO 27001</a></li>
+                <li><a href="Software_Arquiteturas.html">Software</a></li>
+
+                <li><a href="Others.html">Others</a></li>
+
+
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+              <ul class="list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+            
+	        </ul>
+    	</nav>
+
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+
+              <div class="q">Threat Modeling AND ISO 27001</div>
+              <div class="a">
+                <table border="1">
+                  <thead>
+                    <tr>
+                      <th>Step</th>
+                      <th>Description</th>
+                      <th>Example</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1. Define ISMS Scope</td>
+                      <td>Clarify which information assets are protected.</td>
+                      <td>Decide whether the ISMS applies to the entire company or just a department (e.g., IT).</td>
+                    </tr>
+                    <tr>
+                      <td>2. Identify Information Assets</td>
+                      <td>Identify all critical assets (data, systems, etc.).</td>
+                      <td>List assets such as customer databases, email servers, and financial data.</td>
+                    </tr>
+                    <tr>
+                      <td>3. Identify Threats & Vulnerabilities</td>
+                      <td>Analyze potential threats and weaknesses in systems.</td>
+                      <td>Look for threats like hacking, natural disasters, and software vulnerabilities.</td>
+                    </tr>
+                    <tr>
+                      <td>4. Assess Impact & Likelihood</td>
+                      <td>Evaluate the likelihood and potential impact of each threat.</td>
+                      <td>Assess the risk of a data breach in a database and its consequences on the business.</td>
+                    </tr>
+                    <tr>
+                      <td>5. Map Existing Controls</td>
+                      <td>Check the current security measures and their effectiveness.</td>
+                      <td>Evaluate existing controls like firewalls, encryption, and access control policies.</td>
+                    </tr>
+                    <tr>
+                      <td>6. Develop a Risk Treatment Plan</td>
+                      <td>Define actions and controls to reduce risks to an acceptable level.</td>
+                      <td>Implement multi-factor authentication (MFA) for sensitive systems.</td>
+                    </tr>
+                    <tr>
+                      <td>7. Document Results</td>
+                      <td>Create reports detailing the risks, impacts, and actions.</td>
+                      <td>Generate a risk report that includes identified threats, risk levels, and mitigation strategies.</td>
+                    </tr>
+                    <tr>
+                      <td>8. Review & Continuous Improvement</td>
+                      <td>Regularly review and update the threat model to adapt to new risks.</td>
+                      <td>Conduct annual reviews and update controls based on new emerging threats.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                 </div>
+
+              <div class="q">ISO 27001 VS ISO 27002 </div>
+              <div class="a">  <table border="1">
+                <tr>
+                  <th><strong>Aspect</strong></th>
+                  <th><strong>ISO 27001</strong></th>
+                  <th><strong>ISO 27002</strong></th>
+                </tr>
+                <tr>
+                  <td><strong>Purpose</strong></td>
+                  <td>Defines requirements for implementing an ISMS.</td>
+                  <td>Provides guidelines and best practices for implementing controls.</td>
+                </tr>
+                <tr>
+                  <td><strong>Document Type</strong></td>
+                  <td>Mandatory requirements (for certification).</td>
+                  <td>Guidelines (recommendations for implementation).</td>
+                </tr>
+                <tr>
+                  <td><strong>Focus</strong></td>
+                  <td>Focuses on establishing an ISMS and managing security risks.</td>
+                  <td>Focuses on how to implement specific security controls.</td>
+                </tr>
+                <tr>
+                  <td><strong>Certification</strong></td>
+                  <td>Organizations can get certified.</td>
+                  <td>No certification, acts as a guide.</td>
+                </tr>
+                <tr>
+                  <td><strong>Controls</strong></td>
+                  <td>Defines security controls to implement.</td>
+                  <td>Details on how to apply the controls effectively.</td>
+                </tr>
+                <tr>
+                  <td><strong>Target Audience</strong></td>
+                  <td>Organizations seeking certification.</td>
+                  <td>Organizations looking for best practice guidelines.</td>
+                </tr>
+              </table>
+              </div>
+
+              <div class="q">O que é?
+              </div>
+              <div class="a">
+               International standard that defines the requirements for an Information Security Management System (ISMS).</br> It helps helps organizations secure their information systematically and effectively — protecting customer data, internal processes, and critical systems. </br>
+              </div>
+
+              <div class="q">O que é novo?</div>
+              <div class="a"> 
+              - Adicionados 11 controlos de segurança:  <strong>Information security for use of cloud services</strong>, Threat Intelligence, Secure Coding, Web Filtering</br>
+              114 to 93 security controls
+              
+             </div>
+              
+             <div class="q">4 security groups - 93 </div>
+             <div class="a"> 
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Group</th>
+                    <th>Description</th>
+                    <th>Examples</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>A.5 - Organizational Controls (37)</td>
+                    <td>Governance and structure for information security.</td>
+                    <td>Policies, roles, risk management, compliance.</td>
+                  </tr>
+                  <tr>
+                    <td>A.6 - People Controls (15)</td>
+                    <td>Managing people’s roles in security.</td>
+                    <td>Training, background checks, hiring and termination.</td>
+                  </tr>
+                  <tr>
+                    <td>A.7 - Physical and Environmental Controls (12)</td>
+                    <td>Protecting physical assets and environment.</td>
+                    <td>Access control, environmental risk monitoring.</td>
+                  </tr>
+                  <tr>
+                    <td>A.8 - Technological Controls (29)</td>
+                    <td>Securing IT systems and networks.</td>
+                    <td>Access control, encryption, malware protection.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+             </div>
+
+
+             <div class="q"> Como as organizações se certificam?
+            </div>
+            <div class="a">
+              <table border="1" cellspacing="0" cellpadding="8">
+                <thead>
+                  <tr>
+                    <th>Step</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1. Internal Preparation</td>
+                    <td>Implement the ISMS (policies, risk assessment, controls, training, documentation).</td>
+                  </tr>
+                  <tr>
+                    <td>2. Internal Audit</td>
+                    <td>Perform an internal or pre-assessment audit to identify and fix issues.</td>
+                  </tr>
+                  <tr>
+                    <td>3. Choose Certification Body</td>
+                    <td>Hire an accredited organization (e.g., BSI, TÜV, DNV, SGS).</td>
+                  </tr>
+                  <tr>
+                    <td>4. Certification Audit</td>
+                    <td>Stage 1: Document review; Stage 2: Full audit of practices.</td>
+                  </tr>
+                  <tr>
+                    <td>5. Achieve Certification</td>
+                    <td>Certification granted (valid for 3 years) with annual surveillance audits.</td>
+                  </tr>
+                  <tr>
+                    <td>6. Recertification</td>
+                    <td>Full re-audit after 3 years to renew the certification.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
+
+              <div class="q"> Importância para as organizações
+              </div>
+              <div class="a">
+                <p><strong>ISO 27001:2022</strong> is important because it helps organizations <strong>protect their information</strong>, <strong>prevent security risks</strong>, and ensure compliance with <strong>data protection laws</strong>. It shows customers that the company cares about <strong>information security</strong> and improves <strong>trust</strong> and <strong>reputation</strong> of the company. Additionally, it helps avoid <strong>financial losses</strong> and ensures the company is <strong>constantly improving its security processes</strong>.</p>
+              </div>
+
+
+              <div class="q">Como fazer 27001:2022 ?</div>
+              <div class="a">
+                <ul>
+                  <li><strong>Obtain Management Commitment:</strong> Get top management's support and resources. (e.g., Present a business case showing ISO 27001 benefits)</li>
+                  <li><strong>Define the ISMS Scope:</strong> Set the boundaries of ISMS in the organization. (e.g., Apply ISMS to the IT department only)</li>
+                  <li><strong>Conduct a Risk Assessment (Threat Modeling):</strong> Identify risks to information assets. (e.g., Analyze risks like data breaches in the customer database)</li>
+                  <li><strong>Develop a Risk Treatment Plan:</strong> Plan actions to address identified risks. (e.g., Encrypt sensitive data storage)</li>
+                  <li><strong>Create Security Policies and Procedures:</strong> Define security rules and practices. (e.g., Enforce a strong password policy)</li>
+                  <li><strong>Implement Security Controls:</strong> Apply controls to mitigate identified risks. (e.g., Install firewalls and antivirus software)</li>
+                  <li><strong>Conduct Training and Awareness Programs:</strong> Educate employees about security practices. (e.g., Host workshops about phishing awareness)</li>
+                  <li><strong>Monitor and Review the ISMS:</strong> Regularly assess ISMS effectiveness. (e.g., Review security incidents quarterly)</li>
+                  <li><strong>Conduct Internal Audits:</strong> Audit ISMS compliance and performance internally. (e.g., Check if data access controls are followed)</li>
+                  <li><strong>Perform Management Review:</strong> Management evaluates ISMS and goals alignment. (e.g., Senior management reviews audit results)</li>
+                  <li><strong>Obtain ISO 27001 Certification:</strong> Get certified by an external accredited body. (e.g., Schedule an audit with a certification body)</li>
+                </ul>
+                
+                
+                
+                
+
+              </div>
+
+
+              <div class="q">Importância para o Client </div>
+              <div class="a"><ul>
+                <li><strong>Increased Client Confidence</strong> - ISO 27001 certification boosts trust in your ability to protect sensitive information, especially in sectors like healthcare, finance, and government.</li>
+                <li><strong>Faster Sales Cycles</strong> - Certification speeds up procurement processes by reducing the time spent on security questionnaires.</li>
+                <li><strong>Competitive Advantage</strong> - ISO 27001 positions your company as a leader in information security, giving you an edge over competitors.</li>
+              </ul>
+               </div>
+
+              <div class="q"> <span style="color:#c0422f"> Key Elements </span> of ISO 27001:2022
+              </div>
+              <div class="a">
+                <ul>
+                  <li><strong>ISMS</strong> - A structured approach to managing information security.</li>
+                  <li><strong>Risk Assessment</strong> - Identifying, assessing, and managing security risks.</li>
+                  <li><strong>Leadership</strong> - Active support and resources from top management.</li>
+                  <li><strong>Continual Improvement</strong> - Ongoing monitoring and enhancement of security measures.</li>
+                  <li><strong>Compliance</strong> - Adhering to legal and regulatory requirements.</li>
+                  <li><strong>Security Controls</strong> - Implementing measures like access control and encryption.</li>
+                  <li><strong>Employee Training</strong> - Educating staff on security risks and best practices.</li>
+                  <li><strong>Internal Audits</strong> - Regular audits to assess and improve the ISMS.</li>
+                  <li><strong>Documentation</strong> - Maintaining clear policies and procedures.</li>
+                </ul>
+                
+              </div>
+              <div class="q">ISO 27001: Cloud Security</div>
+              <div class="a">
+                <table border="1">
+                  <tr>
+                    <th>Control Category</th>
+                    <th>Relevant Controls for Cloud Security</th>
+                  </tr>
+                  <tr>
+                    <td>A.5 - Information Security Policies</td>
+                    <td>Define clear policies that cover cloud security.</td>
+                  </tr>
+                  <tr>
+                    <td>A.6 - Organization of Information Security</td>
+                    <td>Define roles and responsibilities for security, including for cloud services.</td>
+                  </tr>
+                  <tr>
+                    <td>A.8 - Asset Management</td>
+                    <td>Ensure that information assets in the cloud are properly classified and protected.</td>
+                  </tr>
+                  <tr>
+                    <td>A.9 - Access Control</td>
+                    <td>Implement logical access controls to protect cloud-stored data.</td>
+                  </tr>
+                  <tr>
+                    <td>A.12 - Operations Security</td>
+                    <td>Ensure the security of IT operations, including those in cloud environments.</td>
+                  </tr>
+                  <tr>
+                    <td>A.13 - Communications Security</td>
+                    <td>Protect the transmission of data to and from the cloud using encryption and secure protocols.</td>
+                  </tr>
+                  <tr>
+                    <td>A.15 - Supplier Relationships</td>
+                    <td>Ensure that cloud providers follow security controls and meet contractual security requirements.</td>
+                  </tr>
+                  <tr>
+                    <td>A.18 - Compliance</td>
+                    <td>Ensure legal and regulatory compliance for cloud data, such as GDPR and other privacy standards.</td>
+                  </tr>
+                </table>
+                
+              </div>
+
+
+              <div class="q">ISO 27001:2022 Enhance Risk Management </div>
+              <div class="a"> <ul>
+                <li><strong>Systematic Risk Assessment</strong> - Identifies risks, threats, vulnerabilities, and impacts.</li>
+                <li><strong>Risk Treatment</strong> - Defines how to manage risks through mitigation, transfer, acceptance, or avoidance.</li>
+                <li><strong>Ongoing Monitoring</strong> - Continuously reviews and adapts risk management processes to new threats.</li>
+                <li><strong>Clear Accountability</strong> - Defines roles and responsibilities for managing risks.</li>
+                <li><strong>Compliance</strong> - Ensures adherence to legal, regulatory, and contractual requirements.</li>
+                <li><strong>Security Controls</strong> - Implements specific controls like encryption and access management.</li>
+                <li><strong>Continuous Improvement</strong> - Promotes an ongoing cycle of process enhancement.</li>
+              </ul>
+
+              Organizations devem gerir o risco: 
+              <ul>
+                <li><strong>Risk Identification and Assessment</strong> - Identify threats to sensitive data and evaluate their severity and likelihood (Clause 6.1).</li>
+                <li><strong>Risk Treatment</strong> - Choose treatment options like mitigating, transferring, avoiding, or accepting risks. New options include exploiting and enhancing risks to seize opportunities.</li>
+              </ul>
+              
+              </div>
+
+
+
+              <div class="q">ISO 27001 vs GDPR</div>
+              <div class="a"><table border="1">
+                <tr>
+                  <th><strong>ISO 27001:2022 Focus</strong></th>
+                  <th><strong>GDPR Link</strong></th>
+                </tr>
+                <tr>
+                  <td><strong>Data Protection by Design and by Default</strong></td>
+                  <td>Ensures personal data is protected from the outset, aligning with GDPR’s "data protection by design and by default" principle.</td>
+                </tr>
+                <tr>
+                  <td><strong>Risk Management</strong></td>
+                  <td>Supports GDPR’s requirement for regular risk assessments to manage data protection risks.</td>
+                </tr>
+                <tr>
+                  <td><strong>Data Integrity and Confidentiality</strong></td>
+                  <td>Protects data’s accuracy and security, ensuring compliance with GDPR’s requirement for safeguarding personal data.</td>
+                </tr>
+                <tr>
+                  <td><strong>Access Control</strong></td>
+                  <td>Ensures only authorized personnel have access to personal data, as required by GDPR.</td>
+                </tr>
+                <tr>
+                  <td><strong>Incident Response and Breach Notification</strong></td>
+                  <td>Establishes processes for detecting, reporting, and responding to data breaches, in line with GDPR’s breach notification requirement.</td>
+                </tr>
+                <tr>
+                  <td><strong>Documentation and Audit Trails</strong></td>
+                  <td>Ensures records of data processing and audit trails are maintained, which is mandatory under GDPR.</td>
+                </tr>
+                <tr>
+                  <td><strong>Third-Party Risk Management</strong></td>
+                  <td>Manages third-party vendor risks, ensuring their compliance with GDPR’s data protection obligations.</td>
+                </tr>
+                <tr>
+                  <td><strong>Training and Awareness</strong></td>
+                  <td>Regular training ensures employees understand data protection responsibilities, aligning with GDPR’s training requirement.</td>
+                </tr>
+              </table>
+              </div>
+
+        
+
+
+
+              <div class="q"> Information Security Management System (ISMS)</div>
+              <div class="a">Set of policies, procedures, and controls that organizations use to manage and protect their information assets.</div>
+               
+              <div class="q"> Risk-based Auditing</div>
+              <div class="a"> audit plan designed to address management’s high-priority risks. It allows internal auditors to respond to the risks and provide insights to management to solve risks timely</div>
+
+              <div class="q">Tipos Risco</div>
+              <div class="a"> 
+               <ul>
+                <li><strong>Cybersecurity Risk</strong> - Risk of data breaches or cyber-attacks targeting sensitive information.</li>
+                <li><strong>Compliance Risk</strong> - Risk of failing to meet legal or regulatory requirements, leading to penalties.</li>
+                <li><strong>Operational Risk</strong> - Risk of disruptions in critical operations due to system failures or shortages.</li>
+                <li><strong>Financial Risk</strong> - Risk of financial misstatements, fraud, or loss of assets.</li>
+                <li><strong>Reputational Risk</strong> - Risk of damage to public image or customer trust.</li>
+                <li><strong>Strategic Risk</strong> - Risk of not achieving business goals due to market changes or poor decisions.</li>
+                <li><strong>Human Resources Risk</strong> - Risk of employee turnover or lack of skills affecting performance.</li>
+                <li><strong>Supply Chain Risk</strong> - Risk of disruptions in the supply chain, such as supplier failures or disasters.</li>
+                <li><strong>Environmental Risk</strong> - Risk of non-compliance with environmental regulations or hazards.</li>
+                <li><strong>Technology Risk</strong> - Risk of outdated or unreliable technology causing business interruptions.</li>
+              </ul>
+              </div>
+
+              <div class="q">Types of Audit Risks</div>
+              <div class="a"> 
+                <ul>
+                  <li><strong>Control Risk</strong> - The risk that security measures won't work as expected.</li>
+                  <li><strong>Detection Risk</strong> - The risk that a problem or breach won't be noticed in time.</li>
+                  <li><strong>Inherent Risk</strong> - The risk that existing controls will fail to prevent or detect issues.</li>
+                </ul>
+                
+              </div>
+
+              <div class="q">Risk Assessment Report (RAR)</div>
+              <div class="a"> 
+                - A standard report that includes the outcomes of a risk assessment, detailing the findings and action plan based on the identified risks in an organization.
+              </div>
+
+              <div class="q">Risk Treatment Plan</div>
+              <div class="a">A plan that outlines how identified risks will be treated (e.g., mitigating, accepting, transferring, or avoiding), including actions and timelines. </div>
+              
+              <div class="q">Steps of ISO 27001 risk assessment</div>
+              <div class="a"><ul>
+                <li><strong>Define the risk assessment method</strong> - Choose an appropriate approach or methodology for assessing risks (e.g., qualitative or quantitative).</li>
+                <li><strong>Compile the list of information assets</strong> - Identify and list all critical information assets that need protection (e.g., data, software, systems).</li>
+                <li><strong>Identify the threats and vulnerabilities</strong> - Identify potential threats (e.g., cyber-attacks) and vulnerabilities (e.g., outdated software) that could impact assets.</li>
+                <li><strong>Evaluate risks</strong> - Assess the likelihood and potential impact of each identified risk.</li>
+                <li><strong>Mitigate risks</strong> - Apply controls or actions to reduce or eliminate risks to an acceptable level.</li>
+                <li><strong>Develop risk reports</strong> - Document the results of the risk assessment, including identified risks and mitigation plans.</li>
+                <li><strong>Review, monitor, and audit</strong> - Regularly review, monitor, and audit the risk management process to ensure it remains effective and up to date.</li>
+              </ul></div>
+          
+            
+
+
+              <div class="q">Maturity Model</div>  
+              <div class="a"> A structured framework used to evaluate and improve various aspects of an organization's processes, ensuring sustainable and reliable outcomes. It helps measure the effectiveness of systems, like ISMS, and supports continuous improvements at different levels.</div>
+                
+                <div class="q">Maturity Model Phases</div>  
+                <div class="a">
+                  <ul>
+                    <li><strong>Incomplete</strong> - Processes are undefined or not implemented, resulting in inconsistent and unreliable outcomes.</li>
+                    <li><strong>Performed</strong> - Basic processes are in place but are still not fully controlled or repeatable.</li>
+                    <li><strong>Managed</strong> - Processes are documented and controlled, with some level of management oversight.</li>
+                    <li><strong>Established</strong> - Processes are standardized and defined, with consistent results across the organization.</li>
+                    <li><strong>Predictable</strong> - Processes are measured and monitored, with performance being predictable and stable.</li>
+                    <li><strong>Optimized</strong> - Processes are continuously improved based on data and feedback, ensuring the best possible performance.</li>
+                  </ul>
+                </div>
+
+                <div class="q">ISO 27001 classification of Information</div>  
+                <div class="a">                <ul>
+                  <li><strong>Confidential Information</strong> - Information that is highly sensitive and only accessible to authorized individuals.</li>
+                  <li><strong>Restricted Information</strong> - Information that is limited to certain groups or departments but not as sensitive as confidential info.</li>
+                  <li><strong>Internal Information</strong> - Information meant for internal use within the organization, not for public release.</li>
+                  <li><strong>Public Information</strong> - Information that is freely available and can be shared with anyone.</li>
+                </ul>
+                </div>
+
+               
+
+                <div class="q">Stages of an External Audit</div>  
+                <div class="a">
+                  <ul>
+                    <li><strong>Stage 1: Documentation Review</strong> - Auditor reviews policies and documents.</li>
+                    <li><strong>Stage 2: Certification Audit</strong> - On-site audit to check compliance with standards.</li>
+                    <li><strong>Stage 3: Surveillance Audit</strong> - Regular audits to ensure ongoing compliance.</li>
+                    <li><strong>Stage 4: Recertification Audit</strong> - Re-audit after a few years to renew certification.</li>
+                  </ul>
+                </div>
+
+                <div class="q">Core principles of Information Security - CIA Triad:</div>  
+                <div class="a">
+                  <ul>
+                    <li>Confidentiality: information is only accessible to those who are authorized to view it; TODO: Encryption, Access Control, Authentication</li>
+                    <li>Integrity:  Ensuring that information is accurate, consistent, and has not been tampered with. TODO: Hashing, Checksums, Digital Signatures</li>
+                    <li>Availability: Ensuring that information is accessible and usable when needed by authorized users. TODO: Redundancy, Disaster Recovery Plans, Monitoring and Maintenance</li>
+                  </ul>
+                </div>
+
+                <div class="q">Risk Management e Compliance </div>
+                <div class="a">
+                  <table border="1">
+                    <thead>
+                      <tr>
+                        <th>Term</th>
+                        <th>Definition</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Risk Management</td>
+                        <td>The process of identifying, assessing, and prioritizing risks, followed by the application of resources to mitigate or control the impact of those risks.</td>
+                      </tr>
+                      <tr>
+                        <td>Compliance</td>
+                        <td>The act of adhering to laws, regulations, policies, and internal or external standards applicable to an organization.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                </div>
+
+                <div class="q">Security Control VS Security Policies vs Procedures </div>
+                <div class="a">
+                <ul>
+                  <li><strong>Security Policies:</strong> High-level guidelines that define the overall security approach. (e.g., Acceptable use policy, data protection policy)</li>
+                  <li><strong>Procedures:</strong> Detailed steps and instructions to follow in order to comply with policies. (e.g., Steps to follow when handling sensitive data, incident response procedures)</li>
+                  <li><strong>Security Controls:</strong> Specific safeguards or actions to reduce risks and protect information. (e.g., Encryption, firewalls, access controls)</li>
+                </ul>
+
+              </div>
+                
+                <div class="q"></div>  
+                <div class="a">
+                </div>
+
+
+                <div class="q"></div>  
+                <div class="a">
+                </div>
+
+                
+                
+        
+
+            </div>
+        </div>
+    </div>
+    <script>
+      // Seleciona todas as perguntas com a classe .q
+      const questions = document.querySelectorAll('.q');
+
+      // Para cada pergunta, adiciona o evento de clique
+      questions.forEach((question) => {
+        question.addEventListener('click', function() {
+          // Encontra a resposta relacionada (a próxima div com a classe .a)
+          const answer = this.nextElementSibling;
+          
+          // Alterna a visibilidade da resposta
+          if (answer && answer.classList.contains('a')) {
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+          }
+        });
+      });
+      </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

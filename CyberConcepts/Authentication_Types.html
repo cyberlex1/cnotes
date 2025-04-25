@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="collapse list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+
+                </li>
+            
+	            </ul>
+	          </li>
+
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AST_Tools.html">AS Tools</a></li>
+                <li><a href="Cookies.html">Cookies</a></li>
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+                <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+                <li><a href="Firewall.html">Firewall types</a></li>
+                <li><a href="HTTP_headers.html">HTTP headers</a></li>
+                <li><a href="Linux Commands.html">Linux Commands</a></li>
+                <li><a href="OSI model.html">OSI model</a></li>
+                <li><a href="Pentest.html">Pentest</a></li>
+                <li><a href="Protocols.html">Protocols</a></li>
+                <li><a href="SQLi_types.html">SQLi types</a></li>
+                <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+                <li><a href="XSS_types.html">XSS types</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="Frameworks.html">Frameworks</a></li>
+                <li><a href="my_attacks.html">My Attacks Examples</a></li>
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+	            <ul class=" list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Authentication_Types.html">Authentication Types</a></li>
+                  <li><a href="MFA.html">MFA</a></li>
+                  <li><a href="JWT.html">JWT</a></li>
+                  <li><a href="SAML.html">SAML</a></li>
+                  <li><a href="OAuth.html">OAuth</a></li>
+                </li>
+      
+	            </ul>
+	          </li>
+	        </ul>
+    	</nav>
+
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Authentication Type</th>
+                    <th>Description</th>
+                    <th>Protocol Type</th>
+                    <th>Encryption</th>
+                    <th>Common Attack (Educational)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Password-based</td>
+                    <td>User provides a password to authenticate</td>
+                    <td>Varies (HTTP, SSH, etc.)</td>
+                    <td>Usually hashed (MD5, SHA-1, bcrypt, etc.)</td>
+                    <td>Password spraying, brute-force, phishing</td>
+                  </tr>
+                  <tr>
+                    <td>Multi-Factor Authentication (MFA)</td>
+                    <td>Combines two or more authentication factors</td>
+                    <td>Protocol add-on (TOTP, Push, SMS)</td>
+                    <td>TOTP encrypted (HMAC, SHA-1)</td>
+                    <td>Social engineering, SIM swapping, MFA fatigue attacks</td>
+                  </tr>
+                  <tr>
+                    <td>Biometric</td>
+                    <td>Uses fingerprint, face, or iris recognition</td>
+                    <td>Custom/Hardware specific</td>
+                    <td>Device-level encryption</td>
+                    <td>Sensor spoofing, replay attacks</td>
+                  </tr>
+                  <tr>
+                    <td>Token-based</td>
+                    <td>Generates a token for session-based authentication</td>
+                    <td>OAuth, JWT</td>
+                    <td>JWT (Base64 + Signature), TLS</td>
+                    <td>Token hijacking, XSS to steal tokens</td>
+                  </tr>
+                  <tr>
+                    <td>Certificate-based</td>
+                    <td>Uses X.509 certificates for identity validation</td>
+                    <td>SSL/TLS, PKI</td>
+                    <td>Public-key encryption (RSA, ECC)</td>
+                    <td>Man-in-the-middle (if certs are weak/expired)</td>
+                  </tr>
+                  <tr>
+                    <td>Smart Card</td>
+                    <td>Physical card with embedded chip stores credentials</td>
+                    <td>PKI, PIV</td>
+                    <td>Asymmetric (RSA) + PIN</td>
+                    <td>Card cloning, stolen card with PIN</td>
+                  </tr>
+                  <tr>
+                    <td>Single Sign-On (SSO)</td>
+                    <td>One login grants access to multiple services</td>
+                    <td>SAML, OAuth, OIDC</td>
+                    <td>Depends on backend (JWT, XML Sig)</td>
+                    <td>SSO token abuse, misconfigured identity providers</td>
+                  </tr>
+                  <tr>
+                    <td>Kerberos</td>
+                    <td>Uses tickets for mutual authentication</td>
+                    <td>Kerberos (UDP/TCP 88)</td>
+                    <td>Symmetric (AES, RC4)</td>
+                    <td>Kerberoasting, AS-REP Roasting, Pass-the-Ticket</td>
+                  </tr>
+                  <tr>
+                    <td>NTLM</td>
+                    <td>Microsoft challenge-response auth protocol</td>
+                    <td>NTLMv1/v2</td>
+                    <td>MD4/NT hash</td>
+                    <td>Pass-the-Hash, relay attacks</td>
+                  </tr>
+                  <tr>
+                    <td>RADIUS</td>
+                    <td>Centralized AAA protocol (Access, Auth, Accounting)</td>
+                    <td>RADIUS</td>
+                    <td>Depends (can be PAP, CHAP, EAP)</td>
+                    <td>Credential replay, weak shared secrets</td>
+                  </tr>
+                  <tr>
+                    <td>LDAP</td>
+                    <td>Protocol for accessing directory services</td>
+                    <td>LDAP / LDAPS</td>
+                    <td>None (LDAP) / TLS (LDAPS)</td>
+                    <td>LDAP injection, cleartext creds sniffing (LDAP)</td>
+                  </tr>
+                  <tr>
+                    <td>SAML</td>
+                    <td>XML-based SSO auth for enterprise apps</td>
+                    <td>SAML (over HTTP)</td>
+                    <td>XML Signatures, TLS</td>
+                    <td>Signature wrapping, replay attacks</td>
+                  </tr>
+                  <tr>
+                    <td>OAuth</td>
+                    <td>Delegated access without password sharing</td>
+                    <td>OAuth 2.0</td>
+                    <td>Token-based, TLS</td>
+                    <td>Token reuse, redirect URI manipulation</td>
+                  </tr>
+                  <tr>
+                    <td>OpenID Connect</td>
+                    <td>Identity layer on top of OAuth 2.0</td>
+                    <td>OIDC (OAuth + JWT)</td>
+                    <td>JWT + TLS</td>
+                    <td>ID token theft, insecure token storage</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              
+              
+
+
+                  
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="collapse list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+
+                </li>
+            
+	            </ul>
+	          </li>
+
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AST_Tools.html">AS Tools</a></li>
+                <li><a href="Cookies.html">Cookies</a></li>
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+                <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+                <li><a href="Firewall.html">Firewall types</a></li>
+                <li><a href="HTTP_headers.html">HTTP headers</a></li>
+                <li><a href="Linux Commands.html">Linux Commands</a></li>
+                <li><a href="OSI model.html">OSI model</a></li>
+                <li><a href="Pentest.html">Pentest</a></li>
+                <li><a href="Protocols.html">Protocols</a></li>
+                <li><a href="SQLi_types.html">SQLi types</a></li>
+                <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+                <li><a href="XSS_types.html">XSS types</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="Frameworks.html">Frameworks</a></li>
+                <li><a href="my_attacks.html">My Attacks Examples</a></li>
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+	            <ul class=" list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Authentication_Types.html">Authentication Types</a></li>
+                  <li><a href="MFA.html">MFA</a></li>
+                  <li><a href="JWT.html">JWT</a></li>
+                  <li><a href="SAML.html">SAML</a></li>
+                  <li><a href="OAuth.html">OAuth</a></li>
+                </li>
+      
+	            </ul>
+	          </li>
+	        </ul>
+    	</nav>
+
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+                <h2 class="mb-4">XSS</h2>
+                <p><strong>Parameterized queries</strong> are SQL queries where user inputs are passed as parameters rather than being directly embedded into the query string. This prevents SQL injection by treating user input as data, not executable code. It ensures the query structure remains safe and intact.</p>
+                <!-- Table of SQLi Types -->
+
+                <h4>Best Practices / Methodologies</h4>
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Framework/List</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>OWASP</td>
+                        <td>An open-source organization focused on improving web application security. The OWASP Top 10 is a list of the most critical security risks for web applications.</td>
+                        <td>Injection (e.g., SQL Injection)</td>
+                      </tr>
+                      <tr>
+                        <td>PTES</td>
+                        <td>Penetration Testing Execution Standard provides guidelines for conducting penetration tests, focusing on key steps such as information gathering, vulnerability analysis, and exploitation.</td>
+                        <td>Information Gathering (collecting data about the network)</td>
+                      </tr>
+                      <tr>
+                        <td>SANS 25</td>
+                        <td>A list of the top 25 software errors that result in security vulnerabilities, highlighting common coding mistakes that lead to vulnerabilities.</td>
+                        <td>Buffer Overflow (excessive data written to a buffer)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  
+                <h4>Cybersecurity Frameworks</h4>
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Framework/List</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>COBIT</td>
+                        <td>Framework for IT governance and management, focusing on aligning IT with business objectives and ensuring effective governance.</td>
+                        <td>Control Objectives for IT (COBIT 5)</td>
+                      </tr>
+                      <tr>
+                        <td>NIST</td>
+                        <td>Provides guidelines and best practices for improving cybersecurity, including the NIST Cybersecurity Framework (CSF).</td>
+                        <td>Identify, Protect, Detect, Respond, Recover</td>
+                      </tr>
+                      <tr>
+                        <td>MITRE ATT&CK</td>
+                        <td>A framework that describes the tactics, techniques, and procedures (TTPs) used by adversaries during cyber attacks. It helps security professionals identify and defend against specific threats.</td>
+                        <td>Spearphishing Attachment (sending a malicious attachment via email)</td>
+                      </tr>
+               
+                    </tbody>
+                  </table>
+
+                  <h4>Standards and Regulations</h4>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Standard/Regulation</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>PCI DSS</td>
+                        <td>Payment Card Industry Data Security Standard: a set of security standards to ensure that companies handling credit card information maintain secure systems and processes.</td>
+                        <td>Encryption of cardholder data, maintaining secure networks</td>
+                      </tr>
+                      <tr>
+                        <td>ISO/IEC 27001</td>
+                        <td>International standard for Information Security Management Systems (ISMS), providing a systematic approach to managing sensitive company information.</td>
+                        <td>Establishing and maintaining a risk management process for protecting information assets</td>
+                      </tr>
+                      <tr>
+                        <td>HIPAA</td>
+                        <td>Health Insurance Portability and Accountability Act: U.S. regulation focused on protecting the privacy and security of healthcare information.</td>
+                        <td>Data encryption, secure communication of patient information</td>
+                      </tr>
+                      <tr>
+                        <td>GDPR</td>
+                        <td>General Data Protection Regulation: EU regulation focused on data protection and privacy for all individuals within the European Union.</td>
+                        <td>Right to be forgotten, data subject consent for processing personal data</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+
+
+                  
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

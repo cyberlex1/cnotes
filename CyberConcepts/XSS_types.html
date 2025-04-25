@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="custom-menu">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class="fa fa-bars"></i>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+    </div>
+            <div class="p-4 pt-5">
+      <ul class="list-unstyled components mb-5">
+
+        <li class="active">
+            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+            <ul class="collapse list-unstyled" id="cyberArticles">
+            <li>
+              <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+              <li><a href="General_Questions.html">General Questions</a></li>
+
+            </li>
+        
+            </ul>
+          </li>
+
+          <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+          <ul class=" list-unstyled" id="cyberConcepts">
+            <li><a href="AD Components.html">AD Components</a></li>
+            <li><a href="AD_Authentication.html">AD Authentication</a></li>
+            <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+            <li><a href="AD_Attacks.html">AD Attacks</a></li>
+        </ul>
+          </li>
+
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+          <ul class=" list-unstyled" id="cyberConcepts">
+            <li><a href="AST_Tools.html">AS Tools</a></li>
+            <li><a href="Cookies.html">Cookies</a></li>
+            <li><a href="Concepts.html">Concepts</a></li>
+            <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+            <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+            <li><a href="Firewall.html">Firewall types</a></li>
+            <li><a href="HTTP_headers.html">HTTP headers</a></li>
+            <li><a href="Linux Commands.html">Linux Commands</a></li>
+            <li><a href="OSI model.html">OSI model</a></li>
+            <li><a href="Pentest.html">Pentest</a></li>
+            <li><a href="Protocols.html">Protocols</a></li>
+            <li><a href="SQLi_types.html">SQLi types</a></li>
+            <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+            <li><a href="XSS_types.html">XSS types</a></li>
+            <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+            <li><a href="Frameworks.html">Frameworks</a></li>
+            <li><a href="my_attacks.html">My Attacks Examples</a></li>
+        </ul>
+          </li>
+
+        <li class="active">
+            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+            <ul class=" list-unstyled" id="cyberArticles">
+            <li>
+              <li><a href="Authentication_Types.html">Authentication Types</a></li>
+              <li><a href="MFA.html">MFA</a></li>
+              <li><a href="JWT.html">JWT</a></li>
+              <li><a href="SAML.html">SAML</a></li>
+              <li><a href="OAuth.html">OAuth</a></li>
+            </li>
+  
+            </ul>
+          </li>
+        </ul>
+    </nav>
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+                <h2 class="mb-4">XSS</h2>
+                <p><strong>Parameterized queries</strong> are SQL queries where user inputs are passed as parameters rather than being directly embedded into the query string. This prevents SQL injection by treating user input as data, not executable code. It ensures the query structure remains safe and intact.</p>
+                <!-- Table of SQLi Types -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>XSS Type</th>
+                            <th>Description</th>
+                            <th>Mitigation</th>
+                            <th>How to Detect</th>
+                            <th>Examples</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Stored XSS</td>
+                            <td>Malicious script is stored on the server and served to users who access the affected page.</td>
+                            <td>Sanitize user inputs, escape data when displaying in HTML, implement Content Security Policy (CSP).</td>
+                            <td>Manual input testing, use of automated tools like Burp Suite, fuzzing.</td>
+                            <td class="example">&lt;script&gt;alert('XSS');&lt;/script&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>Reflected XSS</td>
+                            <td>Malicious script is reflected off the server in response to a user’s input, typically through a URL or form parameter.</td>
+                            <td>Sanitize inputs, avoid reflecting data from the user directly into the output without validation.</td>
+                            <td>Check user input in the URL or form data for reflected scripts.</td>
+                            <td class="example">http://example.com/search?q=&lt;script&gt;alert('XSS')&lt;/script&gt;</td>
+                        </tr>
+                        <tr>
+                            <td>DOM-based XSS</td>
+                            <td>Malicious script is executed as a result of modifying the DOM (Document Object Model) in the browser via JavaScript.</td>
+                            <td>Sanitize and validate data before using it in the DOM. Avoid using `innerHTML` with user inputs.</td>
+                            <td>Inspect client-side JavaScript for vulnerabilities, manually change DOM elements with malicious data.</td>
+                            <td class="example">document.getElementById('message').innerHTML = '&lt;script&gt;alert(1)&lt;/script&gt;';</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

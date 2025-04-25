@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 4px; /* Diminuído o padding para aproximar mais o conteúdo da borda */
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    th:first-child, td:first-child {
+        font-weight: bold; /* Primeira coluna em negrito */
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="collapse list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+
+                </li>
+            
+	            </ul>
+	          </li>
+
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AST_Tools.html">AS Tools</a></li>
+                <li><a href="Cookies.html">Cookies</a></li>
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+                <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+                <li><a href="Firewall.html">Firewall types</a></li>
+                <li><a href="HTTP_headers.html">HTTP headers</a></li>
+                <li><a href="Linux Commands.html">Linux Commands</a></li>
+                <li><a href="OSI model.html">OSI model</a></li>
+                <li><a href="Pentest.html">Pentest</a></li>
+                <li><a href="Protocols.html">Protocols</a></li>
+                <li><a href="SQLi_types.html">SQLi types</a></li>
+                <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+                <li><a href="XSS_types.html">XSS types</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="Frameworks.html">Frameworks</a></li>
+                <li><a href="my_attacks.html">My Attacks Examples</a></li>
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+	            <ul class=" list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Authentication_Types.html">Authentication Types</a></li>
+                  <li><a href="MFA.html">MFA</a></li>
+                  <li><a href="JWT.html">JWT</a></li>
+                  <li><a href="SAML.html">SAML</a></li>
+                  <li><a href="OAuth.html">OAuth</a></li>
+                </li>
+      
+	            </ul>
+	          </li>
+	        </ul>
+    	</nav>
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+                <h2>APT (Advanced Persistent Threat)</h2>
+                <p>An APT is a prolonged, targeted cyberattack aiming to steal data or disrupt systems by maintaining stealthy, long-term access.</p>
+                <!-- Table of SQLi Types -->
+  
+
+                <h2>Persistent Threat Attacks: Descriptions and Examples</h2>
+
+                <table border="1" cellpadding="8" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>Persistent Threat Attack</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>APT (Advanced Persistent Threat)</td>
+                        <td>A long-term, targeted cyberattack in which attackers infiltrate a network and remain undetected to steal data or cause damage.</td>
+                        <td>The Stuxnet worm, which targeted industrial control systems over a prolonged period.</td>
+                      </tr>
+                      <tr>
+                        <td>Backdoor</td>
+                        <td>Malicious software that allows attackers to bypass standard authentication and security measures for continued access.</td>
+                        <td>Backdoors installed by malware to maintain unauthorized access after an attack has been carried out.</td>
+                      </tr>
+                      <tr>
+                        <td>Botnet</td>
+                        <td>Infected machines controlled remotely by a hacker, often used for ongoing DDoS (Distributed Denial of Service) attacks or data theft.</td>
+                        <td>Botnets used to flood networks with traffic or exfiltrate data over a period of time.</td>
+                      </tr>
+                      <tr>
+                        <td>Credential Stuffing</td>
+                        <td>Using stolen credentials from one breach to try and access multiple other accounts over an extended period.</td>
+                        <td>Hackers use a database of email/password pairs to access a range of services like banking or social media accounts.</td>
+                      </tr>
+                      <tr>
+                        <td>Exfiltration of Data</td>
+                        <td>Persistent efforts to steal sensitive data from a network, usually over an extended period, without being detected.</td>
+                        <td>Ongoing transfers of company intellectual property or customer data from compromised systems to an external server.</td>
+                      </tr>
+                      <tr>
+                        <td>Phishing Campaigns</td>
+                        <td>Persistent attacks targeting individuals or organizations to steal sensitive information by mimicking trusted entities.</td>
+                        <td>Multiple phishing emails sent over weeks or months to collect login credentials from employees.</td>
+                      </tr>
+                      <tr>
+                        <td>Rootkit</td>
+                        <td>A set of tools that allow an attacker to maintain privileged access to a system while hiding their presence.</td>
+                        <td>Installations of remote access tools (RATs) to maintain continuous control over a compromised system.</td>
+                      </tr>
+                      <tr>
+                        <td>Spyware</td>
+                        <td>Malicious software designed to collect information from a target device without their knowledge.</td>
+                        <td>Keyloggers that record sensitive information over time, such as usernames and passwords.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                <h2>Stages of an APT (Advanced Persistent Threat)</h2>
+
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Stage</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1. Reconnaissance</td>
+                      <td>The attacker gathers information about the target, such as vulnerabilities and weaknesses.</td>
+                    </tr>
+                    <tr>
+                      <td>2. Initial Compromise</td>
+                      <td>The attacker gains access to the network through phishing, exploiting vulnerabilities, etc.</td>
+                    </tr>
+                    <tr>
+                      <td>3. Establishing Foothold</td>
+                      <td>Install backdoors or malware to ensure long-term access to the system.</td>
+                    </tr>
+                    <tr>
+                      <td>4. Lateral Movement</td>
+                      <td>Move across the network to find valuable data or systems.</td>
+                    </tr>
+                    <tr>
+                      <td>5. Privilege Escalation</td>
+                      <td>Gain higher access privileges to increase control over the system.</td>
+                    </tr>
+                    <tr>
+                      <td>6. Data Exfiltration</td>
+                      <td>Steal valuable data such as intellectual property or sensitive information.</td>
+                    </tr>
+                    <tr>
+                      <td>7. Cleanup and Covering Tracks</td>
+                      <td>Remove traces of the attack and avoid detection by security systems.</td>
+                    </tr>
+                    <tr>
+                      <td>8. Maintaining Access</td>
+                      <td>Ensure continued access to the network for future use or attacks.</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                
+
+                <h2>Persistent Threat Attacks: Descriptions and Examples</h2>
+
+                <table>
+                    <thead>
+                      <tr>
+                        <th>Persistent Threat Attack</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>APT (Advanced Persistent Threat)</td>
+                        <td>A long-term, targeted cyberattack in which attackers infiltrate a network and remain undetected to steal data or cause damage.</td>
+                        <td>The Stuxnet worm, which targeted industrial control systems over a prolonged period.</td>
+                      </tr>
+                      <tr>
+                        <td>Backdoor</td>
+                        <td>Malicious software that allows attackers to bypass standard authentication and security measures for continued access.</td>
+                        <td>Backdoors installed by malware to maintain unauthorized access after an attack has been carried out.</td>
+                      </tr>
+                      <tr>
+                        <td>Botnet</td>
+                        <td>Infected machines controlled remotely by a hacker, often used for ongoing DDoS (Distributed Denial of Service) attacks or data theft.</td>
+                        <td>Botnets used to flood networks with traffic or exfiltrate data over a period of time.</td>
+                      </tr>
+                      <tr>
+                        <td>Credential Stuffing</td>
+                        <td>Using stolen credentials from one breach to try and access multiple other accounts over an extended period.</td>
+                        <td>Hackers use a database of email/password pairs to access a range of services like banking or social media accounts.</td>
+                      </tr>
+                      <tr>
+                        <td>Exfiltration of Data</td>
+                        <td>Persistent efforts to steal sensitive data from a network, usually over an extended period, without being detected.</td>
+                        <td>Ongoing transfers of company intellectual property or customer data from compromised systems to an external server.</td>
+                      </tr>
+                      <tr>
+                        <td>Phishing Campaigns</td>
+                        <td>Persistent attacks targeting individuals or organizations to steal sensitive information by mimicking trusted entities.</td>
+                        <td>Multiple phishing emails sent over weeks or months to collect login credentials from employees.</td>
+                      </tr>
+                      <tr>
+                        <td>Rootkit</td>
+                        <td>A set of tools that allow an attacker to maintain privileged access to a system while hiding their presence.</td>
+                        <td>Installations of remote access tools (RATs) to maintain continuous control over a compromised system.</td>
+                      </tr>
+                      <tr>
+                        <td>Spyware</td>
+                        <td>Malicious software designed to collect information from a target device without their knowledge.</td>
+                        <td>Keyloggers that record sensitive information over time, such as usernames and passwords.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+
+
+
+                
+
+                <h2>Common Malware Attacks: Descriptions and Examples</h2>
+
+                <table border="1" cellpadding="8" cellspacing="0">
+                <thead>
+                    <tr>
+                    <th>Malware Attack</th>
+                    <th>Description</th>
+                    <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td>Virus</td>
+                    <td>Malicious software that attaches itself to clean files and spreads to other files and systems.</td>
+                    <td>Infected email attachment that spreads once opened.</td>
+                    </tr>
+                    <tr>
+                    <td>Worm</td>
+                    <td>A self-replicating malware that spreads across networks without needing a host file.</td>
+                    <td>Code Red Worm that spread through vulnerable servers.</td>
+                    </tr>
+                    <tr>
+                    <td>Trojan Horse</td>
+                    <td>A type of malware disguised as a legitimate program, often used to steal data or control a system.</td>
+                    <td>Fake software installer that gives hackers access to your computer.</td>
+                    </tr>
+                    <tr>
+                    <td>Ransomware</td>
+                    <td>Malware that encrypts files and demands payment for decryption.</td>
+                    <td>WannaCry that demanded Bitcoin for file decryption.</td>
+                    </tr>
+                    <tr>
+                    <td>Spyware</td>
+                    <td>Software that secretly monitors and collects user data, often for advertising purposes.</td>
+                    <td>Software that tracks browsing activity to show targeted ads.</td>
+                    </tr>
+                    <tr>
+                    <td>Adware</td>
+                    <td>Malware that displays unwanted advertisements to the user.</td>
+                    <td>Popup ads that appear constantly while browsing the web.</td>
+                    </tr>
+                    <tr>
+                    <td>Rootkit</td>
+                    <td>A tool that hides the existence of certain processes or programs from normal detection methods.</td>
+                    <td>Hacker installing a rootkit to avoid detection by antivirus software.</td>
+                    </tr>
+                    <tr>
+                    <td>Keylogger</td>
+                    <td>Malware that records keystrokes to capture passwords, credit card numbers, and other sensitive information.</td>
+                    <td>Software that secretly logs everything typed on a computer.</td>
+                    </tr>
+                    <tr>
+                    <td>Botnet</td>
+                    <td>A network of infected devices controlled by a hacker, often used for distributed denial-of-service (DDoS) attacks.</td>
+                    <td>A network of zombie computers used to flood a website with traffic.</td>
+                    </tr>
+                    <tr>
+                    <td>Backdoor</td>
+                    <td>A secret method for bypassing normal authentication or security measures to gain remote access to a system.</td>
+                    <td>Malware that installs a backdoor for future access to an infected computer.</td>
+                    </tr>
+                    <tr>
+                    <td>Fileless Malware</td>
+                    <td>Malware that runs in the system memory and does not leave traditional traces in the file system.</td>
+                    <td>Malware that executes directly from the computer's memory, avoiding detection by traditional antivirus programs.</td>
+                    </tr>
+                </tbody>
+                </table>
+
+                
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

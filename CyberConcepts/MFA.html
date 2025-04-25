@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 02</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  </style>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="collapse list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+
+                </li>
+            
+	            </ul>
+	          </li>
+
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AST_Tools.html">AS Tools</a></li>
+                <li><a href="Cookies.html">Cookies</a></li>
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+                <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+                <li><a href="Firewall.html">Firewall types</a></li>
+                <li><a href="HTTP_headers.html">HTTP headers</a></li>
+                <li><a href="Linux Commands.html">Linux Commands</a></li>
+                <li><a href="OSI model.html">OSI model</a></li>
+                <li><a href="Pentest.html">Pentest</a></li>
+                <li><a href="Protocols.html">Protocols</a></li>
+                <li><a href="SQLi_types.html">SQLi types</a></li>
+                <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+                <li><a href="XSS_types.html">XSS types</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="Frameworks.html">Frameworks</a></li>
+                <li><a href="my_attacks.html">My Attacks Examples</a></li>
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+	            <ul class=" list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Authentication_Types.html">Authentication Types</a></li>
+                  <li><a href="MFA.html">MFA</a></li>
+                  <li><a href="JWT.html">JWT</a></li>
+                  <li><a href="SAML.html">SAML</a></li>
+                  <li><a href="OAuth.html">OAuth</a></li>
+                </li>
+      
+	            </ul>
+	          </li>
+	        </ul>
+    	</nav>
+
+
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5 pt-5">
+        <div class="container my-5">
+          <h4>Types of Authentication Factors</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Authentication Factor</th>
+                <th>Description</th>
+                <th>Example</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Something You Know (Knowledge Factor)</td>
+                <td>This is typically a password, PIN, or passphrase.</td>
+                <td>A user enters their password during login.</td>
+              </tr>
+              <tr>
+                <td>Something You Have (Possession Factor)</td>
+                <td>This refers to a physical object that the user has, such as a mobile phone, hardware token, or smart card.</td>
+                <td>A user receives a one-time passcode (OTP) on their phone or uses an authentication app like Google Authenticator to generate a code.</td>
+              </tr>
+              <tr>
+                <td>Something You Are (Inherence Factor)</td>
+                <td>This factor involves biometric verification, such as fingerprints, face recognition, or iris scanning.</td>
+                <td>A user uses their fingerprint to unlock a device or verify their identity.</td>
+              </tr>
+              <tr>
+                <td>Somewhere You Are (Location Factor)</td>
+                <td>This is based on the user’s geographical location, detected through IP addresses, GPS, or Wi-Fi networks.</td>
+                <td>A user can only log in when accessing from a specific geographic location, like a corporate network.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4>How MFA Works Step-by-Step</h4>
+
+
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Action</th>
+                <th>Authentication Factor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>User Logs In with Username and Password</td>
+                <td>First Factor: Something You Know (Password)</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Second Authentication Factor is Requested</td>
+                <td>Second Factor Options: 
+                    <ul>
+                      <li>One-time passcode (OTP) sent to phone or email (Something You Have)</li>
+                      <li>Biometric scan (fingerprint or face scan) (Something You Are)</li>
+                      <li>Smart card or security key (Something You Have)</li>
+                    </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>User Provides the Second Factor</td>
+                <td>Second Factor: User enters OTP, performs biometric scan, or uses security key</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Access Granted</td>
+                <td>Both factors are verified, and the user gains access to the system</td>
+              </tr>
+            </tbody>
+          </table>
+
+
+          
+          <h3>Common Forms of MFA</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Form</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SMS-based OTP</td>
+                <td>A one-time passcode sent via text message</td>
+              </tr>
+              <tr>
+                <td>Authenticator Apps</td>
+                <td>Apps like Google Authenticator or Microsoft Authenticator generate time-based one-time passcodes</td>
+              </tr>
+              <tr>
+                <td>Hardware Tokens</td>
+                <td>Physical devices that generate or display one-time passcodes</td>
+              </tr>
+              <tr>
+                <td>Biometric Scanning</td>
+                <td>Fingerprint, facial recognition, or iris scanning</td>
+              </tr>
+              <tr>
+                <td>Push Notifications</td>
+                <td>A notification sent to the user’s mobile device for approval or denial of the login attempt</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Benefits of MFA</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Benefit</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Increased Security</td>
+                <td>Even if an attacker knows the password, they still need access to the second factor (e.g., phone, fingerprint)</td>
+              </tr>
+              <tr>
+                <td>Protection Against Phishing</td>
+                <td>Even if a password is stolen, MFA adds another layer of defense</td>
+              </tr>
+              <tr>
+                <td>Compliance</td>
+                <td>Many industries and regulations require MFA for sensitive data (e.g., financial services, healthcare)</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Common MFA Attacks</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Attack</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>SIM Swapping</td>
+                <td>Attackers trick mobile providers into transferring a victim’s phone number to a new SIM card, intercepting OTPs</td>
+              </tr>
+              <tr>
+                <td>Phishing</td>
+                <td>Attackers create fake login pages to steal passwords and OTPs from users</td>
+              </tr>
+              <tr>
+                <td>MFA Fatigue</td>
+                <td>Overloading a user with repeated authentication requests to prompt them to approve a malicious login attempt</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          
+          
+
+          
+          
+
+            
+
+      
+    
+
+  
+
+
+       
+      
+      </div>
+	  
+		</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    
+  </body>
+</html>

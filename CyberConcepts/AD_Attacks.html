@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+                  <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
+                  <li><a href="my_attacks.html">My Attacks Examples</a></li>
+                </li>
+	            </ul>
+	          </li>
+
+
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="G-Cloud.html">G-Cloud</a></li>
+                <li><a href="ISO27001.html">ISO 27001</a></li>
+                <li><a href="Software_Arquiteturas.html">Software</a></li>
+
+                <li><a href="Others.html">Others</a></li>
+
+
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+              <ul class="list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+            
+	        </ul>
+    	</nav>
+
+      
+
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+
+              
+                <table border="1">
+                    <thead>
+                      <tr>
+                        <th>Attack</th>
+                        <th>Access Level</th>
+                        <th>Tool</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Kerbrute Enumeration</td>
+                        <td>No domain access</td>
+                        <td>Kerbrute</td>
+                        <td>Enumerates valid AD users via Kerberos pre-auth abuse.</td>
+                      </tr>
+                      <tr>
+                        <td>Harvesting</td>
+                        <td>User access</td>
+                        <td>Rubeus</td>
+                        <td>Collects Kerberos tickets for later use (e.g., Pass-the-Ticket).</td>
+                      </tr>
+                      <tr>
+                        <td>Password Spraying</td>
+                        <td>User access</td>
+                        <td>Rubeus</td>
+                        <td>Tries one password across many users to find weak creds.</td>
+                      </tr>
+                      <tr>
+                        <td>Kerberoasting</td>
+                        <td>Any user</td>
+                        <td>Rubeus, Impacket</td>
+                        <td>Requests service tickets to crack service account passwords.</td>
+                      </tr>
+                      <tr>
+                        <td>AS-REP Roasting</td>
+                        <td>Any user</td>
+                        <td>Rubeus</td>
+                        <td>Cracks encrypted TGTs of users with no pre-auth enabled.</td>
+                      </tr>
+                      <tr>
+                        <td>Pass-the-Ticket</td>
+                        <td>Domain Admin (if TGT from DA)</td>
+                        <td>Mimikatz</td>
+                        <td>Uses dumped TGTs to impersonate users and escalate privileges.</td>
+                      </tr>
+                      <tr>
+                        <td>Golden Ticket</td>
+                        <td>Maintain access (full)</td>
+                        <td>Mimikatz</td>
+                        <td>Create forged TGTs using krbtgt hash—full domain access.</td>
+                      </tr>
+                      <tr>
+                        <td>Silver Ticket</td>
+                        <td>Maintain access (service)</td>
+                        <td>Mimikatz</td>
+                        <td>Forged ticket for specific service—stealthier than Golden Ticket.</td>
+                      </tr>
+                      <tr>
+                        <td>Skeleton Key</td>
+                        <td>Maintain access (domain-wide)</td>
+                        <td>Mimikatz</td>
+                        <td>Backdoor master key allowing domain-wide access via Kerberos.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+
+                  <ul>
+                    <li><strong>How does Responder work?</strong> Responder is used in internal network attacks to capture NTLM hashes by poisoning name resolution protocols like LLMNR, NBT-NS, and MDNS.</li>
+                    <li><strong>How does NTLM Relaying work?</strong> NTLM relaying is a Man-in-the-Middle (MitM) attack where the attacker intercepts an NTLM authentication request and forwards it to another service to gain access without cracking the hash.</li>
+                    <li><strong>Attack path to compromise Domain Admin:</strong>
+                      <ul>
+                        <li>Enumerate valid Active Directory (AD) users with <strong>kerbrute</strong>.</li>
+                        <li>Gain initial access to a Domain User through <strong>password spraying</strong>.</li>
+                        <li>Query the domain controller to identify service accounts with Domain Admin privileges and perform <strong>kerberoasting</strong> to get TGS tickets.</li>
+                        <li>Crack the TGS ticket using <strong>hashcat</strong> to retrieve the cleartext password.</li>
+                        <li>Login with Domain Admin credentials using <strong>Runas</strong> or <strong>PsExec</strong>.</li>
+                      </ul>
+                    </li>
+                  </ul>
+    
+
+
+                  
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

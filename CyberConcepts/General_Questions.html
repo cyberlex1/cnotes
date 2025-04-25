@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+    td:first-child, th:first-child {
+        font-size: 16px;
+    }
+    .answer {
+      display: none;
+    }
+    tr.question:hover {
+      background-color: #f9f9f9;
+    }
+
+    .faq {
+        width: 100%;
+        margin: 20px auto;
+      }
+
+      .q {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin: 5px 0;
+        cursor: pointer;
+        border: 1px solid #ddd;
+      }
+
+      .a {
+        display: none;
+        padding: 10px;
+        background-color: #f9f9f9;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+      }
+
+      .q:hover {
+        background-color: #e6e6e6;
+      }
+
+    
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="custom-menu">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class="fa fa-bars"></i>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+    </div>
+            <div class="p-4 pt-5">
+      <ul class="list-unstyled components mb-5">
+
+        <li class="active">
+            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+            <ul class="list-unstyled" id="cyberArticles">
+            <li>
+              <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
+              <li><a href="General_Questions.html">General Questions</a></li>
+              <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
+              <li><a href="my_attacks.html">My Attacks Examples</a></li>
+            </li>
+            </ul>
+          </li>
+
+
+
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
+          <ul class=" list-unstyled" id="cyberConcepts">
+
+            <li><a href="Concepts.html">Concepts</a></li>
+            <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+            <li><a href="G-Cloud.html">G-Cloud</a></li>
+            <li><a href="ISO27001.html">ISO 27001</a></li>
+            <li><a href="Software_Arquiteturas.html">Software</a></li>
+            <li><a href="Others.html">Others</a></li>
+
+
+        </ul>
+          </li>
+
+        <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+          <ul class="list-unstyled" id="cyberConcepts">
+            <li><a href="AD Components.html">AD Components</a></li>
+            <li><a href="AD_Authentication.html">AD Authentication</a></li>
+            <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+            <li><a href="AD_Attacks.html">AD Attacks</a></li>
+        </ul>
+          </li>
+
+        
+        </ul>
+    </nav>
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+
+                <div class="faq">
+                    <!-- Pergunta 1 -->
+                    <div class="q">Tell me about yourself</div>
+                    <div class="a">I have experience across various cybersecurity domains. I'm someone who is constantly driven to learn and grow, and I embrace change and new responsibilities with enthusiasm. When I don’t know the answer to a problem, I take the initiative to learn and figure it out. I enjoy working collaboratively in a team, but I’m also comfortable working independently. To continuously improve my cybersecurity knowledge, I actively participate in industry conferences, pursue cyber certifications, and take part in Capture The Flag (CTF) challenges. Outside of work, I value spending quality time with family and friends, going to the cinema, staying active through cycling and running, and reading a good book.</div>
+              
+                    <div class="q">How is your day in cybersecurity?</div>
+                    <div class="a">
+
+                        <strong>How is your day in cybersecurity?</strong><br>
+                        <p>My day typically starts with daily team meetings where we discuss ongoing tasks and priorities. Occasionally, I have meetings with clients to provide updates or address specific concerns. My tasks vary, as I work on penetration testing, vulnerability management, and security assessments, depending on current needs. I usually balance proactive security measures with addressing ongoing incidents or vulnerabilities.</p>
+            
+                        <strong>How do you prioritize tasks?</strong><br>
+                        <p>I prioritize tasks by assessing the risk and urgency. If there's an active vulnerability or high-risk issue, it gets my immediate attention. I also consider any deadlines or client requests for penetration tests or assessments. For routine tasks like vulnerability management, I follow a structured process, addressing the most critical vulnerabilities first based on CVSS scores or system exposure.</p>
+                    </div>
+
+                    <div class="q">Good cyber team?</div>
+                    <div class="a">
+                        <ul>
+                            <li><strong>Protects Sensitive Data:</strong> Safeguards critical information from unauthorized access.</li>
+                            <li><strong>Mitigates Risks:</strong> Identifies and reduces potential security threats.</li>
+                            <li><strong>Ensures Compliance:</strong> Helps meet industry regulations and avoid penalties.</li>
+                            <li><strong>Maintains Business Continuity:</strong> Ensures operations continue during cyber incidents.</li>
+                            <li><strong>Prevents Financial Loss:</strong> Avoids costly cyberattacks and data breaches.</li>
+                            <li><strong>Protects Brand Reputation:</strong> Minimizes damage to company reputation from security failures.</li>
+                            <li><strong>Enhances Customer Confidence:</strong> Builds trust with customers through strong security measures.</li>
+                          </ul>
+                    </div>
+
+                    <div class="q">Leadership capabilities on the job.</div>
+                    <div class="a">
+                        <div>
+                            <h3>Leadership Example</h3>
+                            <p><strong>Situation:</strong> Identified a significant vulnerability in the system's firewall that could expose customer data.</p>
+                            <p><strong>Task:</strong> Address the vulnerability quickly and reinforce security measures with a limited team.</p>
+                            <p><strong>Action:</strong> Led a cross-functional team to prioritize and resolve the issue, communicated with management, applied patches, and implemented a proactive vulnerability management plan.</p>
+                            <p><strong>Result:</strong> Vulnerability patched within 24 hours with no data loss, improved team preparedness, and received praise from management for effective leadership.</p>
+                          </div>
+                          
+                    </div>
+                    
+
+
+                    <div class="q"><span style="color: rgb(33, 203, 14)">Keep on top</span> of cybersecurity industry news and trends?</div>
+                    <div class="a">
+                        <p>To stay updated on cybersecurity trends and news, follow major sites like <strong>Krebs on Security</strong>, <strong>Dark Reading</strong>, and <strong>The Hacker News</strong>, subscribe to industry newsletters, follow experts on <strong>Twitter</strong> and <strong>LinkedIn</strong>, and attend conferences.</p>
+                        <span>Youtube cyber experts: The Cyber Mentor (pentest); HackerSploit (pentest); NetworkChuck (network), IppSec (CTFs challenges)  </span>
+
+                    </div>
+
+
+                    <div class="q">How do you spend your <span style="color: rgb(33, 203, 14)">free time</span>?</div>
+                    <div class="a">In my free time, I enjoy a variety of activities that help me stay active and engaged. I love cycling and running, which keep me physically fit and clear-headed. I also enjoy reading, especially books on cybersecurity and technology, as it allows me to keep learning. Spending quality time with family and friends is important to me, and I try to make sure I nurture those relationships. Additionally, I participate in Capture The Flag (CTF) challenges to test and improve my cybersecurity skills. I also enjoy attending cybersecurity talks and lectures to stay up-to-date with the latest trends and developments in the field.</div>
+
+
+                    <!-- Pergunta 2 -->
+                    <div class="q">Work with <span style="color: rgb(14, 71, 203)">team</span>  </div>
+                    <div class="a">I maintain clear and structured communication throughout the penetration testing process. Before starting, I align with stakeholders to define the scope and objectives. During testing, I provide regular updates on progress or critical findings. After the test, I deliver a detailed report outlining vulnerabilities, risk levels (e.g., CVSS), exploitation steps, and remediation guidance. I also participate in debrief meetings to explain technical findings in a clear and actionable way, tailored to both technical and non-technical audiences.</div>
+              
+                    <!-- Pergunta 15 -->
+                    <div class="q"><span style="color: rgb(14, 71, 203)">Teamwork</span>  skills</div>
+                    <div class="a">Security incident → SIEM (Splunk) → unusual login attempts → brute-force attack → from an unknown IP address → teamwork we found that the attack was targeting weak passwords. Solution: Block the IP; set a new rule to avoid brute force; communicate the importance of MFA, password rotation and storage.</div>
+                
+                    <!-- Pergunta 3 -->
+                    <div class="q">Explain technical terms</div>
+                    <div class="a">Focus on Impact (Ransomware can lock up your company's critical data, and the attacker will demand payment to restore access)<br>
+                        Simplify the Language (A vulnerability that allows attackers to access and manipulate our database).</div>
+              
+                    <div class="q">Biggest<span style="color: red"> challenge</span></div>
+                    <div class="a">Pentesters often work within tight time constraints. A limited amount of time to conduct thorough testing can result in missing vulnerabilities or weaknesses, especially in large systems with many components.<br>
+                        Communication with Non-Technical Stakeholders - Translating technical findings into business terms for executives or non-technical staff can be challenging.
+                        </div>
+                    <!-- Pergunta 4 -->
+                    <div class="q"><span style="color: red">Leave</span> your current job?</div>
+                    <div class="a">I’m grateful for the experience and skills I’ve gained in my current role, but I’m now looking for more challenging projects and opportunities to grow and to contribute with my experience. I believe that this job position can bring me that.</div>
+              
+                    <!-- Pergunta 5 -->
+                    <div class="q">Heard about us?</div>
+                    <div class="a">I came across this position on LinkedIn and after reading the job description I felt that my skills and experience could align with what you're looking for.</div>
+              
+                    <!-- Pergunta 6 -->
+                    <div class="q"><span style="color: rgb(5, 142, 5)">Strengths</span>  and weaknesses</div>
+                    <div class="a">Strengths: naturally curious and have strong problem-solving skills -> attention to detail -> In cybersecurity small vulnerabilities can lead to large-scale breaches. Weaknesses: focus too much on detail sometimes slows me down. To improve I’ve started setting time limits for tasks and focusing on the most important ones first.</div>
+              
+                    <!-- Pergunta 7 -->
+                    <div class="q">React to a <span style="color: red">conflict</span> in the workplace?</div>
+                    <div class="a">
+                        <p><strong>Step 1:</strong> <strong>Active Listening:</strong> I ensure I fully understand both sides of the issue by listening carefully to each person’s perspective.</p>
+                        <p><strong>Step 2:</strong> <strong>Empathy:</strong> I try to empathize with both parties, recognizing their concerns and emotions, which helps build trust.</p>
+                        <p><strong>Step 3:</strong> <strong>Open Communication:</strong> I facilitate open dialogue, encouraging honest and respectful conversation to identify underlying causes.</p>
+                        <p><strong>Step 4:</strong> <strong>Collaborative Problem Solving:</strong> I work with the individuals involved to find a mutually acceptable solution and establish clear actions to resolve the conflict.</p>
+                        <p><strong>Step 5:</strong> <strong>Follow-Up:</strong> I ensure that the solution is implemented and check in afterward to ensure that the issue is fully resolved.</p>
+                    </div>
+
+                    <div class="q"><span style="color: rgb(204, 19, 19)">Bad news </span>to a client / colleague</div>
+                    <div class="a">
+            
+                            <p><strong>Situation:</strong> While working on a cybersecurity project, I discovered a major vulnerability in the client's system that would delay the project timeline and potentially increase costs for the client.</p>
+                            <p><strong>Task:</strong> I needed to inform the client about the issue, explain the implications, and present potential solutions while maintaining a positive relationship.</p>
+                            <p><strong>Action:</strong> I scheduled a meeting with the client, clearly explained the situation without overwhelming them with technical details, and provided a plan to address the issue. I also offered alternatives and reassured them that the team was committed to resolving the problem swiftly.</p>
+                            <p><strong>Result:</strong> The client appreciated the transparency and the proactive approach. We successfully implemented the solution, and the project was completed with minimal disruption. The client was satisfied with the outcome and valued the honesty throughout the process.</p>
+                        
+                    </div>
+              
+                    <!-- Pergunta 8 -->
+                    <div class="q"><span style="color: rgb(158, 61, 61)">Busy</span>  workload</div>
+                    <div class="a">Break large projects into smaller parts, prioritize tasks and communicate with the team to adjust priorities as needed. <br> Tools: Task management (Jira, Trello); Team Communication (Slack, Microsoft Teams); Organize Documentation (Notion, Confluence)</div>
+              
+                    <!-- Pergunta 9 -->
+                    <div class="q"><span style="color: red">Failure</span>  at work?</div>
+                    <div class="a">During a vulnerability management I ignored a SQLi low-severity vuln. caught by Nessus assuming it had low impact. After a deeper analysis I realized it was actually a medium severity and could lead to information leakage. I learned that every finding must not be ignored and small things can have a huge impact.</div>
+              
+                    <!-- Pergunta 10 -->
+                    <div class="q">Work under pressure / adversity</div>
+                    <div class="a">During a black box penetration testing in a production web app with a tight deadline I found a critical vulnerability (SQLI → bypass authentication → gain access → lead to data breach). Despite the pressure and with just a small timeframe to finish the report I worked closely with the team to find a remediation. The vulnerability was fixed on time.</div>
+              
+                    <!-- Pergunta 11 -->
+                    <div class="q">Yourself in 5 years?</div>
+                    <div class="a">In 5 years I see myself in a leadership role in cybersecurity where I can guide and support teams, contribute to strategic decisions and helping organizations stay resilient in an ever-evolving threat landscape.</div>
+
+                    <!-- Pergunta 13 -->
+                    <div class="q">Yourself in 3 words</div>
+                    <div class="a">Me: Analytical, curious, resilient. Other people: stays calm under pressure, always willing to help.</div>
+                
+                    <!-- Pergunta 12 -->
+                    <div class="q">Ideal work environment</div>
+                    <div class="a">Is the one that fosters collaboration, innovation and continuous learning. I believe in a culture of mutual respect, where everyone is empowered to contribute their ideas and expertise.</div>
+              
+
+                    <!-- Pergunta 14 -->
+                    <div class="q">Great <span style="color: rgb(12, 161, 14)">achievement</span>?</div>
+                    <div class="a">Professionally: Penetration Testing → Remote Code Execution (RCE) vulnerability during a penetration testing on a prod. Web app. → Improperly sanitized user input in a file upload → arbitrary code execution → allow execute commands → gain access to sensitive data. Remediation: proper input sanitization, restricting file types → WAF and file scanning.<br> Personal: One time, while I was driving, I saw a pregnant woman who wasn’t feeling well. I took her to the hospital, and later I found out she had her baby. I'm proud that I was able to help in that moment.</div>
+              
+
+                    <!-- Pergunta 16 -->
+                    <div class="q">Motivated in repetitive tasks?</div>
+                    <div class="a">Focus on the larger picture and the impact those tasks have on the overall project success or team. I like to set small, achievable goals throughout the process to ensure progress.</div>
+              
+
+                                        
+                    <!-- Pergunta 17 -->
+                    <div class="q">What can I do that other candidates can’t?</div>
+                    <div class="a">Experience in both offensive and defensive security areas that can help the business grow. I am highly committed to building strong relationships with customers, ensuring that their needs are met while aligning with the company’s goals. Always searching to stay updated on the latest cybersecurity trends, tools, and best practices through certifications, research, and hands-on challenges.</div>
+              
+                    <!-- Pergunta 18 -->
+                    <div class="q">Want this job / hire you?</div>
+                    <div class="a">Excitement about the opportunity to join the company. <br>I'm impressed by {company} reputation and with the {company}'s values and culture.<br> Opportunity to learn from experts and grow professionally. <br>Commitment to contributing to the company’s strategic goals with my cybersecurity skills from different cyber areas (pentest, vuln. assessment/management), threat modeling, DevSecOps.</div>
+              
+                    <!-- Pergunta 19 -->
+                    <div class="q">Job Salary</div>
+                    <div class="a">Based on my research and the job requirements, I’m looking for a salary in the range of $XXX to $YYY annually, which aligns with the industry standards for this role and my level of experience. Of course, I am open to discussing the total compensation package, including benefits and growth opportunities.</div>
+              
+                    <!-- Pergunta 20 -->
+                    <div class="q">Any Questions?</div>
+                    <div class="a">What opportunities for growth and professional development does the company offer? <br>How does the company stay current with emerging technologies and industry trends? <br>What is the typical career progression for someone in this role? What’s the next step in the interview process?</div>
+                  </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+      // Seleciona todas as perguntas com a classe .q
+      const questions = document.querySelectorAll('.q');
+
+      // Para cada pergunta, adiciona o evento de clique
+      questions.forEach((question) => {
+        question.addEventListener('click', function() {
+          // Encontra a resposta relacionada (a próxima div com a classe .a)
+          const answer = this.nextElementSibling;
+          
+          // Alterna a visibilidade da resposta
+          if (answer && answer.classList.contains('a')) {
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+          }
+        });
+      });
+      </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

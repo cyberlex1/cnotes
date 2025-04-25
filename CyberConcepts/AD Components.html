@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+                  <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
+                  <li><a href="my_attacks.html">My Attacks Examples</a></li>
+                </li>
+	            </ul>
+	          </li>
+
+
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="G-Cloud.html">G-Cloud</a></li>
+                <li><a href="ISO27001.html">ISO 27001</a></li>
+                <li><a href="Software_Arquiteturas.html">Software</a></li>
+
+                <li><a href="Others.html">Others</a></li>
+
+
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+              <ul class="list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+            
+	        </ul>
+    	</nav>
+
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+              <img src="images/AD_Components.png" alt="" width="1000" >
+
+                <!-- Table of SQLi Types -->
+                <h2>Active Directory Physical Components</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Component</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Domain Controller (DC)</td>
+                      <td>Servers that store the AD database and authenticate users and devices in the network.</td>
+                    </tr>
+                    <tr>
+                      <td>Global Catalog (GC)</td>
+                      <td>Distributed data store that contains partial information about objects from all domains in the forest.</td>
+                    </tr>
+                    <tr>
+                      <td>DNS</td>
+                      <td>Translates domain names to IP addresses, enabling domain controllers and services to be found.</td>
+                    </tr>
+                    <tr>
+                      <td>ADFS (Active Directory Federation Services)</td>
+                      <td>Provides single sign-on (SSO) and identity federation services across multiple organizations or systems.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                <h2>Active Directory Logical Components</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Component</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Domain</td>
+                      <td>Logical grouping of objects such as users, groups, and computers that share a central directory.</td>
+                    </tr>
+                    <tr>
+                      <td>Forest</td>
+                      <td>The top-level container consisting of multiple domains, all sharing a common schema and global catalog.</td>
+                    </tr>
+                    <tr>
+                      <td>Organizational Unit (OU)</td>
+                      <td>A container within a domain that organizes objects like users, groups, and computers for delegation of administrative tasks.</td>
+                    </tr>
+                    <tr>
+                      <td>Active Directory Schema</td>
+                      <td>Defines the types of objects and their attributes that can be stored in AD (e.g., user, group, device).</td>
+                    </tr>
+                    <tr>
+                      <td>Trusts</td>
+                      <td>Relationships between domains that allow users from one domain to access resources in another.</td>
+                    </tr>
+                    <tr>
+                      <td>Group Policy Objects (GPOs)</td>
+                      <td>Configuration settings that define user and computer environments across domains.</td>
+                    </tr>
+                    <tr>
+                      <td>LDAP (Lightweight Directory Access Protocol)</td>
+                      <td>Protocol used to query and modify objects within AD.</td>
+                    </tr>
+                    <tr>
+                      <td>Kerberos Authentication</td>
+                      <td>A protocol used to authenticate users and computers in a secure manner.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                  
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

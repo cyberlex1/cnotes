@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 02</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  </style>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="collapse list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+
+                </li>
+            
+	            </ul>
+	          </li>
+
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AST_Tools.html">AS Tools</a></li>
+                <li><a href="Cookies.html">Cookies</a></li>
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+                <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+                <li><a href="Firewall.html">Firewall types</a></li>
+                <li><a href="HTTP_headers.html">HTTP headers</a></li>
+                <li><a href="Linux Commands.html">Linux Commands</a></li>
+                <li><a href="OSI model.html">OSI model</a></li>
+                <li><a href="Pentest.html">Pentest</a></li>
+                <li><a href="Protocols.html">Protocols</a></li>
+                <li><a href="SQLi_types.html">SQLi types</a></li>
+                <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+                <li><a href="XSS_types.html">XSS types</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="Frameworks.html">Frameworks</a></li>
+                <li><a href="my_attacks.html">My Attacks Examples</a></li>
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+	            <ul class=" list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Authentication_Types.html">Authentication Types</a></li>
+                  <li><a href="MFA.html">MFA</a></li>
+                  <li><a href="JWT.html">JWT</a></li>
+                  <li><a href="SAML.html">SAML</a></li>
+                  <li><a href="OAuth.html">OAuth</a></li>
+                </li>
+      
+	            </ul>
+	          </li>
+	        </ul>
+    	</nav>
+
+
+
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5 pt-5">
+        <div class="container my-5">
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Action</th>
+                <th>Authentication Factor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>User attempts to access a service (Service Provider - SP)</td>
+                <td>Initial Authentication (via the SP)</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>SP sends a SAML authentication request to the Identity Provider (IdP)</td>
+                <td>Authentication request sent from SP to IdP</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>IdP verifies the user’s identity (via login page or existing session)</td>
+                <td>User credentials validated by IdP</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>If authenticated, the IdP sends a SAML response (containing an assertion) to the SP</td>
+                <td>SAML assertion (authentication token) returned by IdP</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>The SP validates the SAML assertion and grants access to the user</td>
+                <td>Access granted based on valid SAML response</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Common Use Cases for SAML</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Use Case</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Single Sign-On (SSO)</td>
+                <td>SAML is widely used in enterprise environments for Single Sign-On (SSO), allowing users to access multiple applications with one set of credentials.</td>
+              </tr>
+              <tr>
+                <td>Federated Identity</td>
+                <td>SAML enables federated identity management, where users can authenticate across different domains or organizations without needing separate login credentials.</td>
+              </tr>
+              <tr>
+                <td>Enterprise Applications</td>
+                <td>SAML is commonly used in organizations for internal applications, allowing secure access without requiring multiple logins for different systems.</td>
+              </tr>
+              <tr>
+                <td>Cloud Services</td>
+                <td>SAML is frequently used to enable secure and seamless login to cloud services like Salesforce, Google Apps, and Microsoft 365 using enterprise credentials.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>SAML Structure</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Part</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Request</td>
+                <td>The service provider sends a SAML authentication request to the identity provider.</td>
+              </tr>
+              <tr>
+                <td>Response</td>
+                <td>Upon successful authentication, the identity provider sends a SAML response, which contains a security assertion (authentication information).</td>
+              </tr>
+              <tr>
+                <td>Assertion</td>
+                <td>Assertion is the main component of the SAML response, containing the user identity and authentication information that the SP uses to grant access.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Benefits of Using SAML</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Benefit</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Improved User Experience</td>
+                <td>Users can access multiple services with a single login, reducing the need to remember and enter multiple sets of credentials.</td>
+              </tr>
+              <tr>
+                <td>Centralized Authentication</td>
+                <td>SAML allows for centralized authentication, simplifying user management and security enforcement across multiple services.</td>
+              </tr>
+              <tr>
+                <td>Security</td>
+                <td>SAML uses encrypted communication between IdPs and SPs, ensuring that credentials are not exposed during the authentication process.</td>
+              </tr>
+              <tr>
+                <td>Reduced Password Fatigue</td>
+                <td>Users only need to remember one password, improving security by reducing the risk of weak or reused passwords.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Common Security Risks with SAML</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Risk</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>XML Signature Wrapping</td>
+                <td>Attackers may alter the SAML response by adding new elements, potentially allowing unauthorized access.</td>
+              </tr>
+              <tr>
+                <td>Replay Attacks</td>
+                <td>If the SAML response is intercepted, an attacker may reuse it to authenticate as a legitimate user.</td>
+              </tr>
+              <tr>
+                <td>Man-in-the-Middle (MITM)</td>
+                <td>If communication between the SP and IdP is not secured with proper encryption, attackers can intercept and manipulate the SAML messages.</td>
+              </tr>
+              <tr>
+                <td>Insecure Storage of SAML Tokens</td>
+                <td>If SAML tokens are stored insecurely (e.g., in plain text), attackers may steal and use them to impersonate users.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          
+          
+          
+
+          
+          
+
+            
+
+      
+    
+
+  
+
+
+       
+      
+      </div>
+	  
+		</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    
+  </body>
+</html>

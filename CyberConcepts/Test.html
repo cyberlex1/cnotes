@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Table</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .answer {
+      display: none;
+      background-color: #f9f9f9;
+    }
+
+    tr.question:hover {
+      background-color: #eef;
+    }
+  </style>
+</head>
+<body>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Concept</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="question">
+        <td><strong>Open Source or Close Source</strong></td>
+      </tr>
+      <tr class="answer">
+        <td><strong>Open Source</strong> can be more secure if actively maintained and has a strong community that continuously reviews the code.
+        <strong>Closed Source</strong> can be more secure if it's a well-established, professionally maintained product with strong security protocols.</td>
+      </tr>
+
+      <tr class="question">
+        <td><strong>Which Framework is Best?</strong></td>
+      </tr>
+      <tr class="answer">
+        <td>Depends on the scope of the engagement and the type of testing you're performing. OWASP (web apps; security testing guidelines); PTES Full-scope penetration testing (includes network, infrastructure, and web applications).</td>
+      </tr>
+
+      <tr class="question">
+        <td><strong>Goal of Information Security / Cybersecurity</strong></td>
+      </tr>
+      <tr class="answer">
+        <td>Protect an organization’s information assets from unauthorized access, disclosure, alteration, destruction, and disruption. It focuses on maintaining the CIA triad of information and systems, ensuring they remain safe, reliable, and accessible to authorized individuals.</td>
+      </tr>
+
+      <tr class="question">
+        <td style="background-color: #d9ebd0;"><strong>Preventive Controls</strong></td>
+      </tr>
+      <tr class="answer">
+        <td>Measures put in place to prevent security incidents from occurring. Examples: Firewalls, Encryption, Access Controls, MFA. Goal: block/deter malicious activities before they happen.</td>
+      </tr>
+
+      <tr class="question">
+        <td style="background-color: #d9ebd0;"><strong>Detective Controls</strong></td>
+      </tr>
+      <tr class="answer">
+        <td>Measures that detect and identify security incidents. Examples: IDS, Log Monitoring, Cameras, File Integrity Monitoring. Goal: identify/respond to attacks that bypass prevention.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const questions = document.querySelectorAll("tr.question");
+    questions.forEach((row) => {
+      row.addEventListener("click", () => {
+        const answerRow = row.nextElementSibling;
+        answerRow.style.display = answerRow.style.display === "table-row" ? "none" : "table-row";
+      });
+    });
+  </script>
+
+</body>
+</html>

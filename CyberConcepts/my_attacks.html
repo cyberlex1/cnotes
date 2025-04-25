@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 02</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+                  <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
+                  <li><a href="my_attacks.html">My Attacks Examples</a></li>
+                </li>
+	            </ul>
+	          </li>
+
+
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="G-Cloud.html">G-Cloud</a></li>
+                <li><a href="ISO27001.html">ISO 27001</a></li>
+                <li><a href="Software_Arquiteturas.html">Software</a></li>
+
+                <li><a href="Others.html">Others</a></li>
+
+
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+              <ul class="list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+            
+	        </ul>
+    	</nav>
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5 pt-5">
+        <div class="container my-5">
+          <h2 class="mb-4">Security Vulnerability Scenarios</h2>
+        
+          <!-- RCE -->
+          <div class="mb-4">
+            <h4>1. RCE (Remote Code Execution) Leads to Privilege Escalation and Data Exfiltration</h4>
+            <ul>
+              <li>Discovery of an RCE vulnerability in a file upload feature</li>
+              <li>Uploading a web shell masked as an image file</li>
+              <li>Executing arbitrary code on the server by accessing the uploaded file</li>
+              <li>Gaining remote control of the server and interacting with the filesystem</li>
+              <li>Escalating privileges from a low-privileged user to root by exploiting a misconfigured sudoers file</li>
+              <li>Exfiltrating sensitive files (e.g., <code>/etc/passwd</code>, API keys, or database dumps) to a remote server controlled by the attacker</li>
+            </ul>
+          </div>
+        
+          <!-- Path Traversal -->
+          <div class="mb-4">
+            <h4>2. Path Traversal Leads to Sensitive Data Exposure and Account Takeover</h4>
+            <ul>
+              <li>Discovery of a path traversal vulnerability in a file download feature</li>
+              <li>Manipulating the file path parameter to navigate outside the intended directory (e.g., <code>../../../../etc/passwd</code>)</li>
+              <li>Accessing sensitive files on the server, such as configuration files and user data</li>
+              <li>Extracting hashed passwords from configuration files</li>
+              <li>Brute forcing the password hashes offline</li>
+              <li>Logging into the application with the compromised credentials</li>
+              <li>Escalating privileges by accessing administrator functionality</li>
+            </ul>
+          </div>
+        
+          <!-- Server Misconfiguration -->
+          <div class="mb-4">
+            <h4>3. Server Misconfiguration Leads to Information Disclosure and Subsequent Exploitation</h4>
+            <ul>
+              <li>Discovery of a server misconfiguration where sensitive backup files (e.g., <code>.bak</code>, <code>.tar.gz</code>) are publicly accessible</li>
+              <li>Downloading backup files containing the application’s database and configuration</li>
+              <li>Extracting database credentials from the backup</li>
+              <li>Using the credentials to connect to the live database</li>
+              <li>Performing SQL injection attacks to dump user data and credentials</li>
+              <li>Using the credentials to access sensitive user accounts</li>
+              <li>Exfiltrating personal data and using the accounts for further exploitation</li>
+            </ul>
+          </div>
+        
+          <!-- XXE -->
+          <div class="mb-4">
+            <h4>4. XML External Entity (XXE) Leads to Information Disclosure and Internal Network Mapping</h4>
+            <ul>
+              <li>Discovery of XXE vulnerability in an XML parser used by the application</li>
+              <li>Injecting a malicious XML payload containing an external entity reference (e.g., <code>&lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt;</code>)</li>
+              <li>Exposing sensitive files by reading them via the XXE attack</li>
+              <li>Accessing internal network resources through HTTP requests to internal services</li>
+              <li>Mapping internal network infrastructure by discovering open ports and accessible services</li>
+              <li>Pivoting to internal systems and escalating access through further exploitation</li>
+            </ul>
+          </div>
+        
+          <!-- SSRF -->
+          <div class="mb-4">
+            <h4>5. Server-Side Request Forgery (SSRF) Leads to Internal Resource Access and Data Exfiltration</h4>
+            <ul>
+              <li>Discovery of SSRF vulnerability in an image processing service that fetches URLs from user input</li>
+              <li>Crafting a malicious URL pointing to an internal resource (e.g., <code>http://localhost:9200</code> or <code>http://internal-db:3306</code>)</li>
+              <li>Triggering the server to make a request to internal services and potentially retrieve sensitive data</li>
+              <li>Accessing an internal metadata service or cloud provider API (e.g., AWS metadata service for instance credentials)</li>
+              <li>Extracting credentials and using them for further exploitation</li>
+            </ul>
+          </div>
+        </div>
+        
+
+       
+      </div>
+	  
+		</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="custom-menu">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class="fa fa-bars"></i>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+    </div>
+            <div class="p-4 pt-5">
+      <ul class="list-unstyled components mb-5">
+
+        <li class="active">
+            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+            <ul class="collapse list-unstyled" id="cyberArticles">
+            <li>
+              <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+              <li><a href="General_Questions.html">General Questions</a></li>
+
+            </li>
+        
+            </ul>
+          </li>
+
+          <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+          <ul class=" list-unstyled" id="cyberConcepts">
+            <li><a href="AD Components.html">AD Components</a></li>
+            <li><a href="AD_Authentication.html">AD Authentication</a></li>
+            <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+            <li><a href="AD_Attacks.html">AD Attacks</a></li>
+        </ul>
+          </li>
+
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+          <ul class=" list-unstyled" id="cyberConcepts">
+            <li><a href="AST_Tools.html">AS Tools</a></li>
+            <li><a href="Cookies.html">Cookies</a></li>
+            <li><a href="Concepts.html">Concepts</a></li>
+            <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+            <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+            <li><a href="Firewall.html">Firewall types</a></li>
+            <li><a href="HTTP_headers.html">HTTP headers</a></li>
+            <li><a href="Linux Commands.html">Linux Commands</a></li>
+            <li><a href="OSI model.html">OSI model</a></li>
+            <li><a href="Pentest.html">Pentest</a></li>
+            <li><a href="Protocols.html">Protocols</a></li>
+            <li><a href="SQLi_types.html">SQLi types</a></li>
+            <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+            <li><a href="XSS_types.html">XSS types</a></li>
+            <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+            <li><a href="Frameworks.html">Frameworks</a></li>
+            <li><a href="my_attacks.html">My Attacks Examples</a></li>
+        </ul>
+          </li>
+
+        <li class="active">
+            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+            <ul class=" list-unstyled" id="cyberArticles">
+            <li>
+              <li><a href="Authentication_Types.html">Authentication Types</a></li>
+              <li><a href="MFA.html">MFA</a></li>
+              <li><a href="JWT.html">JWT</a></li>
+              <li><a href="SAML.html">SAML</a></li>
+              <li><a href="OAuth.html">OAuth</a></li>
+            </li>
+  
+            </ul>
+          </li>
+        </ul>
+    </nav>
+
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+                <h2 class="mb-4">The Cyber Kill Chain </h2>
+                <p>The Cyber Kill Chain is a model used to describe the stages of a cyberattack, from initial reconnaissance to the final exfiltration of data. The stages typically include:
+                    </p>
+                <!-- Table of SQLi Types -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Stage</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Reconnaissance</td>
+                            <td>Gathering information about the target, such as IP addresses, employee names, and technology stack.</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Weaponization</td>
+                            <td>Creating a malicious payload (e.g., malware embedded in a document or script).</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Delivery</td>
+                            <td>Sending the malicious payload to the target via email, web, USB, or another method.</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Exploitation</td>
+                            <td>Executing the malicious code by exploiting a vulnerability or user action.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Installation</td>
+                            <td>Installing malware on the target system to maintain access.</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Command and Control (C2)</td>
+                            <td>Establishing a remote connection to control the infected system.</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Actions on Objectives</td>
+                            <td>Executing the final goal of the attack (e.g., data theft, destruction, espionage).</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

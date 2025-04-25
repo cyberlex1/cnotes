@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Sidebar 02</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+  </style>
+  </style>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+				<div class="p-4 pt-5">
+          <ul class="list-unstyled components mb-5">
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+	            <ul class="collapse list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="General_Questions.html">General Questions</a></li>
+
+                </li>
+            
+	            </ul>
+	          </li>
+
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AD Components.html">AD Components</a></li>
+                <li><a href="AD_Authentication.html">AD Authentication</a></li>
+                <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+                <li><a href="AD_Attacks.html">AD Attacks</a></li>
+            </ul>
+	          </li>
+
+	        <ul class="list-unstyled components mb-5">
+	          <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
+              <ul class=" list-unstyled" id="cyberConcepts">
+                <li><a href="AST_Tools.html">AS Tools</a></li>
+                <li><a href="Cookies.html">Cookies</a></li>
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="CyberKillChain.html">Cyber Kill Chain</a></li>
+                <li><a href="CyberKillChain At_Attacks.html">Cyber Kill Chain Attacks</a></li>
+                <li><a href="Firewall.html">Firewall types</a></li>
+                <li><a href="HTTP_headers.html">HTTP headers</a></li>
+                <li><a href="Linux Commands.html">Linux Commands</a></li>
+                <li><a href="OSI model.html">OSI model</a></li>
+                <li><a href="Pentest.html">Pentest</a></li>
+                <li><a href="Protocols.html">Protocols</a></li>
+                <li><a href="SQLi_types.html">SQLi types</a></li>
+                <li><a href="SIEM & IDS:IPS.html">SIEM & IDS/IPS</a></li>
+                <li><a href="XSS_types.html">XSS types</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="Frameworks.html">Frameworks</a></li>
+                <li><a href="my_attacks.html">My Attacks Examples</a></li>
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
+	            <ul class=" list-unstyled" id="cyberArticles">
+                <li>
+                  <li><a href="Authentication_Types.html">Authentication Types</a></li>
+                  <li><a href="MFA.html">MFA</a></li>
+                  <li><a href="JWT.html">JWT</a></li>
+                  <li><a href="SAML.html">SAML</a></li>
+                  <li><a href="OAuth.html">OAuth</a></li>
+                </li>
+      
+	            </ul>
+	          </li>
+	        </ul>
+    	</nav>
+
+
+        <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5 pt-5">
+        <div class="container my-5">
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Step</th>
+                <th>Action</th>
+                <th>Authentication Factor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>User attempts to access a resource (Service Provider) using a third-party application (Client)</td>
+                <td>Initial Authentication (via third-party app)</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>The client application sends an OAuth request for authorization to the Authorization Server</td>
+                <td>Authorization Request</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>User is prompted to authenticate and authorize the application to access their resources (e.g., via login)</td>
+                <td>User credentials validated by Authorization Server</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>If authenticated, the Authorization Server sends an authorization code back to the client application</td>
+                <td>Authorization Code</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>The client application exchanges the authorization code for an access token from the Authorization Server</td>
+                <td>Access Token</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>The client application uses the access token to access the user's protected resources from the Resource Server</td>
+                <td>Access with Token</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Common Use Cases for OAuth</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Use Case</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Third-Party Login</td>
+                <td>OAuth is commonly used in "Login with Facebook/Google" scenarios, where users can authenticate using their existing account credentials from a trusted third-party.</td>
+              </tr>
+              <tr>
+                <td>Delegated Access</td>
+                <td>OAuth is used to grant a third-party application limited access to a user's resources (e.g., access to Google Calendar or Facebook posts) without sharing the user's password.</td>
+              </tr>
+              <tr>
+                <td>Mobile App Authentication</td>
+                <td>OAuth is used to authenticate mobile apps that access a user's data without requiring them to input their password directly into the app.</td>
+              </tr>
+              <tr>
+                <td>Cloud Service Authentication</td>
+                <td>OAuth is used for secure, token-based authentication to cloud services like Google Cloud, Microsoft Azure, and AWS, allowing secure API calls to access resources.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>OAuth Flow and Components</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Authorization Server</td>
+                <td>The server that authenticates the user and issues tokens (authorization code, access token).</td>
+              </tr>
+              <tr>
+                <td>Resource Server</td>
+                <td>The server that holds the protected resources and accepts access tokens to authorize access to them.</td>
+              </tr>
+              <tr>
+                <td>Client Application</td>
+                <td>The third-party app that requests access to the user's protected resources.</td>
+              </tr>
+              <tr>
+                <td>Authorization Code</td>
+                <td>A temporary code issued by the authorization server after the user authorizes access to their resources, exchanged for an access token.</td>
+              </tr>
+              <tr>
+                <td>Access Token</td>
+                <td>A token issued by the authorization server that grants access to the protected resources for a specified period.</td>
+              </tr>
+              <tr>
+                <td>Refresh Token</td>
+                <td>A token used to obtain a new access token after the original one expires, without requiring the user to re-authenticate.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Benefits of OAuth</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Benefit</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Delegated Access</td>
+                <td>OAuth enables third-party apps to access user data without requiring the user to share their credentials.</td>
+              </tr>
+              <tr>
+                <td>Security</td>
+                <td>OAuth reduces security risks by allowing users to authorize access without exposing their passwords.</td>
+              </tr>
+              <tr>
+                <td>Granular Access</td>
+                <td>OAuth allows users to grant limited access to their data, enhancing privacy and security (e.g., allowing an app to only access calendar events, not email).</td>
+              </tr>
+              <tr>
+                <td>Single Sign-On (SSO)</td>
+                <td>OAuth can be part of an SSO solution, allowing users to authenticate once and access multiple services without needing to log in each time.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Common OAuth Security Risks</h3>
+          <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Risk</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Token Theft</td>
+                <td>If an attacker intercepts or steals an access token, they may impersonate the user and access protected resources.</td>
+              </tr>
+              <tr>
+                <td>Authorization Code Interception</td>
+                <td>If the authorization code is intercepted during transmission, an attacker can exchange it for an access token.</td>
+              </tr>
+              <tr>
+                <td>Insecure Redirect URIs</td>
+                <td>If OAuth redirect URIs are misconfigured, attackers may redirect the user to a malicious server to steal tokens or credentials.</td>
+              </tr>
+              <tr>
+                <td>Insufficient Token Expiry</td>
+                <td>If tokens don't expire or are long-lived, stolen tokens can be used for extended periods before being invalidated.</td>
+              </tr>
+              <tr>
+                <td>Cross-Site Request Forgery (CSRF)</td>
+                <td>Malicious websites can make unauthorized requests to a service on behalf of an authenticated user if proper protections are not implemented.</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        
+
+          
+          
+
+            
+
+      
+    
+
+  
+
+
+       
+      
+      </div>
+	  
+		</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    
+  </body>
+</html>

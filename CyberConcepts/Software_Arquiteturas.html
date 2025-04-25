@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <style>
+    .pdf-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* Adjust this for aspect ratio */
+    }
+  
+    .pdf-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+    td:first-child, th:first-child {
+        font-size: 16px;
+    }
+    .answer {
+      display: none;
+    }
+    tr.question:hover {
+      background-color: #f9f9f9;
+    }
+
+    .faq {
+        width: 100%;
+        margin: 20px auto;
+      }
+
+      .q {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin: 5px 0;
+        cursor: pointer;
+        border: 1px solid #ddd;
+      }
+
+      .a {
+        display: none;
+        padding: 10px;
+        background-color: #f9f9f9;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+      }
+
+      .q:hover {
+        background-color: #e6e6e6;
+      }
+
+    
+  </style>
+  <body>
+  
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar">
+            <div class="custom-menu">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <i class="fa fa-bars"></i>
+          <span class="sr-only">Toggle Menu</span>
+        </button>
+    </div>
+            <div class="p-4 pt-5">
+      <ul class="list-unstyled components mb-5">
+
+        <li class="active">
+            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
+            <ul class="list-unstyled" id="cyberArticles">
+            <li>
+              <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
+              <li><a href="General_Questions.html">General Questions</a></li>
+              <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
+              <li><a href="my_attacks.html">My Attacks Examples</a></li>
+            </li>
+            </ul>
+          </li>
+
+
+
+        <ul class="list-unstyled components mb-5">
+          <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
+          <ul class=" list-unstyled" id="cyberConcepts">
+
+            <li><a href="Concepts.html">Concepts</a></li>
+            <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+            <li><a href="G-Cloud.html">G-Cloud</a></li>
+            <li><a href="ISO27001.html">ISO 27001</a></li>
+            <li><a href="Software_Arquiteturas.html">Software</a></li>
+
+            <li><a href="Others.html">Others</a></li>
+
+
+        </ul>
+          </li>
+
+        <li class="active">
+            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+          <ul class="list-unstyled" id="cyberConcepts">
+            <li><a href="AD Components.html">AD Components</a></li>
+            <li><a href="AD_Authentication.html">AD Authentication</a></li>
+            <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
+            <li><a href="AD_Attacks.html">AD Attacks</a></li>
+        </ul>
+          </li>
+
+        
+        </ul>
+    </nav>
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container my-5">
+
+              <h5>What is Software Architecture?</h5>
+              <p>The high-level structure of a software system. </br>
+
+                Defines the system’s components, their interactions, and how they work together.</p>
+
+
+                <div class="q"> <strong>Software Secure Practices</strong></div>
+                <div class="a">
+                  <table border="1">
+                    <thead>
+                        <tr>
+                            <th><strong>Practice</strong></th>
+                            <th><strong>Key Points</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Input Validation</strong></td>
+                            <td>Validate and sanitize inputs to prevent injection attacks (SQL, XSS, etc.).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Authentication & Authorization</strong></td>
+                            <td>Use strong authentication (MFA) and ensure proper authorization (least privilege).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Encryption</strong></td>
+                            <td>Encrypt sensitive data at rest and in transit (AES-256, TLS/SSL).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Secure Code Practices</strong></td>
+                            <td>Avoid hardcoded credentials, use parameterized queries, and conduct code reviews.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Error Handling</strong></td>
+                            <td>Avoid exposing sensitive data in error messages and log errors securely.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Patch Management</strong></td>
+                            <td>Apply security patches and update libraries/dependencies regularly.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Session Management</strong></td>
+                            <td>Use secure session techniques, timeouts, and expiration policies.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Access Controls</strong></td>
+                            <td>Restrict unauthorized access and use MFA for high-risk areas.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Logging & Monitoring</strong></td>
+                            <td>Log security events and monitor for anomalies or breaches.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SDLC Security</strong></td>
+                            <td>Integrate security throughout the SDLC and perform security testing.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Least Privilege</strong></td>
+                            <td>Limit access to the minimum necessary for both users and services.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security Testing</strong></td>
+                            <td>Conduct regular penetration testing, vulnerability scanning, and code analysis.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Security Awareness Training</strong></td>
+                            <td>Train developers and users on security practices and emerging threats.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Backup & Recovery</strong></td>
+                            <td>Implement encrypted backups and regularly test recovery procedures.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Third-Party Libraries</strong></td>
+                            <td>Evaluate third-party libraries for vulnerabilities and monitor updates.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                </div>
+
+              <div class="q"> <strong>Importance of Software Architecture</strong></div>
+              <div class="a">
+                <ul>
+                  <li><strong>Scalability:</strong> Ensures the system can grow and handle increased load.</li>
+                  <li><strong>Maintainability:</strong> Simplifies updates, modifications, and troubleshooting.</li>
+                  <li><strong>Performance:</strong> Helps optimize the system’s speed and efficiency.</li>
+                  <li><strong>Security:</strong> Defines practices and components that protect the system from vulnerabilities.</li>
+                  <li><strong>Cost-Effectiveness:</strong> Balances development and operational costs over time.</li>
+              </ul>
+              
+              </div>
+              <div class="q"><strong>Components</strong></div>
+              <div class="a">
+                <ul>
+                  <li><strong>Components:</strong> The individual building blocks of the system (e.g., databases, services, APIs).</li>
+                  <li><strong>Connectors:</strong> How components communicate (e.g., messaging, APIs, network protocols).</li>
+                  <li><strong>Data Flow:</strong> The flow of data between components.</li>
+                  <li><strong>Modules:</strong> Grouping of components into larger, cohesive units.</li>
+              </ul>
+              
+              </div>
+
+              <h4>Softwares Architectures</h4>
+
+              <div class="q">🧩 <strong>Microservices</strong></div>
+              <div class="a">
+                <ul>
+                  <li>Independent, small services focused on specific business capabilities</li>
+                  <li>Each service has its own database and can be deployed independently</li>
+                  <li>Communicate via APIs (REST, gRPC, etc.)</li>
+                  <li>Improves scalability and fault isolation</li>
+                  <li>Requires service discovery, orchestration (e.g., Kubernetes)</li>
+                  <li><strong>✅ Advantages:</strong> Scalable, independent deployments, high resilience</li>
+                  <li><strong>❌ Disadvantages:</strong> Complex to manage, inter-service communication, observability</li>
+                </ul>
+              </div>
+              
+              <div class="q">⚙️ <strong>Event-driven Architecture</strong></div>
+              <div class="a">
+                <ul>
+                  <li>Uses events to trigger and communicate between services</li>
+                  <li>Highly decoupled and asynchronous</li>
+                  <li>Supports real-time processing and scalability</li>
+                  <li>Built with message brokers (Pub/Sub, Kafka, RabbitMQ)</li>
+                  <li>Ideal for complex workflows and reactive systems</li>
+                  <li><strong>✅ Advantages:</strong> High decoupling, scalable, great for real-time systems</li>
+                  <li><strong>❌ Disadvantages:</strong> Hard to debug, risk of lost events, complex monitoring</li>
+                </ul>
+              </div>
+              
+              <div class="q">🔌 <strong>Service-Oriented Architecture (SOA)</strong></div>
+              <div class="a">
+                <ul>
+                  <li>Organizes services around business functions</li>
+                  <li>Uses enterprise service bus (ESB) for communication</li>
+                  <li>Services are reusable and loosely coupled</li>
+                  <li>Focuses on interoperability and integration</li>
+                  <li>Predecessor to microservices with more centralized control</li>
+                  <li><strong>✅ Advantages:</strong> System integration, service reusability</li>
+                  <li><strong>❌ Disadvantages:</strong> ESB can become a bottleneck, less flexible than microservices</li>
+                </ul>
+              </div>
+              
+              <div class="q">🏗️ <strong>Layered (N-tier) Architecture</strong></div>
+              <div class="a">
+                <ul>
+                  <li>Classic architecture: presentation, business logic, data layers</li>
+                  <li>Improves separation of concerns and maintainability</li>
+                  <li>Each layer communicates only with adjacent layers</li>
+                  <li>Good for monolithic applications</li>
+                  <li>Simple and easy to implement</li>
+                  <li><strong>✅ Advantages:</strong> Simple, well-structured, easy to understand</li>
+                  <li><strong>❌ Disadvantages:</strong> Limited flexibility, harder to scale, layer coupling</li>
+                </ul>
+              </div>
+              
+              <div class="q">🧱 <strong>Hexagonal / Clean Architecture</strong></div>
+              <div class="a">
+                <ul>
+                  <li>Separates core logic from external concerns (UI, DB, APIs)</li>
+                  <li>Promotes testability and flexibility</li>
+                  <li>Inward-facing core domain, outward-facing infrastructure</li>
+                  <li>Often uses adapters and ports for integrations</li>
+                  <li>Clean separation between business rules and frameworks</li>
+                  <li><strong>✅ Advantages:</strong> Highly testable, decoupled, domain-focused</li>
+                  <li><strong>❌ Disadvantages:</strong> Steep learning curve, more boilerplate and layers</li>
+                </ul>
+              </div>
+              
+              <div class="q">📦 <strong>Domain-Driven Design (DDD)</strong></div>
+              <div class="a">
+                <ul>
+                  <li>Focuses on modeling real-world business domains</li>
+                  <li>Encourages collaboration between developers and domain experts</li>
+                  <li>Breaks systems into bounded contexts</li>
+                  <li>Uses entities, value objects, aggregates, repositories</li>
+                  <li>Good for complex business logic and large teams</li>
+                  <li><strong>✅ Advantages:</strong> Great for complex domains, aligns business and tech</li>
+                  <li><strong>❌ Disadvantages:</strong> Conceptually complex, not suitable for small projects</li>
+                </ul>
+              </div>
+              
+
+            </div>
+        </div>
+    </div>
+    <script>
+      // Seleciona todas as perguntas com a classe .q
+      const questions = document.querySelectorAll('.q');
+
+      // Para cada pergunta, adiciona o evento de clique
+      questions.forEach((question) => {
+        question.addEventListener('click', function() {
+          // Encontra a resposta relacionada (a próxima div com a classe .a)
+          const answer = this.nextElementSibling;
+          
+          // Alterna a visibilidade da resposta
+          if (answer && answer.classList.contains('a')) {
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+          }
+        });
+      });
+      </script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
