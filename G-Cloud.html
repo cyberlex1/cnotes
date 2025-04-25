@@ -297,7 +297,7 @@
               <div class="a">
                 <div class="q"><strong>What is it?</strong></div>
                 <div class="a">
-                  Google Cloud Security Command Center (SCC) is a security management platform that provides visibility, threat detection, vulnerability management, and compliance monitoring for Google Cloud resources. It helps detect threats, identify vulnerabilities, and automate responses, enhancing cloud security.
+                  Google Cloud Security Command Center (SCC) is a <strong>security management platform </strong> ==> that helps detect threats, identify vulnerabilities, and automate responses, enhancing cloud security.
                 </div>
                 <div class="q"><strong>How to detect and respond to threats with SCC</strong></div>
 <div class="a">
@@ -620,40 +620,21 @@
   
   
             
-          <div class="q">🔐 Cloud Armor </div>
+          <div class="q">🔐 Cloud Armor</div>
           <div class="a">
-            <h4>Cloud Armor - Protecting Applications on Google Cloud Platform</h4>
-            <p><strong>Cloud Armor</strong> is a security service provided by Google Cloud Platform (GCP) that helps protect applications from a variety of threats, particularly those from malicious web traffic. Its primary role is to safeguard applications deployed in GCP by filtering and blocking malicious requests before they reach the application.</p>
-            
-            <h2>Key Features and Role of Cloud Armor:</h2>
-            
+            <h4>Cloud Armor – GCP Web Protection</h4>
+            <p>Protects your websites and apps from online attacks.  
+              It blocks bad traffic like hackers or DDoS attacks before it reaches your servers.</p>
             <ul>
-                <li><strong>DDoS Protection</strong>: 
-                    <p>Cloud Armor provides Distributed Denial of Service (DDoS) protection to safeguard applications against large-scale attacks aimed at overwhelming resources. It leverages Google's global infrastructure to absorb and mitigate attacks at the network edge before they can reach the application.</p>
-                </li>
-                
-                <li><strong>Web Application Firewall (WAF)</strong>: 
-                    <p>Cloud Armor integrates a WAF to protect applications from common web application attacks, such as SQL injection, cross-site scripting (XSS), and other OWASP Top 10 threats. Users can define custom rules to block or allow traffic based on specific conditions like IP address, region, or request types.</p>
-                </li>
-                
-                <li><strong>Access Control</strong>: 
-                    <p>Cloud Armor allows users to set rules based on various attributes, such as IP address, geography (region-based filtering), and request headers. This enables granular control over who can access the applications and helps ensure that only authorized traffic is allowed.</p>
-                </li>
-                
-                <li><strong>Scalability</strong>: 
-                    <p>The service is designed to scale automatically with your application’s needs. As the application grows or faces traffic spikes, Cloud Armor ensures that the level of protection adapts without requiring manual intervention.</p>
-                </li>
-                
-                <li><strong>Integration with Google Cloud Load Balancer</strong>: 
-                    <p>Cloud Armor works seamlessly with Google Cloud's HTTP(S) Load Balancer to protect both global and regional applications deployed in GCP. This integration enables traffic to be filtered before it reaches the backend servers, ensuring that malicious traffic does not compromise the application.</p>
-                </li>
-                
-                <li><strong>Logging and Monitoring</strong>: 
-                    <p>Cloud Armor provides detailed logs that track incoming requests, which help with security auditing, compliance, and troubleshooting. Integration with Google Cloud's operations suite (formerly Stackdriver) allows for real-time monitoring and alerting on suspicious activity.</p>
-                </li>
+              <li><strong>DDoS Protection:</strong> Blocks large-scale attacks using Google’s global edge.</li>
+              <li><strong>WAF (Web Application Firewall):</strong> Protects against SQLi, XSS, OWASP Top 10 threats.</li>
+              <li><strong>Access Control:</strong> Rules by IP, region, or headers to restrict traffic.</li>
+              <li><strong>Scalable:</strong> Automatically adapts to traffic spikes.</li>
+              <li><strong>Load Balancer Integration:</strong> Filters traffic before reaching backends.</li>
+              <li><strong>Logging & Monitoring:</strong> Tracks traffic and integrates with GCP Ops Suite.</li>
             </ul>
           </div>
-
+          
               
             <div class="q"> <span style="color:red">Logging</span>  Tools</div>
             <div class="a">
@@ -1155,31 +1136,24 @@
             <div class="a">
               <ul>
                 <li>Object storage for unstructured data (images, videos, backups).</li>
-                <li>Highly durable and scalable (multi-region options).</li>
-                <li>Supports lifecycle rules, versioning, and encryption.</li>
-                <li>Public or private file access with signed URLs.</li>
+                <li>Highly durable (99.999999999% durability) and scalable.</li>
+                <li>Supports encryption, versioning, lifecycle rules, and access control.</li>
               </ul>
-
-              <p>It allows you to store and retrieve any amount of data, at any time, from anywhere on the web.              </p>
-
+            
+              <p>Stores and retrieves large amounts of data, anytime, anywhere.</p>
+            
               <strong>Key Features</strong>
               <ul>
-                <li><strong>Object Storage:</strong> Stores data as objects inside buckets (not traditional file systems).</li>
-                <li><strong>Scalability:</strong> Handles from a few bytes to petabytes easily without user intervention.</li>
-                <li><strong>Durability:</strong> 99.999999999% (11 9’s) durability by replicating data across multiple locations.</li>
-                <li><strong>Security:</strong> Integrated IAM, bucket policies, data encryption at rest and in transit.</li>
-                <li><strong>Classes for Cost Optimization:</strong> Choose between Standard, Nearline, Coldline, and Archive based on access frequency and cost needs.</li>
-                <li><strong>Global Access:</strong> Access your data from anywhere in the world, thanks to Google's global network.</li>
-                <li><strong>Lifecycle Management:</strong> Automatically transition or delete objects based on rules you set (ex: move to Coldline after 30 days).</li>
-                <li><strong>Data Consistency:</strong> Strong consistency for object creation, updates, and deletions.</li>
+                <li><strong>Scalable:</strong> Handles data from bytes to petabytes.</li>
+                <li><strong>Security:</strong> Integrated IAM, encryption at rest and in transit.</li>
+                <li><strong>Cost Optimization:</strong> Different storage classes based on access frequency.</li>
               </ul>
-
+            
               <table border="1" cellpadding="5" cellspacing="0">
                 <thead>
                   <tr>
                     <th>Storage Class</th>
                     <th>Use Case</th>
-                    <th>Access Frequency</th>
                     <th>Cost</th>
                   </tr>
                 </thead>
@@ -1187,30 +1161,27 @@
                   <tr>
                     <td><strong>Standard</strong></td>
                     <td>Frequently accessed data</td>
-                    <td>High</td>
                     <td>Higher cost</td>
                   </tr>
                   <tr>
                     <td><strong>Nearline</strong></td>
-                    <td>Data accessed about once a month</td>
-                    <td>Medium</td>
+                    <td>Monthly access</td>
                     <td>Lower cost</td>
                   </tr>
                   <tr>
                     <td><strong>Coldline</strong></td>
-                    <td>Data accessed a few times per year</td>
-                    <td>Low</td>
+                    <td>Yearly access</td>
                     <td>Very low cost</td>
                   </tr>
                   <tr>
                     <td><strong>Archive</strong></td>
-                    <td>Long-term storage and archival</td>
-                    <td>Very rare</td>
+                    <td>Long-term storage</td>
                     <td>Cheapest</td>
                   </tr>
                 </tbody>
               </table> 
             </div>
+            
             
             <div class="q">🗄️ Cloud SQL</div>
             <div class="a">
@@ -1513,6 +1484,182 @@
             </div>
             
 
+                        
+            <div class="q"> Bucket</div>
+            <div class="a">
+              <strong>What is the Function of a Bucket in Google Cloud Storage?</strong>
+     
+                    In Google Cloud Storage, a <strong>bucket</strong> is the fundamental container to store data. It holds objects like files and metadata. <br><br>
+                    <strong>Key functions:</strong>
+                    <ul>
+                      <li>Stores objects (files, backups, media, etc.)</li>
+                      <li>Requires a globally unique name</li>
+                      <li>Controls access via IAM, ACLs, Signed URLs</li>
+                      <li>Allows choosing storage classes (Standard, Nearline, Coldline, Archive)</li>
+                      <li>Defines region/location for data storage</li>
+                      <li>Supports lifecycle management rules</li>
+                      <li>Enables object versioning</li>
+                    </ul>
+                    <strong>Use cases:</strong> website hosting, backups, log storage, media storage.
+            </div>
+
+            <div class="q">Cloud Router and VPN tunnels</div>
+            <div class="a">
+              <p><strong>Cloud Router</strong> is a managed service in Google Cloud Platform (GCP) that automatically exchanges route information between your Virtual Private Cloud (VPC) network and your on-premises network using dynamic routing protocols like BGP (Border Gateway Protocol).</p>
+    
+              <h2>Key Functions of Cloud Router:</h2>
+              <ul>
+                  <li><strong>Dynamic Routing:</strong> 
+                      <p>Automatically learns and shares route information with on-premises networks through BGP, ensuring that your network stays updated without manual configuration.</p>
+                  </li>
+                  
+                  <li><strong>High Availability:</strong> 
+                      <p>Cloud Router supports redundant configurations to maintain connectivity even during failures, ensuring reliable hybrid and multi-cloud environments.</p>
+                  </li>
+                  
+                  <li><strong>Scaling:</strong> 
+                      <p>It scales automatically to handle the growth of your network without needing manual intervention or hardware upgrades.</p>
+                  </li>
+                  
+                  <li><strong>Integration with VPN and Interconnect:</strong> 
+                      <p>Cloud Router works with Cloud VPN and Dedicated Interconnect to manage hybrid connections dynamically and securely.</p>
+                  </li>
+                  
+                  <li><strong>Reduced Manual Effort:</strong> 
+                      <p>Eliminates the need to manually update routes when your network grows or changes, reducing the risk of errors and operational burden.</p>
+                  </li>
+              </ul>
+    
+              <h2>VPN Tunnels</h2>
+              <p>
+                  A <strong>VPN Tunnel</strong> securely connects your on-premises network or another cloud environment 
+                  to your Google Cloud VPC over the public Internet using encrypted communication.
+              </p>
+          
+              <ul>
+                  <li>Encrypts traffic between sites securely.</li>
+                  <li>Can be <strong>Static</strong> (manual routes) or <strong>Dynamic</strong> (with Cloud Router and BGP).</li>
+                  <li>Commonly used for hybrid cloud or multi-cloud networking.</li>
+              </ul>
+          
+              <h2>How They Work Together</h2>
+              <ul>
+                  <li><strong>Without Cloud Router:</strong> VPN uses static routes; manual updates needed.</li>
+                  <li><strong>With Cloud Router:</strong> VPN tunnels use dynamic routing (BGP), automatic route exchange.</li>
+                  <li>Improves network flexibility and simplifies management.</li>
+              </ul>
+            </div>
+            
+            <div class="q">Cloud Spanner </div>
+            <div class="a">
+              <p>
+                <strong>Cloud Spanner</strong> fully managed SQL database that scales globally and supports strong consistency.
+                It combines the benefits of traditional relational databases (SQL, strong consistency) with the scalability of NoSQL databases.
+              </p>
+            
+              <h2>Key Features</h2>
+              <ul>
+                <li><strong>Horizontal Scalability:</strong> Scales automatically across regions and nodes.</li>
+                <li><strong>Strong Consistency:</strong> Global transactions with strong consistency guarantees.</li>
+                <li><strong>SQL Support:</strong> Supports ANSI SQL with extensions for distributed data.</li>
+                <li><strong>High Availability:</strong> Offers up to 99.999% availability SLA.</li>
+                <li><strong>Global Distribution:</strong> Data can be automatically replicated across regions.</li>
+                <li><strong>Managed Service:</strong> Google handles backups, replication, and patching.</li>
+              </ul>
+            
+              <h2>How to Configure Cloud Spanner</h2>
+              <ol>
+                <li><strong>Create an Instance:</strong> 
+                  <ul>
+                    <li>Go to the Google Cloud Console.</li>
+                    <li>Navigate to <em>Spanner > Instances > Create Instance</em>.</li>
+                    <li>Set a name, instance ID, and select an instance configuration (regional or multi-region).</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Create a Database:</strong> 
+                  <ul>
+                    <li>After creating an instance, select it and click <em>Create Database</em>.</li>
+                    <li>Define your schema using DDL statements (e.g., create tables and indexes).</li>
+                  </ul>
+                </li>
+            
+                <li><strong>Connect and Use:</strong> 
+                  <ul>
+                    <li>Use the <code>gcloud</code> CLI, client libraries (Java, Python, Go, etc.), or JDBC to connect.</li>
+                    <li>Start inserting, querying, and managing data via SQL commands.</li>
+                  </ul>
+                </li>
+              </ol>
+            
+            </div>
+
+            <div class="q">Pub/Sub</div>
+            <div class="a">
+              <h1>What is Google Cloud Pub/Sub?</h1>
+              <p>Messaging service that lets different apps communicate by sending and receiving messages in real time.</p>
+              <div class="q">⚙️ How Cloud Pub/Sub Works</div>
+              <div class="a">
+                <p>Apps (publishers) send messages to a <strong>topic</strong>.</p>
+                <p>Other apps (subscribers) receive those messages from the topic.</p>
+                <p>Google Cloud handles the delivery, scaling, and reliability.</p>
+              </div>
+
+              <div class="q">Key Features</div>
+              <div class="a">
+
+                  <ul>
+                    <li>Real-time event distribution</li>
+                    <li>Scalable to millions of messages per second</li>
+                    <li>Automatic load balancing</li>
+                    <li>Durable message storage</li>
+                  </ul>
+                </div>
+
+
+              <div class="q">How to Set Up</div>
+              <div class="a">
+
+                  <h2>Step-by-Step:</h2>
+                  <ol>
+                    <li><strong>Enable Pub/Sub API</strong>
+                      <ul>
+                        <li>Go to the <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>.</li>
+                        <li>Enable the <strong>Pub/Sub API</strong> for your project.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Create a Topic</strong>
+                      <ul>
+                        <li>Navigate to <strong>Pub/Sub</strong> section.</li>
+                        <li>Click on <strong>Create Topic</strong>.</li>
+                        <li>Give it a name and click <strong>Create</strong>.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Create a Subscription</strong>
+                      <ul>
+                        <li>Select the created Topic.</li>
+                        <li>Click <strong>Create Subscription</strong>.</li>
+                        <li>Choose type (e.g., <strong>Pull</strong> or <strong>Push</strong>).</li>
+                        <li>Configure options and save.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Publish Messages</strong>
+                      <ul>
+                        <li>Use Console, <code>gcloud</code> CLI, or SDK to publish a message to your topic.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Receive Messages</strong>
+                      <ul>
+                        <li>Subscribers will automatically receive the messages based on the subscription settings.</li>
+                      </ul>
+                    </li>
+                  </ol>
+ </div>
+            </div>
 
             
 
@@ -1615,24 +1762,7 @@
               </ol>
             </div>
 
-            
-            <div class="q"> Bucket</div>
-            <div class="a">
-              <strong>What is the Function of a Bucket in Google Cloud Storage?</strong>
-     
-                    In Google Cloud Storage, a <strong>bucket</strong> is the fundamental container to store data. It holds objects like files and metadata. <br><br>
-                    <strong>Key functions:</strong>
-                    <ul>
-                      <li>Stores objects (files, backups, media, etc.)</li>
-                      <li>Requires a globally unique name</li>
-                      <li>Controls access via IAM, ACLs, Signed URLs</li>
-                      <li>Allows choosing storage classes (Standard, Nearline, Coldline, Archive)</li>
-                      <li>Defines region/location for data storage</li>
-                      <li>Supports lifecycle management rules</li>
-                      <li>Enables object versioning</li>
-                    </ul>
-                    <strong>Use cases:</strong> website hosting, backups, log storage, media storage.
-            </div>
+
 
 
             
@@ -1646,58 +1776,9 @@
 
             
 
-            <div class="q"> Cloud</div>
-            <div class="a">A computer system that has a network, hardware, storage, and an application programming interface</div>
-
-            
-
-            <div class="q">Cloud Router and VPN tunnels</div>
-            <div class="a">
-              <p><strong>Cloud Router</strong> is a managed service in Google Cloud Platform (GCP) that automatically exchanges route information between your Virtual Private Cloud (VPC) network and your on-premises network using dynamic routing protocols like BGP (Border Gateway Protocol).</p>
     
-              <h2>Key Functions of Cloud Router:</h2>
-              <ul>
-                  <li><strong>Dynamic Routing:</strong> 
-                      <p>Automatically learns and shares route information with on-premises networks through BGP, ensuring that your network stays updated without manual configuration.</p>
-                  </li>
-                  
-                  <li><strong>High Availability:</strong> 
-                      <p>Cloud Router supports redundant configurations to maintain connectivity even during failures, ensuring reliable hybrid and multi-cloud environments.</p>
-                  </li>
-                  
-                  <li><strong>Scaling:</strong> 
-                      <p>It scales automatically to handle the growth of your network without needing manual intervention or hardware upgrades.</p>
-                  </li>
-                  
-                  <li><strong>Integration with VPN and Interconnect:</strong> 
-                      <p>Cloud Router works with Cloud VPN and Dedicated Interconnect to manage hybrid connections dynamically and securely.</p>
-                  </li>
-                  
-                  <li><strong>Reduced Manual Effort:</strong> 
-                      <p>Eliminates the need to manually update routes when your network grows or changes, reducing the risk of errors and operational burden.</p>
-                  </li>
-              </ul>
-    
-              <h2>VPN Tunnels</h2>
-              <p>
-                  A <strong>VPN Tunnel</strong> securely connects your on-premises network or another cloud environment 
-                  to your Google Cloud VPC over the public Internet using encrypted communication.
-              </p>
-          
-              <ul>
-                  <li>Encrypts traffic between sites securely.</li>
-                  <li>Can be <strong>Static</strong> (manual routes) or <strong>Dynamic</strong> (with Cloud Router and BGP).</li>
-                  <li>Commonly used for hybrid cloud or multi-cloud networking.</li>
-              </ul>
-          
-              <h2>How They Work Together</h2>
-              <ul>
-                  <li><strong>Without Cloud Router:</strong> VPN uses static routes; manual updates needed.</li>
-                  <li><strong>With Cloud Router:</strong> VPN tunnels use dynamic routing (BGP), automatic route exchange.</li>
-                  <li>Improves network flexibility and simplifies management.</li>
-              </ul>
-            </div>
-            
+
+       
            
             <div class="q">Cloud computing vs virtualization </div>
             <div class="a">
@@ -1760,51 +1841,7 @@
 
             </div>
 
-            <div class="q">Cloud Spanner </div>
-            <div class="a">
-              <p>
-                <strong>Cloud Spanner</strong> is a fully managed, scalable, and globally distributed relational database service by Google Cloud.
-                It combines the benefits of traditional relational databases (SQL, strong consistency) with the scalability of NoSQL databases.
-              </p>
-            
-              <h2>Key Features</h2>
-              <ul>
-                <li><strong>Horizontal Scalability:</strong> Scales automatically across regions and nodes.</li>
-                <li><strong>Strong Consistency:</strong> Global transactions with strong consistency guarantees.</li>
-                <li><strong>SQL Support:</strong> Supports ANSI SQL with extensions for distributed data.</li>
-                <li><strong>High Availability:</strong> Offers up to 99.999% availability SLA.</li>
-                <li><strong>Global Distribution:</strong> Data can be automatically replicated across regions.</li>
-                <li><strong>Managed Service:</strong> Google handles backups, replication, and patching.</li>
-              </ul>
-            
-              <h2>How to Configure Cloud Spanner</h2>
-              <ol>
-                <li><strong>Create an Instance:</strong> 
-                  <ul>
-                    <li>Go to the Google Cloud Console.</li>
-                    <li>Navigate to <em>Spanner > Instances > Create Instance</em>.</li>
-                    <li>Set a name, instance ID, and select an instance configuration (regional or multi-region).</li>
-                  </ul>
-                </li>
-            
-                <li><strong>Create a Database:</strong> 
-                  <ul>
-                    <li>After creating an instance, select it and click <em>Create Database</em>.</li>
-                    <li>Define your schema using DDL statements (e.g., create tables and indexes).</li>
-                  </ul>
-                </li>
-            
-                <li><strong>Connect and Use:</strong> 
-                  <ul>
-                    <li>Use the <code>gcloud</code> CLI, client libraries (Java, Python, Go, etc.), or JDBC to connect.</li>
-                    <li>Start inserting, querying, and managing data via SQL commands.</li>
-                  </ul>
-                </li>
-              </ol>
-            
-            </div>
-
-
+        
 
             <div class="q">Data Compliance</div>
             <div class="a">
@@ -2196,6 +2233,37 @@ resource "google_compute_instance" "default" {
 
             </div>
 
+            <div class="q">SaaS</div>
+            <div class="a">
+              SaaS (Software as a Service) is a cloud computing model where software applications are delivered over the internet.
+
+Instead of installing and maintaining software locally, users access it through a web browser. The provider hosts, maintains, updates, and secures the application. </br>
+
+Examples: Gmail, Google Docs, Salesforce, Dropbox.
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th>Deployment Model</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Public SaaS</td>
+                    <td>A single version of the application is used by multiple customers (multi-tenant). Hosted and managed by the SaaS provider. Example: Gmail.</td>
+                  </tr>
+                  <tr>
+                    <td>Private SaaS</td>
+                    <td>A dedicated instance of the application for a single organization. Offers more control and customization. Example: SaaS apps deployed in a company's private cloud.</td>
+                  </tr>
+                  <tr>
+                    <td>Hybrid SaaS</td>
+                    <td>Combines public and private SaaS features. Some components run in a public cloud, while sensitive data or services are handled privately.</td>
+                  </tr>
+                </tbody>
+              </table>
+              
+            </div>
             <div class="q">IaaS, PaaS, SaaS - G-cloud levels</div>
             <div class="a">
             <table border="1">
@@ -2205,15 +2273,15 @@ resource "google_compute_instance" "default" {
               </tr>
               <tr>
                 <td><strong>IaaS</strong> (Infrastructure as a Service)</td>
-                <td>The basic building block of cloud computing, providing virtualized hardware resources.</td>
+                <td>The cloud provides the basic infrastructure (servers, storage, networking). You manage almost everything. Google Compute Engine</td>
               </tr>
               <tr>
                 <td><strong>PaaS</strong> (Platform as a Service)</td>
-                <td>Provides infrastructure and development tools for building, testing, and deploying applications.</td>
+                <td>The cloud handles the infrastructure and runtime environment. You focus on your code. Google App Engine, Heroku</td>
               </tr>
               <tr>
                 <td><strong>SaaS</strong> (Software as a Service)</td>
-                <td>Delivers software applications over the internet, managed by the provider.</td>
+                <td>Everything is managed for you — you only interact with the software. You just use the app.  Gmail, Google Docs, Salesforce</td>
               </tr>
               <tr>
                 <td><strong>BPO</strong> (Business Process Outsourcing)</td>
@@ -2293,70 +2361,7 @@ resource "google_compute_instance" "default" {
               </ul>
             </div>
 
-            <div class="q">Pub/Sub</div>
-            <div class="a">
-              <h1>What is Google Cloud Pub/Sub?</h1>
-                  <p><strong>Google Cloud Pub/Sub</strong> is a real-time messaging service for sending and receiving messages between independent applications.</p>
-
-                  <h2>How it Works:</h2>
-                  <ul>
-                    <li><strong>Publishers</strong> send messages to a <strong>topic</strong>.</li>
-                    <li><strong>Subscribers</strong> receive messages from that topic.</li>
-                    <li>Pub/Sub ensures <strong>reliable delivery</strong> of messages, even if services are temporarily unavailable.</li>
-                    <li>It supports <strong>asynchronous communication</strong> between systems.</li>
-                  </ul>
-
-                  <h2>Key Features:</h2>
-                  <ul>
-                    <li>Real-time event distribution</li>
-                    <li>Scalable to millions of messages per second</li>
-                    <li>Automatic load balancing</li>
-                    <li>Durable message storage</li>
-                  </ul>
-
-                  <h1>How to Set Up Google Cloud Pub/Sub</h1>
-
-                  <h2>Step-by-Step:</h2>
-                  <ol>
-                    <li><strong>Enable Pub/Sub API</strong>
-                      <ul>
-                        <li>Go to the <a href="https://console.cloud.google.com" target="_blank">Google Cloud Console</a>.</li>
-                        <li>Enable the <strong>Pub/Sub API</strong> for your project.</li>
-                      </ul>
-                    </li>
-                
-                    <li><strong>Create a Topic</strong>
-                      <ul>
-                        <li>Navigate to <strong>Pub/Sub</strong> section.</li>
-                        <li>Click on <strong>Create Topic</strong>.</li>
-                        <li>Give it a name and click <strong>Create</strong>.</li>
-                      </ul>
-                    </li>
-                
-                    <li><strong>Create a Subscription</strong>
-                      <ul>
-                        <li>Select the created Topic.</li>
-                        <li>Click <strong>Create Subscription</strong>.</li>
-                        <li>Choose type (e.g., <strong>Pull</strong> or <strong>Push</strong>).</li>
-                        <li>Configure options and save.</li>
-                      </ul>
-                    </li>
-                
-                    <li><strong>Publish Messages</strong>
-                      <ul>
-                        <li>Use Console, <code>gcloud</code> CLI, or SDK to publish a message to your topic.</li>
-                      </ul>
-                    </li>
-                
-                    <li><strong>Receive Messages</strong>
-                      <ul>
-                        <li>Subscribers will automatically receive the messages based on the subscription settings.</li>
-                      </ul>
-                    </li>
-                  </ol>
-
-            </div>
-
+          
 
             <div class="q">Object Versioning</div>
             <div class="a">
@@ -2509,37 +2514,6 @@ resource "google_compute_instance" "default" {
               
             </div>
 
-            <div class="q">SaaS</div>
-            <div class="a">
-              SaaS (Software as a Service) is a cloud computing model where software applications are delivered over the internet.
-
-Instead of installing and maintaining software locally, users access it through a web browser. The provider hosts, maintains, updates, and secures the application. </br>
-
-Examples: Gmail, Google Docs, Salesforce, Dropbox.
-              <table border="1">
-                <thead>
-                  <tr>
-                    <th>Deployment Model</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Public SaaS</td>
-                    <td>A single version of the application is used by multiple customers (multi-tenant). Hosted and managed by the SaaS provider. Example: Gmail.</td>
-                  </tr>
-                  <tr>
-                    <td>Private SaaS</td>
-                    <td>A dedicated instance of the application for a single organization. Offers more control and customization. Example: SaaS apps deployed in a company's private cloud.</td>
-                  </tr>
-                  <tr>
-                    <td>Hybrid SaaS</td>
-                    <td>Combines public and private SaaS features. Some components run in a public cloud, while sensitive data or services are handled privately.</td>
-                  </tr>
-                </tbody>
-              </table>
-              
-            </div>
 
             <div class="q">Serverless computing</div>
             <div class="a">
