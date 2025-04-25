@@ -350,11 +350,18 @@
 
               <div class="q">Data Loss Prevention (DLP)</div>
               <div class="a">
-              <p>Protects sensitive data from unauthorized access, leakage, or misuse. Ensures compliance with data protection regulations.</p>
-              <h5>How DLP Works</h5>
-              Monitors data in motion, at rest, and in use. AND Enforces policies to prevent data violations.
-              <h5>Key Features</h5>
-              Scans data for sensitive information; Scans data for sensitive information; Automatically classifies data for proper handling.
+              <p>G-Cloud consegue detetar automaticamente credit cards, passwords, sensitive data. </br> Consegue detetar streams of data, structured text, cloud storage, BigQuery and Images  </p>
+              <p> Monitoring data coming in and out, sending alerts when it detects suspicious activities and blocking sensitive data from leaving the networl</p>
+             
+          
+              <ul>
+                <li><strong>Detect:</strong> Scan GCP data (BigQuery, Storage) for sensitive info.</li>
+                <li><strong>Monitor:</strong> Use scheduled scans & logging for visibility.</li>
+                <li><strong>Alert:</strong> Trigger actions via Pub/Sub or Security tools.</li>
+                <li><strong>Protect:</strong> Mask, tokenize, or redact sensitive data (optional).</li>
+              </ul>
+
+
               <h5>Types of DLP</h5>
               <p><strong>Network DLP:</strong> Protects data transmitted over networks; <strong>Endpoint DLP:</strong>  Secures data on devices (PCs, laptops). <strong>Cloud DLP</strong>: Protects data in cloud storage and applications.</p>
             <h5>Challenges</h5> 
@@ -488,9 +495,9 @@
               <div class="q">> IAM vs ACL  </div>
               <div class="a">   
               
-              IAM (Identity and Access Management): Manages user access and permissions centrally, often used in cloud environments (e.g., Google Cloud, AWS). It uses roles and policies to control access. </br>
+              IAM (Identity and Access Management): Role-based (projects, folders, resources); Manages user access and permissions centrally, often used in cloud environments (e.g., Google Cloud, AWS). It uses roles and policies to control access. </br>
 
-ACL (Access Control List): Defines specific permissions for users on individual resources like files or network devices. It’s simpler and resource-specific.
+ACL (Access Control List): Object-based; Granualar (files, objects). Defines specific permissions for users on individual resources like files or network devices. It’s simpler and resource-specific.
                 </div>
 
             <p>ACLs manage user access to systems. The JML process ensures that access is granted, modified, or revoked based on employment status.</p>
@@ -611,28 +618,24 @@ ACL (Access Control List): Defines specific permissions for users on individual 
               <div class="a">
 
               <ul>
-                <li><strong>1. Preventive Controls:</strong> 
-                  <p>These controls aim to prevent security incidents from happening. Example: Firewalls, strong password policies, and encryption.</p>
+                <li><strong> Preventive Controls:</strong> 
+                  <p>Prevent security incidents from happening. Example: Firewalls, strong password policies, and encryption.</p>
                 </li>
                 
-                <li><strong>2. Detective Controls:</strong> 
-                  <p>These controls detect security incidents as they happen. Example: Intrusion Detection Systems (IDS), security cameras, and log monitoring.</p>
+                <li><strong>Detective Controls:</strong> 
+                  <p>Detect security incidents as they happen. Example: Intrusion Detection Systems (IDS), security cameras, and log monitoring.</p>
                 </li>
                 
-                <li><strong>3. Corrective Controls:</strong> 
-                  <p>These controls correct security incidents after they occur. Example: Patching vulnerabilities, restoring data from backups, and applying security updates.</p>
+                <li><strong>Corrective Controls:</strong> 
+                  <p>Correct security incidents after they occur. Example: Patching vulnerabilities, restoring data from backups, and applying security updates.</p>
                 </li>
                 
-                <li><strong>4. Detective Controls:</strong> 
-                  <p>These controls help identify incidents in real time. Example: System audits, network traffic monitoring, and real-time security alerts.</p>
+                <li><strong>Recovery Controls:</strong> 
+                  <p>Help to recover from a security incident. Example: Data backup systems, disaster recovery plans, and business continuity planning.</p>
                 </li>
                 
-                <li><strong>5. Recovery Controls:</strong> 
-                  <p>These controls help to recover from a security incident. Example: Data backup systems, disaster recovery plans, and business continuity planning.</p>
-                </li>
-                
-                <li><strong>6. Compensatory Controls:</strong> 
-                  <p>Alternative controls implemented when primary controls cannot be used. Example: If a firewall fails, using an IDS as a backup detection mechanism.</p>
+                <li><strong>Compensatory Controls:</strong> 
+                  <p>Implemented when primary controls cannot be used. Example: If a firewall fails, using an IDS as a backup detection mechanism.</p>
                 </li>
               </ul>
               </div>
