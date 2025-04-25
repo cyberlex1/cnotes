@@ -1,14 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Sidebar 02</title>
+    <title>Security Vulnerability Scenarios with HTTP Headers</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-		
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <style>
     .pdf-container {
@@ -26,10 +25,65 @@
       height: 100%;
       border: none;
     }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+    header {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: white;
+    }
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .example {
+        font-family: monospace;
+        color: #d9534f;
+    }
+    .faq {
+        width: 100%;
+        margin: 20px auto;
+      }
+
+      .q {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin: 5px 0;
+        cursor: pointer;
+        border: 1px solid #ddd;
+      }
+
+      .a {
+        display: none;
+        padding: 10px;
+        background-color: #f9f9f9;
+        margin: 5px 0;
+        border: 1px solid #ddd;
+      }
+
+      .q:hover {
+        background-color: #e6e6e6;
+      }
   </style>
   <body>
-		
-		<div class="wrapper d-flex align-items-stretch">
+  
+    <div class="wrapper d-flex align-items-stretch">
       <nav id="sidebar">
 				<div class="custom-menu">
 					<button type="button" id="sidebarCollapse" class="btn btn-primary">
@@ -44,7 +98,7 @@
 	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(255, 215, 73);">About me</a>
 	            <ul class="list-unstyled" id="cyberArticles">
                 <li>
-                  <li><a href="Edu_WExperience_Proj_keyrus.html">Education / Work Experience / Projects</a></li>
+                  <li><a href="Edu_WExperience.html">Education / Work Experience / Projects</a></li>
                   <li><a href="General_Questions.html">General Questions</a></li>
                   <li><a href="Tools.html">Tools (AS/Pentest)</a></li>
                   <li><a href="my_attacks.html">My Attacks Examples</a></li>
@@ -52,9 +106,28 @@
 	            </ul>
 	          </li>
 
+
+
+	        <ul class="list-unstyled components mb-5">
 	          <li class="active">
-	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Active Directory</a>
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"  style="color: rgb(8, 214, 12);">Cyber Concepts</a>
               <ul class=" list-unstyled" id="cyberConcepts">
+
+                <li><a href="Concepts.html">Concepts</a></li>
+                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
+                <li><a href="G-Cloud.html">G-Cloud</a></li>
+                <li><a href="ISO27001.html">ISO 27001</a></li>
+                <li><a href="Software_Arquiteturas.html">Software</a></li>
+
+                <li><a href="Others.html">Others</a></li>
+
+
+            </ul>
+	          </li>
+
+            <li class="active">
+	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" style="color: rgb(199, 223, 144);">Active Directory</a>
+              <ul class="list-unstyled" id="cyberConcepts">
                 <li><a href="AD Components.html">AD Components</a></li>
                 <li><a href="AD_Authentication.html">AD Authentication</a></li>
                 <li><a href="AD_LDAP.html">AD LDAP/LDAPS</a></li>
@@ -62,51 +135,384 @@
             </ul>
 	          </li>
 
-	        <ul class="list-unstyled components mb-5">
-	          <li class="active">
-	            <a href="#cyberConcepts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Cyber Concepts</a>
-              <ul class=" list-unstyled" id="cyberConcepts">
-
-                <li><a href="Concepts.html">Concepts</a></li>
-                <li><a href="web_vulnerabilities.html">Web Vulnerabilities</a></li>
-                
-            </ul>
-	          </li>
-
-            <li class="active">
-	            <a href="#cyberArticles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentication</a>
-	            <ul class=" list-unstyled" id="cyberArticles">
-                <li>
-                  <li><a href="Authentication_Types.html">Authentication Types</a></li>
-                  <li><a href="MFA.html">MFA</a></li>
-                  <li><a href="JWT.html">JWT</a></li>
-                  <li><a href="SAML.html">SAML</a></li>
-                  <li><a href="OAuth.html">OAuth</a></li>
-                </li>
-      
-	            </ul>
-	          </li>
+            
 	        </ul>
     	</nav>
+        <!-- Page Content -->
+        <div id="content" class="p-4 p-md-5 pt-5">
+           
+                <h4 class="q">Education</h4>
+                <div class="a">
+                    <p>
+                        I hold a <strong>Bachelor’s Degree in Informatics Engineering</strong> from the University of Aveiro (UA), where I built a solid foundation in computer science. Throughout the program, I explored topics such as software engineering, operating systems, databases, and artificial intelligence. 
+                    </p>
+                    <p>
+                        I also hold a <strong>Master’s Degree in Computer Science and Engineering</strong> from Instituto Superior Técnico (IST), Lisbon, with a specialization in <strong>Cybersecurity and Artificial Intelligence</strong>. This gave me the opportunity to dive deeper into areas like secure systems, ethical hacking, cryptography, and machine learning. I graduated with distinction, achieving a final grade of <strong>17 out of 20</strong>.
+                        My master’s thesis, "The Role of Facial Emotions in Usability Evaluation," involved handling sensitive visual and audio data. I ensured GDPR compliance by anonymizing and encrypting data, storing it on encrypted servers with restricted access to protect user privacy. I had a final grade of 19 out of 20              </p>
+                </div>
+
+                  <h4 class="q">Work Experience</h4>
+                  <div class="a">
+                      <p>
+                        In 2018, I took a gap year between secondary school and university to work in Switzerland’s viniculture industry, where I learned the value of building strong customer relationships.
+                      </p>
+                      <p>
+                        In the summer of 2023, I completed a Data Analyst internship at Sky Portugal, where I developed an ETL pipeline in Python to extract data from New Relic, apply transformations such as normalization, cleaning, and type conversion, and load it into Google Cloud’s BigQuery. I then built dashboards in Looker Studio, which were used by managers to support data-driven decision-making.
+
+                      </p>
+                      <p>
+                        Since september 2023 as a cybersecurity engineer I've been working across different cybersecurity fields and industry areas (Customer Service Outsourcing,  Financial Services, Energy and Infrastructure and Transportation). 
+                        
+                        <ul>
+                          <li>
+                            I have  experience in <span style="color: #d9534f;">DevSecOps</span> exercises, where I integrated Software Composition Analysis (SCA) and Static, Dynamic, and Interactive Application Security Testing tools into a vulnerability management platform, such as DefectDojo. DefectDojo is built using Django framework. This integration enabled vulnerability management, enhancing the overall security posture of applications throughout the Software Development Life Cycle <li>
+                            <p>
+                              I was involved in <span style="color: #d9534f;">Threat Modeling</span>  projects to support the creation of an Information Security Management Systems (ISMSs)</strong> according with <strong>ISO 27001 requirements</strong>.<br>
+                              I also supported my company's <strong>ISO 27001 certification process</strong> by <strong>performing threat modeling</strong> on the <strong>technology-related security controls (Annex A, A.8)</strong>, <strong>identifying and classifying the company's information assets</strong>, and <strong>analyzing potential threats and vulnerabilities</strong> to propose appropriate risk mitigation measures.
+                            </p>
+                                                      </li>
+                          <li>
+                            I performed <strong>Social Engineering attacks</strong> using GoPhish to evaluate security awareness and detect human vulnerabilities within organizations.
+                          </li>
+                          <li>
+                            I have experience in  <span style="color: #d9534f;">Vulnerability Assessment and Management</span>, where I have been responsible for identifying, evaluating, and mitigating vulnerabilities across various IT systems and environments. This includes conducting regular vulnerability scans, prioritizing remediation efforts based on risk levels, and coordinating with teams to implement patching and fixes. 
+                            I used tools like Nexpose, Kiuwan, Qualys, BurpSuite, Nessus, BlackDuck, Seeker, Polaris, SonarQube, Coverity and vulnerability management tools like DefectDojo.
+                          </li>
+                          <li>
+                            I have hands-on experience in <span style="color: #d9534f;">Penetration Testing</span>   for networks, web applications, infrastructure, and AI models. I'm familiar with Black, Grey, and White Box testing, using methodologies like OWASP and PTES. I work with a wide range of tools such as Nessus, OpenVAS, Metasploit, Nmap, Burp Suite, Kali Linux, Wireshark and SQLmap to identify and fix vulnerabilities. Additionally, I hold recognized offensive cybersecurity certifications that have significantly enhanced my expertise in the field.                          </li>
+                         
+                          <li>
+                            I completed the <strong>learning path for the Professional Cloud Network and Security Engineer certification on Google Cloud</strong>. Although I did not have the opportunity to directly participate in cloud projects due to the prioritization of initiatives in other areas within the company, I continued to deepen my knowledge and prepare to implement these practices in future opportunities.                          </li>
+                          <li>
+                            I have collaborated with the <strong>GRC team</strong> to support <strong>ISO 27001</strong> initiatives and apply <strong>security best practices</strong> across cloud-based infrastructures.
+                          </li>
+                          <li>
+                            So, I’ve been working in different types of projects, and I strive to learn a little more about cybersecurity every day. I enjoy being part of challenging projects and working in teams, as it allows me to learn a lot while also helping the company grow.
+
+                          </ul>
+
+                        ________
+                        <ul>
+                          <li>I participated in <strong>DevSecOps</strong>  exercises where I incorporated Application Security Tools in vulnerability management platforms like DefectDojo.</li>
+                          <li>I have conducted <strong>Threat Modeling</strong> exercises in accordance with ISO 27001 standards, proactively identifying potential threats and vulnerabilities in systems. This approach guided my penetration testing, security design reviews, and risk assessments, helping prioritize security measures and ensure compliance with security policies.</li>
+                          <li>I also conducted <strong>Social Engineering attacks</strong> using GoPhish to test security awareness and identify human behavior vulnerabilities.</li>
+                          <li>I also participated in <strong>Vulnerability Assessment & Management</strong> identifying, analyzing, and managing vulnerabilities across different systems and ensuring timely remediation.</li>
+
+                          <li>I am actively involved in <strong>Penetration Testing projects</strong>, conducting security assessments on networks, web applications, infrastructure, including in AI models. I have experience with <strong>Black, Grey, and White Box testing</strong>, using OWASP and PTES methodologies</li>
+                        </ul>
+
+                        
+                        
+                      </p>
+                  </div>
+            
+         
+              
+
+                <h4 class="q" style="background-color: #cceadc;"> Projects</h4>
+        
+                <div class="a">
+                <h3>Penetration Testing</h3>
+
+                <h5>Infrastructure Penetration Testing</h5>
+                <div class="q">🛠️ Infrastructure Penetration Testing – Key Points</div>
+                <div class="a">
+                  <ul>
+                    <li><strong>🔍 Reconnaissance</strong> – Gather info (IP ranges, domains, services)</li>
+                    <li><strong>📡 Scanning & Enumeration</strong> – Identify open ports, services, OS, configurations</li>
+                    <li><strong>💥 Exploitation</strong> – Exploit vulnerabilities (weak creds, outdated software)</li>
+                    <li><strong>🔐 Privilege Escalation</strong> – Gain higher access (e.g., admin/root)</li>
+                    <li><strong>🔄 Lateral Movement</strong> – Move within internal network</li>
+                    <li><strong>🧪 Post-Exploitation</strong> – Assess access, persistence, potential impact</li>
+                    <li><strong>📋 Reporting</strong> – Document findings, risks, and remediation steps</li>
+                  </ul>
+                </div>
+                                </p>
+
+                <h5>Web App Penetration Testing</h5>
+                <div class="q">🌐 Web Application Penetration Testing – Key Points</div>
+                <div class="a">
+                  <ul>
+                    <li><strong>🔍 Reconnaissance</strong> – Collect public info (URLs, endpoints, technologies)</li>
+                    <li><strong>🔑 Authentication Testing</strong> – Test login flows, brute force, MFA bypass</li>
+                    <li><strong>📨 Input Validation</strong> – Look for XSS, SQLi, command injection, etc.</li>
+                    <li><strong>🔓 Authorization Testing</strong> – Check for IDOR, privilege escalation</li>
+                    <li><strong>🔐 Session Management</strong> – Test cookies, session fixation, hijacking</li>
+                    <li><strong>🛡️ Security Misconfigurations</strong> – Headers, error messages, open debug modes</li>
+                    <li><strong>📋 Reporting</strong> – Summarize findings, severity, impact, and remediation</li>
+                  </ul>
+                </div>
+                
+
+                <h5>Network Penetration Testing</h5>
+
+                <div class="q">🌐 Network Penetration Testing – Key Points</div>
+                <div class="a">
+                  <ul>
+                    <li><strong>🔍 Reconnaissance</strong> – Identify network ranges, hosts, and services</li>
+                    <li><strong>📡 Scanning</strong> – Perform port scans (e.g., Nmap) to detect live systems and open ports</li>
+                    <li><strong>🔎 Enumeration</strong> – Gather detailed info (e.g., SMB shares, SNMP, NetBIOS)</li>
+                    <li><strong>💥 Exploitation</strong> – Exploit vulnerabilities (e.g., unpatched services, weak credentials)</li>
+                    <li><strong>🔐 Privilege Escalation</strong> – Gain elevated access to systems or domains</li>
+                    <li><strong>🔄 Lateral Movement</strong> – Traverse across internal hosts and subnets</li>
+                    <li><strong>📊 Traffic Analysis</strong> – Capture and analyze packets (e.g., sniffing, MITM attacks)</li>
+                    <li><strong>📋 Reporting</strong> – Document vulnerabilities, attack paths, and mitigation steps</li>
+                  </ul>
+                </div>
+                
 
 
-
-        <!-- Page Content  -->
-      <div id="content" class="p-4 p-md-5 pt-5">
-        <div class="container my-5">
-  
-
-
-       
       
-      </div>
-	  
-		</div>
+      
+          <h3>Penetration Testing on LLMs</h3>
+          <div class="q">🧠 Penetration Testing on LLMs – Key Points</div>
+          <div class="a">
+            <ul>
+              <li><strong>📥 Prompt Injection</strong> – Try to manipulate the model’s output by crafting malicious or misleading prompts</li>
+              <li><strong>🕵️‍♂️ Data Leakage</strong> – Attempt to extract training data or sensitive information through repeated queries</li>
+              <li><strong>🧱 Jailbreaking</strong> – Bypass safety mechanisms or content filters to make the model generate restricted outputs</li>
+              <li><strong>🎭 Impersonation</strong> – Test if the model can be tricked into mimicking individuals or services (e.g., phishing)</li>
+              <li><strong>🔗 Injection via Inputs</strong> – Inject commands or payloads into user input that gets interpreted by downstream systems (e.g., API chaining)</li>
+              <li><strong>🚨 Model Misuse</strong> – Check if the LLM can be used to assist in generating malicious content (e.g., malware, scams)</li>
+              <li><strong>📋 Reporting</strong> – Document vulnerabilities, examples of misuse, risk impact, and mitigation strategies (e.g., input sanitization, content filtering)</li>
+            </ul>
+          </div>
+          
+      
+          <h3>Social Engineering Attacks</h3>
+          <p>Simulated Social Engineering Attacks using GoPhish to assess human vulnerabilities and enhance security awareness
+            within the organization.</p>
+      
+            <h3>Vulnerability Assessment & Management</h3>
+            <div class="q">🛡️ Vulnerability Assessment & Management – Key Points</div>
+            <div class="a">
+              <ul>
+                <li><strong>🔍 Asset Discovery</strong> – Identify all systems, applications, and devices in the environment</li>
+                <li><strong>🧪 Vulnerability Scanning</strong> – Use automated tools (e.g., Nessus, Qualys) to scan for known vulnerabilities</li>
+                <li><strong>⚠️ Risk Prioritization</strong> – Classify vulnerabilities based on CVSS score, exploitability, and asset criticality</li>
+                <li><strong>🔧 Remediation Planning</strong> – Assign actions to fix or mitigate issues (e.g., patching, configuration changes)</li>
+                <li><strong>📈 Continuous Monitoring</strong> – Re-scan regularly to detect new vulnerabilities and validate fixes</li>
+                <li><strong>📋 Reporting & Metrics</strong> – Track vulnerability trends, remediation progress, and risk posture over time</li>
+                <li><strong>✅ Compliance Alignment</strong> – Ensure adherence to frameworks like CIS, NIST, ISO 27001, PCI-DSS</li>
+              </ul>
+            </div>
+            
+            
+
+            <p><strong>SLA:</strong> Defines the resolution time for a specific vulnerability that the service provider has. E.g., Critical vulnerability (24 hours); Medium (72 hours); Low (7 days).</p>
+
+            <div class="q">🛡️ Vulnerability Assessment Report</div>
+            <div class="a">
+          
+
+            <ul>
+              <li><strong>Executive Summary:</strong> Overview for management.</li>
+              <li><strong>Scope of Assessment:</strong> What was tested.</li>
+              <li><strong>Methodology:</strong> How the vulnerabilities were found.</li>
+              <li><strong>Vulnerabilities Found:</strong> Details about the security flaws.</li>
+              <li><strong>Risk Assessment and Prioritization:</strong> How to prioritize the fixes.</li>
+              <li><strong>Corrective Actions Taken:</strong> What was done to fix the issues.</li>
+              <li><strong>Post-Correction Testing:</strong> Verification if the fixes worked.</li>
+              <li><strong>Ongoing Monitoring:</strong> How security will be maintained.</li>
+              <li><strong>Recommendations:</strong> Suggestions to improve security.</li>
+              <li><strong>Conclusion:</strong> Summary of actions and the security status.</li>
+              <li><strong>Appendices:</strong> Additional information.</li>
+            </ul>
+            </div>
+            
+            <h3>Microsoft Sentinel</h3>
+            <div class="q">🛰️ Microsoft Sentinel – Key Points</div>
+            <div class="a">
+              <ul>
+                <li><strong>🔎 SIEM + SOAR</strong> – Cloud-native platform for security information and event management (SIEM) and security orchestration, automation, and response (SOAR)</li>
+                <li><strong>☁️ Cloud-First</strong> – Built on Azure; scales automatically with demand</li>
+                <li><strong>📥 Data Collection</strong> – Ingest logs from multiple sources: Azure, on-prem, AWS, M365, firewalls, endpoints, etc.</li>
+                <li><strong>📊 Analytics Rules</strong> – Detect threats with built-in and custom detection rules (KQL-based)</li>
+                <li><strong>👮‍♂️ Workbooks</strong> – Visual dashboards for investigation and monitoring</li>
+                <li><strong>⚙️ Playbooks</strong> – Automate responses using Azure Logic Apps (e.g., isolate users, send alerts, block IPs)</li>
+                <li><strong>🧠 Threat Intelligence</strong> – Integrates with threat feeds and MITRE ATT&CK for better detection context</li>
+                <li><strong>📋 Incident Management</strong> – Correlates alerts into incidents for streamlined investigation</li>
+                <li><strong>💼 Use Cases</strong> – Ideal for SOC monitoring, compliance, and threat hunting</li>
+              </ul>
+            </div>
+
+            <div class="q">🛠️ How to Create Analytics Rules in Microsoft Sentinel</div>
+<div class="a">
+  <ul>
+    <li><strong>1. Go to Microsoft Sentinel</strong> → Open the workspace you're working on.</li>
+    <li><strong>2. Navigate to "Analytics"</strong> → Click "Create" to start a new rule.</li>
+    <li><strong>3. Choose Rule Type</strong>:
+      <ul>
+        <li><strong>Scheduled rule</strong>: Runs on a fixed interval using KQL queries</li>
+        <li><strong>Microsoft Security rule</strong>: Based on alerts from Defender tools</li>
+        <li><strong>Fusion rule</strong>: Uses ML to detect multi-stage attacks (prebuilt)</li>
+      </ul>
+    </li>
+    <li><strong>4. Define Rule Details</strong>:
+      <ul>
+        <li>Name, description, severity (High, Medium, Low, Informational)</li>
+        <li>Tactics from MITRE ATT&CK</li>
+      </ul>
+    </li>
+    <li><strong>5. Write KQL Query</strong> – Query the logs to detect suspicious patterns</li>
+    <li><strong>6. Set Rule Logic</strong>:
+      <ul>
+        <li>Set frequency (e.g., every 5 min)</li>
+        <li>Set lookup period (e.g., last 1 hour)</li>
+      </ul>
+    </li>
+    <li><strong>7. Incident Settings</strong> – Decide if alerts create incidents automatically</li>
+    <li><strong>8. Alert Grouping</strong> – Group alerts by user, IP, or event type</li>
+    <li><strong>9. Add Automation (Optional)</strong> – Attach a Playbook to auto-respond</li>
+    <li><strong>10. Review & Create</strong> – Confirm settings and enable the rule</li>
+  </ul>
+</div>
+
+            
+            <p>Microsoft Defender provides endpoint protection (defense against malware, attacks, and suspicious behaviors) and security alerts.</p>
+            
+      
+            <h3>DevSecOps</h3>
+            <p>Integrated vulnerability management with DefectDojo, ensuring real-time synchronization across tools. Implemented
+              SAST, SCA, IAST, and DAST in applications, developed secure REST API solutions, and worked with the Django
+              framework. Automated security processes in CI/CD pipelines.</p>
+      
+              <h3>Threat Modeling</h3>
+              <div class="q">🧠 Threat Modeling – Key Points</div>
+              <div class="a">
+                <ul>
+                  <li><strong>🎯 Identify Assets</strong> – Define what you need to protect (e.g., data, systems, credentials)</li>
+                  <li><strong>📈 Define Architecture</strong> – Diagram the system components, data flows, and trust boundaries</li>
+                  <li><strong>⚠️ Identify Threats</strong> – Use models like STRIDE (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege)</li>
+                  <li><strong>🔍 Analyze Vulnerabilities</strong> – Find weak points where threats can be exploited</li>
+                  <li><strong>📊 Assess Risk</strong> – Prioritize threats based on impact and likelihood</li>
+                  <li><strong>🔐 Define Mitigations</strong> – Plan controls to reduce risk (e.g., encryption, authentication, validation)</li>
+                  <li><strong>🔁 Iterate</strong> – Update the model as the system evolves or new threats emerge</li>
+                </ul>
+              </div>
+              
+                <h3>Azure</h3>
+                <p>Azure scalable cloud platform for businesses and developers, with a wide range of services for compute, storage,
+                  networking, AI, and security.
+                  Project: Implemented a secure cloud infrastructure to a client using Azure</p>
+      
+                  <strong>Process:</strong>
+                  <ul>
+                    <li>Configured Virtual Network:
+                      <ul>
+                        <li>Azure Portal &gt; Virtual Networks &gt; + Add &gt; Subnets</li>
+                        <li>Set up DNS settings and Network Security Groups (NSGs)</li>
+                      </ul>
+                    </li>
+                    <li>Configured Azure Firewall:
+                      <ul>
+                        <li>Azure Portal &gt; Firewall</li>
+                        <li>Set Firewall Rules for traffic control (e.g., allow specific ports for web traffic)</li>
+                        <li>Enable Logging and Monitoring to track traffic</li>
+                      </ul>
+                    </li>
+                    <li>Set up Application Gateway:
+                      <ul>
+                        <li>Azure Portal &gt; Application Gateway &gt; + Add</li>
+                        <li>Configure Frontend IP and Backend Pools</li>
+                        <li>Set up Listeners for HTTP/HTTPS and configure Routing Rules</li>
+                        <li>Enable Web Application Firewall (WAF)</li>
+                      </ul>
+                    </li>
+                    <li>Implemented Azure AD with Multi-Factor Authentication (MFA)</li>
+                    <li>Role-Based Access Control (RBAC):
+                      <ul>
+                        <li>Azure AD &gt; Roles and Administrators</li>
+                      </ul>
+                    </li>
+                    <li>Enabled Azure Storage Encryption:
+                      <ul>
+                        <li>Storage Account &gt; Encryption &gt; Azure-managed encryption</li>
+                      </ul>
+                    </li>
+                    <li>Used Key Vault for secure key management</li>
+                    <li>Enabled Azure Security Center and configured Security Policies for continuous monitoring</li>
+                    <li>Used Azure Sentinel (SIEM):
+                      <ul>
+                        <li>Create a workspace</li>
+                        <li>Connect to Security Center for log collection</li>
+                      </ul>
+                    </li>
+                  </ul>
+
+                </div>
+
+              <h4 class="q">Certifications</h4>
+              <div class="a">
+
+                  <table>
+                    <thead>
+                        <tr>
+                            <th>Certification</th>
+                            <th>Focus Area</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Certified Professional Penetration Tester (eCPPT)</td>
+                            <td>Advanced Penetration Testing</td>
+                            <td>Network and system security assessment, focusing on penetration techniques and vulnerability exploitation.</td>
+                        </tr>
+                        <tr>
+                            <td>Web Application Penetration Tester (eWPT)</td>
+                            <td>Web Application Security</td>
+                            <td>Penetration testing and vulnerability assessment of web applications and their technologies.</td>
+                        </tr>
+                        <tr>
+                            <td>Certified AppSec Practitioner (CAP)</td>
+                            <td>Application Security</td>
+                            <td>Security throughout the software development lifecycle, including secure coding practices.</td>
+                        </tr>
+                        <tr>
+                            <td>Junior Penetration Tester (eJPT)</td>
+                            <td>Fundamental Penetration Testing</td>
+                            <td>Fundamental skills in penetration testing, focusing on vulnerability exploitation and network security.</td>
+                        </tr>
+                    </tbody>
+                </table>
+        
+        </div>
+
+
+
+
+                  
+      
+            
+          
+
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+      // Seleciona todas as perguntas com a classe .q
+      const questions = document.querySelectorAll('.q');
+
+      // Para cada pergunta, adiciona o evento de clique
+      questions.forEach((question) => {
+        question.addEventListener('click', function() {
+          // Encontra a resposta relacionada (a próxima div com a classe .a)
+          const answer = this.nextElementSibling;
+          
+          // Alterna a visibilidade da resposta
+          if (answer && answer.classList.contains('a')) {
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+          }
+        });
+      });
+      </script>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
-    
-  </body>
+</body>
 </html>
