@@ -31,6 +31,7 @@
         margin: 0;
         padding: 0;
         color: #333;
+        background-color: #838080;
     }
     header {
         background-color: #333;
@@ -148,6 +149,615 @@
         <!-- Page Content -->
         <div id="content" class="p-4 p-md-5 pt-5">
             <div class="container my-5">
+              <div class="q">Sessions, Tokens, and JWT</div>
+<div class="a">
+
+  <p><strong>What are Sessions?</strong><br>
+  A session is a mechanism used to store data about a user's interaction with a web application. It is typically stored on the server and is linked to the user through a session ID that is passed between the client (browser) and the server, usually via cookies. Sessions help track the state of a user across multiple requests, such as login status, preferences, or a shopping cart.</p>
+
+  <p><strong>What are Tokens?</strong><br>
+  A token is a piece of data that is used for user authentication and authorization. Tokens are generally issued by a server after a user successfully authenticates. Tokens can be used to access protected resources without the need for re-authentication on every request. There are different types of tokens, such as session tokens, access tokens, and refresh tokens.</p>
+
+  <p><strong>What is JWT (JSON Web Token)?</strong><br>
+  JWT is a compact, URL-safe way to represent claims (such as user information or permissions) between two parties (usually a client and a server). It is commonly used for stateless authentication and authorization in modern web applications, especially in Single Page Applications (SPA). JWTs are encoded and contain three parts: a header, a payload (claim), and a signature to verify its authenticity.</p>
+
+  <h3>Authentication Flow (Sessions, Tokens, JWT):</h3>
+  <ol>
+    <li>User → Submits login credentials to the server.</li>
+    <li>Server → Authenticates user and generates a session or token.</li>
+    <li>User → Receives session ID or token (JWT) and stores it (usually in a cookie or local storage).</li>
+    <li>For subsequent requests, User → Sends the session ID or token to the server.</li>
+    <li>Server → Validates the session or token to ensure the request is authenticated and authorized.</li>
+    <li>Server → Responds with the requested resource if valid, or denies access if invalid.</li>
+  </ol>
+
+  <h3>Pentest Approach (How to Attack Sessions, Tokens, and JWT):</h3>
+  <ul>
+    <li><strong>Session Fixation:</strong> Exploit situations where a server allows a user to set their session ID, potentially hijacking another user's session.</li>
+    <li><strong>Session Hijacking:</strong> Capture a valid session ID (via Man-in-the-Middle attack or XSS) and impersonate the user by using the stolen session ID.</li>
+    <li><strong>Cross-Site Scripting (XSS):</strong> Inject malicious scripts into pages that steal session IDs or JWTs from local storage or cookies.</li>
+    <li><strong>Token Replay:</strong> Intercept and reuse an access token or JWT to gain unauthorized access to protected resources.</li>
+    <li><strong>JWT Manipulation:</strong> Tamper with the JWT (e.g., modifying the payload or changing the signature) to impersonate a user or escalate privileges.</li>
+    <li><strong>Insecure Storage:</strong> Ensure tokens or session IDs are securely stored (e.g., avoid local storage for JWTs in the client-side) to prevent unauthorized access.</li>
+    <li><strong>Cross-Site Request Forgery (CSRF):</strong> Exploit the vulnerability when session cookies are sent automatically by the browser, tricking the user into making unauthorized requests.</li>
+  </ul>
+
+</div>
+
+              <div class="q"> Pentest</div>
+              <div class="a">
+
+                <div class="q">> Types of Penetration Tests</div>                
+                <div class="a">
+                <ul>
+                  <li><strong>Black Box</strong>: No prior knowledge (e.g. URL, IP).</li>
+                  <li><strong>White Box</strong>: Full knowledge</li>
+                  <li><strong>Grey Box</strong>: Limited knowledge (e.g.,  target object architecture, user access, source code).</li>
+                  <br>
+                  <li><strong>External</strong>: Focus on external assets (e.g., website, DNS).</li>
+                  <li><strong>Internal</strong>: Focus on internal systems (e.g., network, servers).</li>
+                  <li><strong>Web App</strong>: Tests web vulnerabilities (e.g., SQL injection, XSS).</li>
+                  <li><strong>Social Engineering</strong>: Tests human factors (e.g., phishing, pretexting).</li>
+                  <li><strong>Wireless</strong>: Tests wireless security (e.g., weak Wi-Fi encryption).</li>
+                  <li><strong>Physical</strong>: Tests physical security (e.g., bypassing locks, cameras).</li>
+                </ul>
+                </div>
+
+                <div class="q">> MITRE ATT&CK</div>                
+                <div class="a">
+                  MITRE ATT&CK is a knowledge base that describes the tactics and techniques used by cyber adversaries during attacks. It helps organizations understand how attackers operate, enabling better detection, defense, and response strategies. The framework is organized into tactics (goals of the attack, like gaining access or exfiltrating data) and techniques (specific methods used to achieve those goals). It’s widely used for threat detection, incident response, penetration testing, and improving overall security posture.
+                </div>
+                <div class="q">> OWASP vs PTES</div>                
+                <div class="a">
+
+                <img src="images/PTES.png" alt="" width="800" >
+                <h4></h4>
+                <table>
+                 
+                  <thead>
+                    <tr>
+                      <th>Aspect</th>
+                      <th>OWASP (Open Web Application Security Project)</th>
+                      <th>PTES (Penetration Testing Execution Standard)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Focus</td>
+                      <td>Web application security</td>
+                      <td>Full penetration testing lifecycle (beyond just web)</td>
+                    </tr>
+                    <tr>
+                      <td>Scope</td>
+                      <td>Web apps, APIs, mobile apps</td>
+                      <td>Networks, infrastructure, web apps, physical security</td>
+                    </tr>
+                    <tr>
+                      <td>Main Output</td>
+                      <td>OWASP Top 10, ASVS, Cheat Sheets, Testing Guide</td>
+                      <td>Methodology standard for professional pentesting</td>
+                    </tr>
+                    <tr>
+                      <td>Approach</td>
+                      <td>Risk-based, vulnerability-focused</td>
+                      <td>Process-based, structured engagement</td>
+                    </tr>
+                    <tr>
+                      <td>Use Case</td>
+                      <td>Developers, AppSec teams, bug bounty hunters</td>
+                      <td>Penetration testers, red teams, consultants</td>
+                    </tr>
+                    <tr>
+                      <td>Phases Covered</td>
+                      <td>Mostly testing and prevention</td>
+                      <td>Full engagement: pre-engagement, threat modeling, exploitation, reporting</td>
+                    </tr>
+                    <tr>
+                      <td>Examples</td>
+                      <td>OWASP Top 10 (e.g., Injection, XSS, Auth failures)</td>
+                      <td>PTES steps (e.g., Intelligence Gathering, Threat Modeling, Post-Exploitation)</td>
+                    </tr>
+                    <tr>
+                      <td>Level of Detail</td>
+                      <td>High for web-specific issues</td>
+                      <td>High for the overall pentesting process</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <h2>Penetration Testing Phases (PTES)</h2>
+                    <table>
+                    <thead>
+                        <tr>
+                        <th>Phase</th>
+                        <th>Key Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td><strong>Engagement</strong></td>
+                        <td>Test fees, understanding client needs, ensuring permission for testing, having an incident handling procedure, and addressing legal responsibilities.</td>
+                        </tr>
+                        <tr>
+                        <td><strong>Intelligence gathering</strong></td>
+                        <td>Target Information - google dorking; scans (services, open ports, vulnerabilities), firewalls ensuring a validated and controlled approach to testing.  </td>
+                        </tr>
+                        <tr>
+                        <td><strong>Footprinting and Scanning</strong></td>
+                        <td>live hosts, fingerprints the operating system, performs port scanning, and analyzes services running on those ports to map the network and assess potential vulnerabilities.</td>
+                        </tr>
+                        <tr>
+                        <td><strong>Vulnerability analysis</strong></td>
+                        <td>Process of discovering flaws in a system or an application. 3 different mechanisms: Testing (active and passive tests), validation (dropping the false positives) and research (verifying and confirming)</td>
+                        </tr>
+                        <tr>
+                        <td><strong> Exploitation and post-exploitation</strong></td>
+                        <td>Taking advantage of the previously discovered vulnerabilities. Post-exploitation (priv. escalation; lateral movement; pivoting)</td>
+                        </tr>
+                        <tr>
+                        <tr>
+                        <td><strong>Reporting</strong></td>
+                        <td>Generate a comprehensive report including vulnerabilities, risks, charts, graphs, and remediation suggestions.</td>
+                        </tr>
+                    </tbody>
+                    </table>
+
+                    <h4>OWASP</h4>
+
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Phase</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1. Information Gathering</td>
+                          <td>Identify technologies, entry points, and gather data about the application.</td>
+                        </tr>
+                        <tr>
+                          <td>2. Configuration & Deployment Management Testing</td>
+                          <td>Check for misconfigurations and insecure setups.</td>
+                        </tr>
+                        <tr>
+                          <td>3. Identity Management Testing</td>
+                          <td>Test how users are identified and authenticated (e.g., session handling).</td>
+                        </tr>
+                        <tr>
+                          <td>4. Authentication Testing</td>
+                          <td>Evaluate login mechanisms, password policies, multi-factor auth, etc.</td>
+                        </tr>
+                        <tr>
+                          <td>5. Authorization Testing</td>
+                          <td>Ensure users cannot access data or functions they shouldn’t (access control).</td>
+                        </tr>
+                        <tr>
+                          <td>6. Session Management Testing</td>
+                          <td>Test for session token handling, expiration, and fixation vulnerabilities.</td>
+                        </tr>
+                        <tr>
+                          <td>7. Input Validation Testing</td>
+                          <td>Check for input-related flaws like XSS, SQL injection, and command injection.</td>
+                        </tr>
+                        <tr>
+                          <td>8. Error Handling</td>
+                          <td>Look for verbose error messages that reveal sensitive information.</td>
+                        </tr>
+                        <tr>
+                          <td>9. Cryptography Testing</td>
+                          <td>Assess proper use of encryption (data in transit, at rest, key management).</td>
+                        </tr>
+                        <tr>
+                          <td>10. Business Logic Testing</td>
+                          <td>Test app-specific workflows for flaws not found with generic testing.</td>
+                        </tr>
+                        <tr>
+                          <td>11. Client-Side Testing</td>
+                          <td>Examine JavaScript, DOM-based XSS, local storage, and browser-related issues.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+
+            
+                <div class="q"><strong>OWASP & OWASP Top 10</strong></div>
+                <div class="a">
+                <h4>OWASP</h4>
+
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Phase</th>
+                            <th>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>1. Information Gathering</td>
+                            <td>Identify technologies, entry points, and gather data about the application.</td>
+                          </tr>
+                          <tr>
+                            <td>2. Configuration & Deployment Management Testing</td>
+                            <td>Check for misconfigurations and insecure setups.</td>
+                          </tr>
+                          <tr>
+                            <td>3. Identity Management Testing</td>
+                            <td>Test how users are identified and authenticated (e.g., session handling).</td>
+                          </tr>
+                          <tr>
+                            <td>4. Authentication Testing</td>
+                            <td>Evaluate login mechanisms, password policies, multi-factor auth, etc.</td>
+                          </tr>
+                          <tr>
+                            <td>5. Authorization Testing</td>
+                            <td>Ensure users cannot access data or functions they shouldn’t (access control).</td>
+                          </tr>
+                          <tr>
+                            <td>6. Session Management Testing</td>
+                            <td>Test for session token handling, expiration, and fixation vulnerabilities.</td>
+                          </tr>
+                          <tr>
+                            <td>7. Input Validation Testing</td>
+                            <td>Check for input-related flaws like XSS, SQL injection, and command injection.</td>
+                          </tr>
+                          <tr>
+                            <td>8. Error Handling</td>
+                            <td>Look for verbose error messages that reveal sensitive information.</td>
+                          </tr>
+                          <tr>
+                            <td>9. Cryptography Testing</td>
+                            <td>Assess proper use of encryption (data in transit, at rest, key management).</td>
+                          </tr>
+                          <tr>
+                            <td>10. Business Logic Testing</td>
+                            <td>Test app-specific workflows for flaws not found with generic testing.</td>
+                          </tr>
+                          <tr>
+                            <td>11. Client-Side Testing</td>
+                            <td>Examine JavaScript, DOM-based XSS, local storage, and browser-related issues.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <h4>OWASP Top 10 – 2021</h4>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Code</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>A01:2021</td>
+                            <td>Broken Access Control</td>
+                            <td>Restrictions on what authenticated users are allowed to do are not properly enforced.</td>
+                          </tr>
+                          <tr>
+                            <td>A02:2021</td>
+                            <td>Cryptographic Failures</td>
+                            <td>Previously known as “Sensitive Data Exposure.” Failures related to cryptography or data protection.</td>
+                          </tr>
+                          <tr>
+                            <td>A03:2021</td>
+                            <td>Injection</td>
+                            <td>Including SQL, NoSQL, OS, and LDAP injection vulnerabilities that occur when untrusted data is executed.</td>
+                          </tr>
+                          <tr>
+                            <td>A04:2021</td>
+                            <td>Insecure Design</td>
+                            <td>Flaws in design and architecture rather than implementation issues (e.g., lack of security controls).</td>
+                          </tr>
+                          <tr>
+                            <td>A05:2021</td>
+                            <td>Security Misconfiguration</td>
+                            <td>Insecure default configurations, incomplete setups, or open cloud storage.</td>
+                          </tr>
+                          <tr>
+                            <td>A06:2021</td>
+                            <td>Vulnerable and Outdated Components</td>
+                            <td>Using components with known vulnerabilities (e.g., libraries, frameworks, etc.).</td>
+                          </tr>
+                          <tr>
+                            <td>A07:2021</td>
+                            <td>Identification and Authentication Failures</td>
+                            <td>Previously “Broken Authentication.” Issues with user identity and session management.</td>
+                          </tr>
+                          <tr>
+                            <td>A08:2021</td>
+                            <td>Software and Data Integrity Failures</td>
+                            <td>Failures related to software updates, CI/CD pipelines, and trust boundaries.</td>
+                          </tr>
+                          <tr>
+                            <td>A09:2021</td>
+                            <td>Security Logging and Monitoring Failures</td>
+                            <td>Lack of logging, detection, and alerting needed to respond to breaches.</td>
+                          </tr>
+                          <tr>
+                            <td>A10:2021</td>
+                            <td>Server-Side Request Forgery (SSRF)</td>
+                            <td>When a server fetches a remote resource without validating the user-supplied URL.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+      
+                    </div>
+
+                <div class="q">> Pentest my approach</div>                
+                <div class="a">
+                  Before any testing begins, I always ensure there's a signed Rules of Engagement (RoE) or scope document that clearly defines what systems are in scope. 
+
+                  <p><strong>1. Reconnaissance:</strong> I start by gathering information through open-source intelligence (OSINT), using tools like <strong>Nmap</strong>, <strong>Amass</strong>, and <strong>Burp Suite</strong> to map out the target’s infrastructure and identify potential attack vectors.</p>
+
+                  <p><strong>2. Vulnerability Identification:</strong> I perform automated and manual scanning, utilizing tools like <strong>Burp Suite</strong>, <strong>Nessus</strong>, and custom scripts to discover vulnerabilities such as XSS, SQL Injection, or misconfigurations.</p>
+              
+                  <p><strong>3. Exploitation:</strong> I then attempt to exploit identified vulnerabilities to gain unauthorized access. I prioritize vulnerabilities based on severity, and I use tools like <strong>Metasploit</strong>, custom scripts, or manual techniques to exploit them safely.</p>
+              
+                  <p><strong>4. Post-Exploitation:</strong> Once access is gained, I explore the internal network or application, escalate privileges, and gather sensitive information while maintaining stealth.</p>
+              
+                  <p><strong>5. Reporting:</strong> I document the findings, including severity, impact, and recommended mitigations, using <strong>CVSS</strong> to provide a risk assessment and deliver actionable recommendations.</p>
+                </div>
+
+
+                <div class="q">> CVSS</div>                
+                <div class="a">
+                  <p>CVSS (Common Vulnerability Scoring System) is a system that rates the severity of security vulnerabilities on a scale from 0.0 to 10.0, helping prioritize fixes based on their impact and exploitability.</p>
+                  <table border="1" cellpadding="8" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th><strong>CVSS Metric</strong></th>
+                        <th><strong>Value/Description</strong></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Attack Vector (AV)</strong></td>
+                        <td>Network (N), Adjacent (A), Local (L), Physical (P)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Attack Complexity (AC)</strong></td>
+                        <td>Low (L), High (H)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Privileges Required (PR)</strong></td>
+                        <td>None (N), Low (L), High (H)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>User Interaction (UI)</strong></td>
+                        <td>None (N), Required (R)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Scope (S)</strong></td>
+                        <td>Unchanged (U), Changed (C)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Confidentiality Impact (C)</strong></td>
+                        <td>None (N), Low (L), High (H)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Integrity Impact (I)</strong></td>
+                        <td>None (N), Low (L), High (H)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Availability Impact (A)</strong></td>
+                        <td>None (N), Low (L), High (H)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Exploitability (E)</strong></td>
+                        <td>Not Defined (X), Unproven (U), Proof of Concept (P), Functional (F), High (H)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Remediation Level (RL)</strong></td>
+                        <td>Not Defined (X), Official Fix (O), Temporary Fix (T), Workaround (W), Unavailable (U)</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Report Confidence (RC)</strong></td>
+                        <td>Not Defined (X), Unknown (U), Reasonable (R), Confirmed (C)</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  <h3>CVSS Score Range</h3>
+                  <ul>
+                    <li><strong>0.0</strong>: No risk</li>
+                    <li><strong>0.1 - 3.9</strong>: Low</li>
+                    <li><strong>4.0 - 6.9</strong>: Medium</li>
+                    <li><strong>7.0 - 8.9</strong>: High</li>
+                    <li><strong>9.0 - 10.0</strong>: Critical</li>
+                  </ul>
+
+                </div>
+
+                <div class="q">> Report</div>                
+                <div class="a">
+
+
+                    <h2>1. Executive Summary</h2>
+                    <p>High-level overview of the test, objectives, scope, critical findings, and overall risk rating. This section is intended for non-technical stakeholders.</p>
+                  
+                    <h2>2. Scope</h2>
+                    <ul>
+                      <li><strong>Targets:</strong> Domains, IPs, APIs, mobile apps, etc.</li>
+                      <li><strong>In-scope components:</strong> Frontend, backend, database, etc.</li>
+                      <li><strong>Out-of-scope:</strong> Systems or segments excluded from the assessment.</li>
+                      <li><strong>Testing window:</strong> Dates and duration of the engagement.</li>
+                    </ul>
+                  
+                    <h2>3. Methodology</h2>
+                    <p>Describe the framework or methodology used, such as:</p>
+                    <ul>
+                      <li><strong>PTES</strong> – Penetration Testing Execution Standard</li>
+                      <li><strong>OWASP Testing Guide</strong></li>
+                      <li><strong>MITRE ATT&CK</strong> (if relevant)</li>
+                    </ul>
+                  
+                    <h2>4. Tools Used</h2>
+                    <ul>
+                      <li>Burp Suite, Nmap, ffuf, Nikto, Metasploit, Amass</li>
+                      <li>Custom Python scripts, jwt.io, Postman</li>
+                      <li>Retire.js, Wappalyzer, dirsearch, etc.</li>
+                    </ul>
+                  
+                    <h2>5. Findings Summary</h2>
+                    <p>A table or list of vulnerabilities with risk ratings:</p>
+                    <table border="1" cellpadding="8" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Title</th>
+                          <th>Severity</th>
+                          <th>CVSS</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>001</td>
+                          <td>IDOR in /api/files/:id</td>
+                          <td>High</td>
+                          <td>7.5</td>
+                          <td>Open</td>
+                        </tr>
+                        <tr>
+                          <td>002</td>
+                          <td>Missing JWT expiration</td>
+                          <td>Medium</td>
+                          <td>5.3</td>
+                          <td>Open</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  
+                    <h2>6. Detailed Findings</h2>
+                  
+                    <h3>6.1 IDOR in File Access API</h3>
+                    <ul>
+                      <li><strong>Description:</strong> Authenticated users could access documents belonging to other users by modifying file IDs.</li>
+                      <li><strong>Risk:</strong> Confidentiality breach of internal documents.</li>
+                      <li><strong>Impact:</strong> High</li>
+                      <li><strong>Reproduction Steps:</strong>
+                        <ol>
+                          <li>Authenticate as user A</li>
+                          <li>Access <code>/api/files/101</code></li>
+                          <li>Change to <code>/api/files/102</code> and observe unauthorized data</li>
+                        </ol>
+                      </li>
+                      <li><strong>Evidence:</strong> Screenshots or HTTP request logs</li>
+                      <li><strong>Recommendation:</strong> Implement ACL checks and enforce ownership verification on resource access.</li>
+                    </ul>
+                  
+                    <h3>6.2 JWT Token Without Expiration</h3>
+                    <ul>
+                      <li><strong>Description:</strong> JWTs lacked the <code>exp</code> claim, allowing indefinite token reuse (Token Replay Attack).</li>
+                      <li><strong>Risk:</strong> Session hijacking and unauthorized access over time.</li>
+                      <li><strong>Impact:</strong> Medium</li>
+                      <li><strong>Recommendation:</strong> Include <code>exp</code> in all tokens and implement automatic token rotation and revocation.</li>
+                    </ul>
+                  
+                    <!-- Add more findings as needed -->
+                  
+                    <h2>7. Post-Exploitation</h2>
+                    <ul>
+                      <li>Downloaded internal files via IDOR</li>
+                      <li>Demonstrated token reuse over long sessions</li>
+                      <li>No monitoring alerts or rate-limiting detected</li>
+                    </ul>
+                  
+                    <h2>8. Recommendations</h2>
+                    <ul>
+                      <li>Implement Role-Based Access Control (RBAC)</li>
+                      <li>Enforce input validation and parameter whitelisting</li>
+                      <li>Set security headers (CSP, HSTS, etc.)</li>
+                      <li>Use token expiration and refresh mechanisms</li>
+                      <li>Enable centralized logging and alerting</li>
+                      <li>Regularly patch outdated components</li>
+                    </ul>
+                  
+                    <h2>9. Conclusion</h2>
+                    <p>The assessment revealed several critical and high-impact vulnerabilities, mainly related to access control and session management. Addressing these issues will significantly improve the overall security posture of the application.</p>
+                  
+                    <h2>10. Appendices</h2>
+                    <ul>
+                      <li>CVSS calculation details</li>
+                      <li>Raw HTTP requests and responses</li>
+                      <li>List of tools and versions</li>
+                      <li>Change log of fixes (if retest is performed)</li>
+                    </ul>
+                </div>
+                  
+              </div>
+
+
+              <div class="q">Pentest vs Vulnerability Scan vs Risk Analysis vs Security Audit vs Read Team</div>
+              <div class="a"> 
+                <table border="1">
+                  <thead>
+                    <tr>
+                      <th>Methodology</th>
+                      <th>Description</th>
+                      <th>Primary Goal</th>
+                      <th>Scope</th>
+                      <th>Tools/Techniques</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Penetration Test</td>
+                      <td>A simulated cyberattack to identify and exploit vulnerabilities.</td>
+                      <td>Find exploitable vulnerabilities and assess their impact.</td>
+                      <td>Focused on exploiting vulnerabilities in a controlled manner.</td>
+                      <td>Manual testing, Metasploit, Burp Suite, social engineering.</td>
+                    </tr>
+                    <tr>
+                      <td>Vulnerability Scan</td>
+                      <td>Automated scanning to identify known vulnerabilities.</td>
+                      <td>Identify vulnerabilities and misconfigurations in systems.</td>
+                      <td>Comprehensive scan of systems, networks, and devices.</td>
+                      <td>Nessus, OpenVAS, Qualys, Nexpose.</td>
+                    </tr>
+                    <tr>
+                      <td>Vulnerability Assessment</td>
+                      <td>Systematic process of identifying and prioritizing vulnerabilities in IT systems.</td>
+                      <td>Identify and assess the severity of vulnerabilities in a system.</td>
+                      <td>Broad scan for known vulnerabilities across the environment.</td>
+                      <td>Nessus, OpenVAS, Qualys, Nexpose.</td>
+                    </tr>
+                    <tr>
+                      <td>Vulnerability Management</td>
+                      <td>The ongoing process of identifying, evaluating, and addressing vulnerabilities.</td>
+                      <td>Manage and mitigate vulnerabilities over time.</td>
+                      <td>Continuous monitoring and patching of vulnerabilities.</td>
+                      <td>Patch management tools, vulnerability scanners, risk management software.</td>
+                    </tr>
+                    <tr>
+                      <td>Risk Analysis</td>
+                      <td>Identifying, assessing, and managing risks to assets and operations.</td>
+                      <td>Prioritize and manage risks based on likelihood and impact.</td>
+                      <td>Focuses on risk exposure, threats, and vulnerability impacts.</td>
+                      <td>Qualitative and quantitative analysis, threat modeling.</td>
+                    </tr>
+                    <tr>
+                      <td>Security Audit</td>
+                      <td>Thorough review of systems, policies, and controls to ensure compliance.</td>
+                      <td>Ensure systems meet security standards, policies, and regulations.</td>
+                      <td>Covers policies, procedures, and security controls.</td>
+                      <td>Manual review, compliance checks, system configuration reviews.</td>
+                    </tr>
+                    <tr>
+                      <td>Red Team</td>
+                      <td>Simulated real-world attack to test organization's defenses and readiness.</td>
+                      <td>Test defenses against a variety of attack vectors, including APTs.</td>
+                      <td>Realistic, ongoing attack simulations.</td>
+                      <td>Advanced penetration techniques, social engineering, physical security tests, phishing.</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                
+
+              </div>
+
               <div class="q"><strong style="color: #d9534f;">HTTP Headers</strong></div>
               <div class="a">
                       

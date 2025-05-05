@@ -31,6 +31,7 @@
         margin: 0;
         padding: 0;
         color: #333;
+        background-color: #838080;
     }
     header {
         background-color: #333;
@@ -151,6 +152,1154 @@
             <div class="container my-5">
               <div style=" background-color:rgb(222, 222, 222); border: 2px; color: rgb(132, 1, 1); font-size: 20px;">A</div>
           
+              <div class="q">🔐 Identity and Access Management (<span style="color:red">IAM</span>)</div>
+              <div class="a">
+                <div class="q">O que é?</div>
+                <div class="a">
+    
+    
+                <h1>IAM in GCP</h1>
+                <p>Controls <span class="highlight">who</span> (<span class="highlight">identity</span>) can do <span class="highlight">what</span> (<span class="highlight">roles</span>) on which <span class="highlight">resource</span> in GCP</p>
+                <p>Has the principle of <span class="important">Least Privilege</span> (*nobody should have more permissions than they need*) and <span class="important">Role-Based Access Control (RBAC)</span> is a method of managing access to resources based on the roles assigned to users, groups, or service accounts.</p>
+                </div>
+    
+                <div class="q">How it works</div>
+                <div class="a">
+           
+                <ul>
+                    <li><strong>Authentication:</strong> GCP checks <span class="highlight">who</span> (user login, service account key, etc.) you are and then gives you <strong>authorization</strong> by checking <span class="highlight">what</span> <strong>IAM policies</strong> are attached to a resource and checks what are the <strong>roles</strong> assigned to you.</li>
+                </ul>
+            
+              </div>
+              <div class="q">who</div>
+              <div class="a">
+    
+                <h3><span class="highlight">who</span> - Identity</h3>
+                <ul>
+                    <li><strong>Users:</strong> google accounts (`user@gmail.com`)</li>
+                    <li><strong>Service Accounts</strong> (svc account): Represent <span class="important">non-human entities</span>: applications, virtual machines (VMs), etc. that need to <em>authenticate and interact with Google Cloud resources</em> programmatically.</li>
+                    <li><strong>Groups:</strong> Collections of users (`engineers@domain.com`)</li>
+                    <li><strong>External Identities:</strong> Identities from external identity providers (e.g., Azure AD, custom identity providers)</li>
+                    <li><strong>Principals:</strong> Abstract representation of entities (`allUsers`, `allAuthenticatedUsers`, custom service account)</li>
+                </ul>
+                <p><em>The recommendation is always to work with groups where possible as individual users might leave the company, change teams, etc.</em></p>
+              </div>
+                <div class="q">what</div>
+                <div class="a">
+    
+                <h3><span class="highlight">what</span> - Access</h3>
+                <p><strong>Roles</strong> = <span class="highlight">1 or more permissions</span>. Roles are attached to identities. They define what type of actions an identity can do.</p>
+                <p>A user can have <strong>multiple roles</strong> for a <strong>single resource</strong>. When a user has multiple roles, the effective permissions are the <strong>union</strong> of the permissions granted by each role.</p>
+            
+                <h4 class="roles">Types of Roles</h4>
+                <ul>
+                    <li><strong>Primitive Roles:</strong>
+                        <ul>
+                            <li><strong>Owner:</strong> Full access to all resources, including managing IAM policies.</li>
+                            <li><strong>Editor:</strong> Can edit resources <span class="important">but cannot manage IAM policies.</span></li>
+                            <li><strong>Viewer:</strong> Read-only access to resources.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Predefined Roles:</strong> Contain permissions for specific services and tasks.
+                        <ul>
+                            <li><strong>Storage Admin:</strong> Full control over Cloud Storage resources. `roles/storage.admin`</li>
+                            <li><strong>Compute Admin:</strong> Full control over Compute Engine resources. `roles/compute.instanceAdmin`</li>
+                            <li><strong>BigQuery Data Editor:</strong> Full access to BigQuery datasets and tables `roles/bigquery.dataEditor`</li>
+                            <li><strong>Kubernetes Engine Cluster Viewer:</strong> Read-only access to Kubernetes Engine clusters `roles/container.clusterViewer`</li>
+                        </ul>
+                    </li>
+                    <li><strong>Custom Roles:</strong> Use when predefined roles do not precisely match the access needs of your organization or project.</li>
+                </ul>
+                <p><em>E.g. Compute Admin role will give you the permissions to create virtual machines, networks, etc.</em> `roles/compute.admin`</p>
+              </div>
+                <div class="q">where</div>
+                <div class="a">
+    
+                <h3><span class="highlight">where</span> - Management</h3>
+                <p><strong>Resources or IAM Objects</strong> are accessed by <strong>identities</strong> based on <strong>roles</strong> assigned to those identities.</p>
+                <p>GCP resources are organized in a <strong>strict resource hierarchy</strong>. Every resource must have a project => projects creation is mandatory.</p>
+    
+                <h1><span style="color:rgb(236, 111, 9)">IAM Policy</span></h1>
+                <p><strong>IAM Policy</strong> = <strong>list of rules</strong> called <strong>bindings</strong></p>
+                <ul>
+                    <li>Each <strong>binding</strong> connects 1 or more identities (domain, user, group, svc account) to a specific <strong>role</strong> (contains permissions) on a specific <strong>resource</strong> (project, bucket, VM, etc.)</li>
+                    <li><strong>Policies</strong> can be defined at <strong>resource</strong> level, <strong>project</strong> level, <strong>folder</strong> level or <strong>organization</strong> level, depending on the type of resource.</li>
+                    <li>IAM policies are inherited from parent resources to child resources in GCP. 
+                        <ul>
+                            <li><em>E.g. if you set an IAM policy at the project level, all resources within that project inherit that policy unless explicitly overridden.</em></li>
+                        </ul>
+                    </li>
+                </ul>
+               
+                </div>
+                
+                <div class="q">Attacks</div>
+                <div class="a">
+                <table border="1">
+                  <thead>
+                    <tr>
+                      <th>Attack</th>
+                      <th>Description</th>
+                      <th>Example</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Privilege Escalation</td>
+                      <td>Abusing misconfigured roles or permissions to gain higher access.</td>
+                      <td>Switching from a read-only role to an admin role via IAM policy loophole.</td>
+                    </tr>
+                    <tr>
+                      <td>Credential Stuffing</td>
+                      <td>Using leaked credentials from other breaches to gain unauthorized access.</td>
+                      <td>Automated login attempts with reused email-password pairs.</td>
+                    </tr>
+                    <tr>
+                      <td>Brute-Force Attacks</td>
+                      <td>Guessing passwords or access tokens by trial and error.</td>
+                      <td>Attempting multiple passwords on login endpoints without rate limiting.</td>
+                    </tr>
+                    <tr>
+                      <td>Pass-the-Token</td>
+                      <td>Using stolen session tokens or JWTs to impersonate users.</td>
+                      <td>Reusing a valid JWT from another user to access protected resources.</td>
+                    </tr>
+                    <tr>
+                      <td>Over-Privileged Users</td>
+                      <td>Users or services with more permissions than needed, increasing attack surface.</td>
+                      <td>A developer account with full database access instead of read-only.</td>
+                    </tr>
+                    <tr>
+                      <td>Misconfigured SSO</td>
+                      <td>Poorly implemented Single Sign-On flows allow unauthorized access.</td>
+                      <td>Forging a SAML assertion due to lack of signature verification.</td>
+                    </tr>
+                    <tr>
+                      <td>Inactive Accounts Abuse</td>
+                      <td>Old or unused accounts with valid credentials become attack vectors.</td>
+                      <td>Login to a former employee’s account still active in IAM.</td>
+                    </tr>
+                    <tr>
+                      <td>Token Replay Attack</td>
+                      <td>Reusing valid tokens without expiration to gain unauthorized access.</td>
+                      <td>Capturing and reusing an unexpired session token for access.</td>
+                    </tr>
+                  </tbody>
+                </table>
+    
+              </div>
+                <div class="q">Single Sign-On (SSO) </div>
+                <div class="a">
+                  <p>Authentication process that allows users to access multiple applications and systems with a single login, eliminating the need to remember multiple passwords. Here's how it works:</p>
+                
+                  <ol>
+                    <li><strong>Initial Login:</strong>
+                      <ul>
+                        <li>The user logs into an application or system with their credentials (username and password).</li>
+                        <li>Once authenticated, SSO creates an <strong>authentication token</strong> (typically a session cookie or JWT token).</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>User Authentication:</strong>
+                      <ul>
+                        <li>The SSO securely stores the token.</li>
+                        <li>When the user attempts to access another system or application, the SSO checks if they already have a valid authentication token.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Access to Systems:</strong>
+                      <ul>
+                        <li>If the token is valid, the user can access other applications or systems without having to log in again.</li>
+                        <li>The system checks the token's validity, and if accepted, the user is automatically authenticated.</li>
+                      </ul>
+                    </li>
+                
+                    <li><strong>Token Expiration:</strong>
+                      <ul>
+                        <li>The generated token has a limited lifetime and expires after a period of inactivity or when the session ends.</li>
+                        <li>The user will need to log in again, generating a new token for access.</li>
+                      </ul>
+                    </li>
+                  </ol>
+                
+                  <h3>Example of SSO Flow:</h3>
+                  <p>1. The user logs into application <strong>A</strong> (main app).</p>
+                  <p>2. The SSO authenticates and generates a session token.</p>
+                  <p>3. The user tries to access application <strong>B</strong> (another system or app).</p>
+                  <p>4. The SSO checks the token and authenticates the user without asking for credentials again.</p>
+                
+                  <h3>Common SSO Technologies:</h3>
+                  <ul>
+                    <li><strong>SAML (Security Assertion Markup Language)</strong></li>
+                    <li><strong>OAuth 2.0 + OpenID Connect</strong></li>
+                    <li><strong>LDAP (Lightweight Directory Access Protocol)</strong></li>
+                    <li><strong>CAS (Central Authentication Service)</strong></li>
+                  </ul>
+                
+                  <h3>Advantages of SSO:</h3>
+                  <ul>
+                    <li><strong>Improved User Experience:</strong> One login to access multiple platforms.</li>
+                    <li><strong>Enhanced Security:</strong> Fewer passwords to manage and less risk of phishing attacks.</li>
+                    <li><strong>Cost Reduction:</strong> Less support needed for password recovery.</li>
+                  </ul>
+                
+                  <h3>Real-World Example:</h3>
+                  <p>Imagine a company using tools like <strong>Google Workspace</strong>, <strong>Slack</strong>, and <strong>Zoom</strong>. With SSO, employees can log in once to the company portal and access all these tools without entering their password again for each one.</p>
+                </div>
+                <div class="q">SAML | OAuth 2.0 + OpenID Connect | LDAP</div>
+                <div class="a">
+                <div class="q">SAML (Security Assertion Markup Language)</div>
+                <div class="a">
+    
+                  <p><strong>What is SAML?</strong><br>
+                  SAML (Security Assertion Markup Language) is an XML-based framework used for exchanging authentication and authorization data between an Identity Provider (IdP) and a Service Provider (SP). It is commonly used in enterprise environments to enable Single Sign-On (SSO) functionality, allowing users to authenticate once and gain access to multiple applications without needing to re-enter credentials.</p>
+    
+                  <h3>Authentication Flow (SAML):</h3>
+                  <ol>
+                    <li><strong>User</strong> → Tries to access a resource on the <strong>Service Provider (SP)</strong></li>
+                    <li><strong>SP</strong> → Redirects User to <strong>Identity Provider (IdP)</strong> for Authentication</li>
+                    <li><strong>User</strong> → Authenticates with the <strong>IdP</strong></li>
+                    <li><strong>IdP</strong> → Generates a <strong>SAML Assertion</strong> containing authentication information</li>
+                    <li><strong>IdP</strong> → Sends the <strong>SAML Assertion</strong> to the <strong>SP</strong></li>
+                    <li><strong>SP</strong> → Verifies the <strong>SAML Assertion</strong>, grants access to the user</li>
+                  </ol>
+    
+                  <h3>Pentest Approach (How to Attack SAML):</h3>
+                  <ul>
+                    <li><strong>SAML Token Manipulation:</strong> Manipulate the SAML token to impersonate a user or escalate privileges. Test for vulnerabilities such as XML Signature Wrapping, SAML Injection, or modifying the SAML Assertion content.</li>
+                    <li><strong>Replay Attacks:</strong> If SAML assertions do not have proper expiration or freshness validation, attempt to replay the assertion to gain unauthorized access. This can be done by capturing a valid assertion and using it again later.</li>
+                    <li><strong>Misconfigured IdP/SP:</strong> Identify and exploit misconfigurations in the Identity Provider or Service Provider. For example, improperly validating the SAML assertion could allow attackers to bypass authentication.</li>
+                    <li><strong>Cross-Site Scripting (XSS) in SAML Assertion:</strong> Look for any SAML assertion that contains user-controlled input that could be exploited with Cross-Site Scripting (XSS), leading to unauthorized access.</li>
+                    <li><strong>Man-in-the-Middle (MITM) Attacks:</strong> In cases where SAML assertions are transmitted over non-secure channels, intercepting and altering the assertion could grant unauthorized access to resources.</li>
+                  </ul>
+    
+                </div>
+                <div class="q">OAuth 2.0 + OpenID Connect</div>
+                <div class="a">
+                
+                  <p><strong>What is OAuth 2.0 + OpenID Connect?</strong><br>
+                  OAuth 2.0 is an authorization framework for third-party apps to access user data securely. OpenID Connect (OIDC) adds authentication, allowing Single Sign-On (SSO) and access control.</p>
+                
+                  <h3>Authentication Flow:</h3>
+                  <ol>
+                    <li>User → Accesses the client application.</li>
+                    <li>Client → Redirects user to the authorization server.</li>
+                    <li>User → Authenticates with the authorization server.</li>
+                    <li>Authorization Server → Issues an authorization code.</li>
+                    <li>Client → Exchanges code for an access token and ID token.</li>
+                    <li>Client → Uses access token to access resources and ID token for user data.</li>
+                  </ol>
+                
+                  <h3>Pentest Approach:</h3>
+                  <ul>
+                    <li><strong>Authorization Code Interception:</strong> Capture and misuse the authorization code.</li>
+                    <li><strong>Token Leakage:</strong> Ensure tokens aren’t exposed in URLs or logs.</li>
+                    <li><strong>Insecure Redirect URIs:</strong> Exploit misconfigured redirect URIs to steal tokens.</li>
+                    <li><strong>Access Token Replay:</strong> Test if access tokens can be reused.</li>
+                    <li><strong>CSRF Attacks:</strong> Exploit CSRF vulnerabilities to hijack sessions.</li>
+                    <li><strong>Misconfigured Scopes:</strong> Check for excessive permissions granted by OAuth scopes.</li>
+                  </ul>
+                
+                </div>
+                <div class="q">LDAP (Lightweight Directory Access Protocol)</div>
+                <div class="a">
+    
+                  <p><strong>What is LDAP?</strong><br>
+                  LDAP (Lightweight Directory Access Protocol) is a protocol used to access and manage directory services, such as user directories, in a network. It allows querying and modifying directory information such as user credentials, roles, and permissions, commonly used in corporate environments for centralized authentication.</p>
+    
+                  <h3>Authentication Flow:</h3>
+                  <ol>
+                    <li>User → Sends login credentials (username, password) to LDAP server.</li>
+                    <li>LDAP Server → Verifies credentials and responds with authentication status (success or failure).</li>
+                    <li>Client → If authentication is successful, accesses protected resources as authorized by the directory.</li>
+                  </ol>
+    
+                  <h3>Pentest Approach:</h3>
+                  <ul>
+                    <li><strong>LDAP Injection:</strong> Inject malicious LDAP queries in input fields to bypass authentication or extract sensitive data.</li>
+                    <li><strong>Weak Bind Security:</strong> Test for improper or weak bind security settings, allowing unauthorized users to bind and access directory data.</li>
+                    <li><strong>Brute Force Attacks:</strong> Attempt to brute force user credentials by repeatedly sending login attempts to the LDAP server.</li>
+                    <li><strong>Exposed LDAP Services:</strong> Ensure that LDAP servers are not exposed to the public internet or improperly protected.</li>
+                    <li><strong>Improper Access Control:</strong> Test for misconfigured access control rules that could allow unauthorized users to read or modify directory data.</li>
+                  </ul>
+    
+                </div>
+                </div>
+    
+    
+    
+                
+    
+                
+                <div class="q">Como implementar?</div>
+                <div class="a">
+                  <table border="1" cellpadding="8" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>Step</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1. Define Requirements</td>
+                        <td>Identify users, systems, roles, and required access levels.</td>
+                      </tr>
+                      <tr>
+                        <td>2. Choose IAM Solution</td>
+                        <td>Select a platform (e.g., Okta, Azure AD, AWS IAM, ForgeRock).</td>
+                      </tr>
+                      <tr>
+                        <td>3. Implement Authentication</td>
+                        <td>Enforce strong passwords, MFA, and SSO.</td>
+                      </tr>
+                      <tr>
+                        <td>4. Apply Access Controls</td>
+                        <td>Use RBAC/ABAC, follow least privilege principles.</td>
+                      </tr>
+                      <tr>
+                        <td>5. Automate Lifecycle</td>
+                        <td>Automate provisioning, role changes, and offboarding.</td>
+                      </tr>
+                      <tr>
+                        <td>6. Monitor & Audit</td>
+                        <td>Log and review access; integrate with SIEM tools.</td>
+                      </tr>
+                      <tr>
+                        <td>7. Manage Privileged Access</td>
+                        <td>Use PAM to secure and monitor admin accounts.</td>
+                      </tr>
+                      <tr>
+                        <td>8. Train Users</td>
+                        <td>Educate users on secure practices and MFA use.</td>
+                      </tr>
+                      <tr>
+                        <td>9. Review Periodically</td>
+                        <td>Update roles, policies, and configurations regularly.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+    
+                </div>
+    
+               
+    
+    <div class="q">Core Components</div>
+    <div class="a">
+      <ul>
+        <li><strong>Identification:</strong> Recognizing the user (e.g., username).</li>
+        <li><strong>Authentication:</strong> Verifying user identity (passwords, MFA, biometrics).</li>
+        <li><strong>Authorization:</strong> Granting permissions based on roles, attributes, or policies.</li>
+        <li><strong>Account Lifecycle Management:</strong> Managing user accounts from creation to deletion.</li>
+        <li><strong>Access Governance:</strong> Regular access reviews and certifications.</li>
+        <li><strong>Privileged Access Management (PAM):</strong> Special controls for admin-level accounts (session logging, vaulting).</li>
+      </ul>
+    </div>
+    
+    <div class="q">Key IAM Technologies</div>
+    <div class="a">
+      <ul>
+        <li><strong>Single Sign-On (SSO):</strong> One login for multiple systems.</li>
+        <li><strong>Multi-Factor Authentication (MFA):</strong> Requires 2 or more factors to log in.</li>
+        <li><strong>Directory Services:</strong> E.g., Active Directory (AD), Azure AD, LDAP.</li>
+        <li><strong>IAM Platforms:</strong> Okta, Ping Identity, AWS IAM, ForgeRock, Auth0.</li>
+      </ul>
+    </div>
+    
+    
+    
+    <div class="q">Access Control Models</div>
+    <div class="a">
+      <ul>
+        <li><strong>RBAC (Role-Based Access Control):</strong> Permissions are assigned based on user roles.</li>
+        <li><strong>ABAC (Attribute-Based Access Control):</strong> Access based on attributes (e.g., department, location).</li>
+        <li><strong>PBAC (Policy-Based Access Control):</strong> Uses business logic and policies to define access.</li>
+      </ul>
+    </div>
+    
+    <div class="q">Best Practices</div>
+    <div class="a">
+      <ul>
+        <li>Enforce the <strong>principle of least privilege</strong>.</li>
+        <li>Apply <strong>MFA</strong> for all users, especially privileged ones.</li>
+        <li>Automate <strong>user provisioning and deprovisioning</strong>.</li>
+        <li>Perform regular <strong>access reviews</strong>.</li>
+        <li>Use <strong>SIEM</strong> for logging and monitoring IAM activity.</li>
+      </ul>
+    </div>
+    
+    
+    <div class="q">Why IAM Matters</div>
+    <div class="a">
+      <ul>
+        <li>Reduces security risks by minimizing unnecessary access.</li>
+        <li>Ensures compliance with standards like <strong>GDPR, ISO 27001, HIPAA</strong>.</li>
+        <li>Prevents insider threats and account compromise.</li>
+        <li>Supports modern security models like <strong>Zero Trust</strong>.</li>
+      </ul>
+    </div>
+                <div class="q">IAM Controls</div>
+                <div class="a">
+                  <section>
+                    <p>IAM controls are the security mechanisms and policies used to ensure that only authorized users can access the right systems, data, or services, with appropriate permissions.</p>
+                  
+                    <ul>
+                      <li>
+                        <strong>Authentication:</strong> Verifies the identity of users.
+                        <ul>
+                          <li>Examples: Passwords, Multi-Factor Authentication (MFA), Single Sign-On (SSO), Biometrics.</li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <strong>Authorization:</strong> Determines what an authenticated user is allowed to do.
+                        <ul>
+                          <li>Models: Role-Based Access Control (RBAC), Attribute-Based Access Control (ABAC), Policy-Based Access Control (PBAC).</li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <strong>Least Privilege:</strong> Users receive the minimum level of access required to perform their tasks.
+                      </li>
+                  
+                      <li>
+                        <strong>Account Lifecycle Management:</strong> Manages user accounts throughout their lifecycle.
+                        <ul>
+                          <li>Includes provisioning, deprovisioning, and role changes.</li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <strong>Privileged Access Management (PAM):</strong> Controls and monitors access to high-privilege accounts.
+                        <ul>
+                          <li>Includes session recording, time-limited access, and credential vaulting.</li>
+                        </ul>
+                      </li>
+                  
+                      <li>
+                        <strong>Session Management:</strong> Handles user sessions by enforcing timeouts, re-authentication, and session limits.
+                      </li>
+                  
+                      <li>
+                        <strong>Access Reviews & Certifications:</strong> Regular reviews to verify that access rights are still valid and appropriate.
+                      </li>
+                  
+                      <li>
+                        <strong>Logging and Monitoring:</strong> Tracks access activity and alerts on suspicious behavior.
+                        <ul>
+                          <li>Integrated with SIEMs for real-time analysis.</li>
+                        </ul>
+                      </li>
+                    </ul>
+                  
+                    <p><em>IAM controls help enforce security, compliance, and operational efficiency by protecting systems from unauthorized access.</em></p>
+                    <ul>
+                      <li>
+                        <strong>Multi-Factor Authentication (MFA):</strong>
+                        A security method that requires users to provide two or more verification factors to gain access.
+                        <ul>
+                          <li>Typically includes something the user knows (password), something the user has (authenticator app or token), and/or something the user is (biometrics).</li>
+                        </ul>
+                      </li>
+                    
+                      <li>
+                        <strong>Single Sign-On (SSO):</strong>
+                        A user authentication process that allows a user to log in once and gain access to multiple systems without being prompted to log in again for each one.
+                        <ul>
+                          <li>Improves user experience and centralizes authentication management.</li>
+                        </ul>
+                      </li>
+                    
+                      <li>
+                        <strong>Role-Based Access Control (RBAC):</strong>
+                        Access is granted based on the user’s role within the organization.
+                        <ul>
+                          <li>Roles are predefined with specific permissions; users are assigned roles rather than individual permissions.</li>
+                        </ul>
+                      </li>
+                    
+                      <li>
+                        <strong>Attribute-Based Access Control (ABAC):</strong>
+                        Access decisions are based on attributes (user, resource, environment).
+                        <ul>
+                          <li>Example: A user in the "HR" department can access employee records only during working hours.</li>
+                        </ul>
+                      </li>
+                    
+                      <li>
+                        <strong>Policy-Based Access Control (PBAC):</strong>
+                        Access is determined by centralized policies written in a formal language.
+                        <ul>
+                          <li>Allows dynamic, fine-grained access based on business rules and contextual information.</li>
+                        </ul>
+                      </li>
+                    </ul>
+                    
+                  
+                </div>
+    
+                <div class="q">Example</div>
+                <div class="a">
+                <pre>
+            {
+              "bindings": [
+                {
+                  "role": "roles/storage.objectViewer",
+                  "members": [
+                    "user:alice@example.com",
+                    "group:dev-team@example.com"
+                  ]
+                },
+                {
+                  "role": "roles/compute.admin",
+                  "members": [
+                    "serviceAccount:my-service-account@project.iam.gserviceaccount.com"
+                  ]
+                }
+              ]
+            }
+                </pre>
+              
+                <ul>
+                    <li><strong>roles/storage.objectViewer:</strong> Grants <strong>read-only</strong> access to objects in <strong>Cloud Storage</strong>. Users can view and download objects but cannot create, modify, or delete them.</li>
+                    <li><strong>roles/compute.admin:</strong> Grants <strong>full administrative</strong> access to <strong>Compute Engine</strong> resources, including the ability to create, modify, and delete VMs, networks, and disks.</li>
+                </ul>
+              </div>
+    
+              <div class="q">IAM Conditions</div>
+              <div class="a">
+            
+                <h3><span style="color:rgb(236, 111, 9)"></span></h3>
+                <ul>
+                    <li>Make <strong>IAM role bindings</strong> more <strong>granular</strong> by adding <strong>"if..." rules</strong> to permissions.</li>
+                    <li>Instead of simply saying "<strong>User X has Role Y</strong>", you can say "<strong>User X has Role Y _only if_ Condition Z is true.</strong>"</li>
+                </ul>
+            
+                <table border="1">
+                    <tr>
+                        <th><strong>Type</strong></th>
+                        <th><strong>Example</strong></th>
+                    </tr>
+                    <tr>
+                        <td><strong>Resource-based</strong></td>
+                        <td>Only access objects in a specific Cloud Storage bucket path.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Request-based</strong></td>
+                        <td>Only allow access from a certain IP address.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Time-based</strong></td>
+                        <td>Only allow access before a certain date (e.g., temporary access).</td>
+                    </tr>
+                </table>
+            
+                <pre>
+            "condition": {
+              "title": "MondayAccess",
+              "description": "Allow access only on Mondays",
+              "expression": "request.time.getDayOfWeek() == DayOfWeek.MONDAY"
+            }
+                </pre>
+              </div>
+            
+                <h2>Questions</h2>
+                <table border="1">
+                    <tr>
+                        <th><strong>Topic</strong></th>
+                        <th><strong>Summary</strong></th>
+                    </tr>
+                    <tr>
+                        <td><strong>3 Core Components</strong></td>
+                        <td><span class="highlight">Identities</span>, <span class="highlight">Roles</span>, and <span class="highlight">Policies</span> (link identities to roles and define what actions can be performed on resources).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Granting Permissions</strong></td>
+                        <td>Attach a role to an identity using GCP Console or <code>gcloud</code> CLI; roles can be granted at <span class="important">folder</span>, <span class="important">project</span>, or <span class="important">resource</span> levels.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hierarchy of Roles</strong></td>
+                        <td><strong>Primitive</strong> Roles (Owner, Editor, Viewer) <br> <strong>Predefined</strong> Roles (more specific) <br> <strong>Custom</strong> Roles (created by users).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Auditing IAM Activity</strong></td>
+                        <td>Use <span class="highlight">Google Cloud Audit Logs</span> (Admin Activity, Data Access, Access Transparency) to monitor changes and actions.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Manage Storage Access with IAM</strong></td>
+                        <td>Grant roles like <code>Storage Object Viewer/Creator</code> to identities for buckets or objects.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IAM vs Resource Manager</strong></td>
+                        <td><strong>IAM</strong> manages access (who can do what); <br><br> <strong>Resource Manager</strong> organizes projects and their lifecycle.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Policy Hierarchy</strong></td>
+                        <td>Organization → Folder → Project → Resource; <br><br>Policies are inherited down the hierarchy.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Authentication vs Authorization</strong></td>
+                        <td><strong>Authentication</strong> verifies identity; <br><br> <strong>Authorization</strong> defines allowed actions.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Implement Least Privilege</strong></td>
+                        <td>Grant only the minimum permissions necessary for a user's tasks, limiting risk.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IAM Policies vs Organization Policies</strong></td>
+                        <td><strong>Organization policies</strong> control settings org-wide; <br><br> <strong>IAM policies</strong> control access to specific resources.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Handling Predefined Role Gaps</strong></td>
+                        <td>Create <span class="roles">Custom Roles</span> to match specific access needs.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Troubleshoot Access Issues</strong></td>
+                        <td>Check user’s roles, permissions, conflicts, and authentication status.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IAM Recommender</strong></td>
+                        <td>Suggests optimizations to improve security and manage access better.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>User Access to Specific Bucket</strong></td>
+                        <td>Assign Storage roles (e.g., Viewer/Creator) directly on the bucket.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IAM vs Cloud Identity</strong></td>
+                        <td><strong>IAM</strong> manages GCP resource access; <br><br> <strong>Cloud Identity</strong> manages Workspace (Google apps) access.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Review IAM Changes</strong></td>
+                        <td>Use Audit Logs to track role and policy modifications.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>User Modifying Own IAM Roles</strong></td>
+                        <td><span class="important">Not allowed</span>; only administrators can change IAM roles.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IAM Policy vs Bucket ACL</strong></td>
+                        <td><strong>IAM Policies</strong> = resource-wide control; <br><br> <strong>ACLs</strong> = object-level control (legacy)!</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MFA for IAM Users</strong></td>
+                        <td>Enable MFA via <span class="important">Cloud Identity</span> settings for extra protection.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Service Account Key</strong></td>
+                        <td>Private key file for service accounts, allowing external apps to authenticate with GCP.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Restrict Cloud Functions Access</strong></td>
+                        <td>Grant roles like Cloud Functions Developer/Viewer to control who can manage functions.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grant Resource Access Without Sharing Credentials</strong></td>
+                        <td>Use Service Accounts + appropriate roles + keys.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IAM and Compliance</strong></td>
+                        <td>IAM supports compliance (e.g., GDPR, HIPAA) through access control and least privilege enforcement.</td>
+                    </tr>
+                </table>
+              </div>
+    
+              
+              <div class="q">Web application security</div>
+              <div class="a">
+
+                <div class="q">> Python Vulnerable Code</div>
+                <div class="a">
+                  <table border="1">
+                    <thead>
+                      <tr>
+                        <th style="width: 10%;">Vulnerable Code Example</th>
+                        <th>Type of Vulnerability</th>
+                        <th>Possible Attacks</th>
+                        <th>Mitigation</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <pre>
+                  def eval_input(user_input):
+                      return eval(user_input)
+                  
+                  user_input = input("Enter a Python expression: ")
+                  eval_input(user_input)
+                          </pre>
+                        </td>
+                        <td>Code Injection (Remote Code Execution)</td>
+                        <td>An attacker can inject arbitrary Python code to execute commands on the server, potentially compromising the system.</td>
+                        <td>Use safer alternatives like literal_eval(). Ensure proper input validation.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <pre>
+                  import sqlite3
+                  def get_user_data(user_id):
+                      conn = sqlite3.connect('users.db')
+                      cursor = conn.cursor()
+                      cursor.execute(f"SELECT * FROM users WHERE id = {user_id}")
+                      return cursor.fetchall()
+                          </pre>
+                        </td>
+                        <td>SQL Injection</td>
+                        <td>An attacker can inject malicious SQL code via the `user_id` input to manipulate the database and retrieve unauthorized data.</td>
+                        <td>Use parameterized queries or prepared statements to prevent SQL injection.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <pre>
+                  import os
+                  def delete_file(file_name):
+                      os.remove(file_name)
+                  file_name = input("Enter a file name to delete: ")
+                  delete_file(file_name)
+                          </pre>
+                        </td>
+                        <td>Command Injection</td>
+                        <td>An attacker can input a file name like `; rm -rf /`, potentially deleting critical system files.</td>
+                        <td>Validate and sanitize user inputs to avoid harmful commands. Use safe APIs to handle file operations.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <pre>
+                  import pickle
+                  def load_data(filename):
+                      with open(filename, 'rb') as f:
+                          data = pickle.load(f)
+                      return data
+                          </pre>
+                        </td>
+                        <td>Insecure Deserialization</td>
+                        <td>An attacker can craft a serialized object that, when deserialized, runs arbitrary code, such as spawning a reverse shell.</td>
+                        <td>Use safe deserialization methods such as `json` and validate input thoroughly before deserialization.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <pre>
+                  import hashlib
+                  def check_password(stored_hash, user_input):
+                      if hashlib.sha256(user_input.encode()).hexdigest() == stored_hash:
+                          return True
+                      return False
+                          </pre>
+                        </td>
+                        <td>Insecure Hashing</td>
+                        <td>If a weak hash function is used or no salt is applied, attackers can perform rainbow table attacks to reverse the hash and discover the password.</td>
+                        <td>Use strong hashing algorithms (e.g., bcrypt, Argon2) with salts for password storage.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <pre>
+                  def weak_random():
+                      return random.randint(1, 100)
+                          </pre>
+                        </td>
+                        <td>Weak Random Number Generation</td>
+                        <td>If random numbers are used in security contexts (e.g., for session IDs), an attacker can predict the generated values and hijack sessions.</td>
+                        <td>Use cryptographically secure random number generators (e.g., `secrets` in Python).</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <pre>
+                  def dynamic_code_execution(user_input):
+                      command = f"echo {user_input}"
+                      os.system(command)
+                          </pre>
+                        </td>
+                        <td>Command Injection</td>
+                        <td>An attacker could inject arbitrary commands using input like `; ls` to execute malicious commands.</td>
+                        <td>Use input sanitization and avoid constructing commands directly from user input. Prefer safe APIs.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <pre>
+                  user_input = input("Enter a file path: ")
+                  with open(user_input, 'r') as file:
+                      content = file.read()
+                          </pre>
+                        </td>
+                        <td>Directory Traversal</td>
+                        <td>An attacker could input paths like `../../etc/passwd` to read unauthorized files from the system.</td>
+                        <td>Sanitize user input to ensure only valid file paths are accepted. Avoid user-controlled file paths where possible.</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <pre>
+                  import os
+                  def list_directory(directory):
+                      os.system(f"ls {directory}")
+                  directory = input("Enter directory: ")
+                  list_directory(directory)
+                          </pre>
+                        </td>
+                        <td>Command Injection</td>
+                        <td>An attacker could inject a command like `; cat /etc/passwd` to list sensitive files from the system.</td>
+                        <td>Use parameterized methods for executing system commands, and sanitize input to avoid injection.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                </div>
+
+                <div class="q">> Common Web Application Security Risks (OWASP Top 10)    </div>
+                <div class="a">
+                  <table border="1">
+                    <thead>
+                      <tr>
+                        <th>Risk</th>
+                        <th>Description</th>
+                        <th>Mitigation</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Broken Access Control</td>
+                        <td>Users can access unauthorized resources or actions.</td>
+                        <td>Implement proper authorization checks; deny by default; use least privilege.</td>
+                      </tr>
+                      <tr>
+                        <td>Cryptographic Failures</td>
+                        <td>Weak or missing encryption for sensitive data.</td>
+                        <td>Use strong, up-to-date encryption standards (e.g., AES-256, HTTPS with TLS 1.2+).</td>
+                      </tr>
+                      <tr>
+                        <td>Injection</td>
+                        <td>User input interpreted as code (e.g., SQL, LDAP).</td>
+                        <td>Use parameterized queries, input validation, and ORM frameworks.</td>
+                      </tr>
+                      <tr>
+                        <td>Insecure Design</td>
+                        <td>Poor security architecture or missing controls.</td>
+                        <td>Perform threat modeling; apply secure design patterns from the start.</td>
+                      </tr>
+                      <tr>
+                        <td>Security Misconfiguration</td>
+                        <td>Improper settings, exposed error messages, default passwords.</td>
+                        <td>Automate configuration checks; disable unused features; harden environments.</td>
+                      </tr>
+                      <tr>
+                        <td>Vulnerable and Outdated Components</td>
+                        <td>Use of libraries or software with known vulnerabilities.</td>
+                        <td>Regularly update dependencies; use tools like Snyk or OWASP Dependency-Check.</td>
+                      </tr>
+                      <tr>
+                        <td>Identification and Authentication Failures</td>
+                        <td>Weak authentication or session management.</td>
+                        <td>Enforce MFA, use secure session tokens, and protect against brute-force attacks.</td>
+                      </tr>
+                      <tr>
+                        <td>Software and Data Integrity Failures</td>
+                        <td>Code or updates can be tampered with.</td>
+                        <td>Use signed updates; enforce integrity checks in CI/CD pipelines.</td>
+                      </tr>
+                      <tr>
+                        <td>Security Logging and Monitoring Failures</td>
+                        <td>Lack of visibility into attacks or breaches.</td>
+                        <td>Implement centralized logging; monitor and alert on suspicious activity.</td>
+                      </tr>
+                      <tr>
+                        <td>Server-Side Request Forgery (SSRF)</td>
+                        <td>Server can be tricked into making internal requests.</td>
+                        <td>Validate and sanitize URLs; restrict outbound traffic from servers.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <h3>Outros</h3>
+                  <table border="1">
+                    <thead>
+                      <tr>
+                        <th>Attack Type</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Zero-Day Vulnerabilities</td>
+                        <td>Vulnerabilities unknown to the application’s makers and unpatched. Attackers exploit these before a fix is available.</td>
+                      </tr>
+                      <tr>
+                        <td>Denial-of-Service (DoS) and Distributed Denial-of-Service (DDoS)</td>
+                        <td>Attackers overload a server or infrastructure with traffic, causing it to slow down or crash, denying service to legitimate users.</td>
+                      </tr>
+                      <tr>
+                        <td>Memory Corruption</td>
+                        <td>Occurs when memory is unintentionally modified, leading to unexpected behavior and exploits like code injection or buffer overflow attacks.</td>
+                      </tr>
+                      <tr>
+                        <td>Credential Stuffing</td>
+                        <td>Attackers use bots to input stolen username and password combinations into login portals to gain unauthorized access to accounts.</td>
+                      </tr>
+                      <tr>
+                        <td>Page Scraping</td>
+                        <td>Automated bots steal large amounts of data from web pages, such as pricing or content, for malicious purposes or competitive advantage.</td>
+                      </tr>
+                      <tr>
+                        <td>API Abuse</td>
+                        <td>Vulnerabilities in APIs that allow attackers to inject malicious code or intercept sensitive data between applications.</td>
+                      </tr>
+                      <tr>
+                        <td>Shadow APIs</td>
+                        <td>APIs developed and published without informing security teams, potentially exposing sensitive company data.</td>
+                      </tr>
+                      <tr>
+                        <td>Third-Party Code Abuse</td>
+                        <td>Exploiting vulnerabilities in third-party tools integrated into the application (e.g., payment processors) to steal data or inject malicious code.</td>
+                      </tr>
+                      <tr>
+                        <td>Attack Surface Misconfigurations</td>
+                        <td>Vulnerabilities in an organization’s entire IT footprint due to overlooked or misconfigured elements like servers, devices, and cloud assets.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  
+                </div>
+                  
+                <div class="q">> Best Practices</div>
+                <div class="a">
+                  <table border="1">
+                    <thead>
+                      <tr>
+                        <th>Security Strategy</th>
+                        <th>Description</th>
+                        <th>Best Practices</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Secure Coding Practices</td>
+                        <td>Implement secure coding standards to prevent common vulnerabilities like SQL Injection, XSS, and CSRF.</td>
+                        <td>Use input validation, output encoding, sanitize user input, and avoid hardcoding sensitive information.</td>
+                      </tr>
+                      <tr>
+                        <td>Authentication & Authorization</td>
+                        <td>Ensure secure user authentication and proper authorization to protect sensitive resources.</td>
+                        <td>Use Multi-Factor Authentication (MFA), enforce strong password policies, and apply RBAC or ABAC.</td>
+                      </tr>
+                      <tr>
+                        <td>Session Management</td>
+                        <td>Secure session handling to prevent unauthorized access to user accounts.</td>
+                        <td>Use secure, HttpOnly, and SameSite cookies, session expiration, and protections against session fixation and hijacking.</td>
+                      </tr>
+                      <tr>
+                        <td>Encryption</td>
+                        <td>Encrypt sensitive data both at rest and in transit to protect it from unauthorized access.</td>
+                        <td>Use HTTPS with TLS, encrypt sensitive data in databases, and ensure proper key management.</td>
+                      </tr>
+                      <tr>
+                        <td>Input Validation</td>
+                        <td>Validate and sanitize all user inputs to avoid injection attacks, such as SQLi or XSS.</td>
+                        <td>Always validate inputs on both client and server sides, and use whitelisting for allowed inputs.</td>
+                      </tr>
+                      <tr>
+                        <td>Security Testing & Vulnerability Scanning</td>
+                        <td>Continuously test and scan the application for vulnerabilities to identify potential security issues.</td>
+                        <td>Perform SAST, DAST, regular penetration testing, and use vulnerability scanners like OWASP ZAP or Burp Suite.</td>
+                      </tr>
+                      <tr>
+                        <td>Regular Security Updates & Patching</td>
+                        <td>Ensure that all third-party components, libraries, and frameworks are up to date and free of known vulnerabilities.</td>
+                        <td>Regularly update software, dependencies, and monitor with tools like Dependabot or OWASP Dependency-Check.</td>
+                      </tr>
+                      <tr>
+                        <td>Access Control</td>
+                        <td>Restrict user access based on the principle of least privilege, only allowing users to access what they need.</td>
+                        <td>Implement RBAC or ABAC, use least-privilege policy, and audit access controls regularly.</td>
+                      </tr>
+                      <tr>
+                        <td>Security Logging and Monitoring</td>
+                        <td>Enable detailed logging and continuous monitoring of application and system activities to detect and respond to security incidents.</td>
+                        <td>Log all security-related events, use SIEM solutions, and set up automated alerts for abnormal behavior.</td>
+                      </tr>
+                      <tr>
+                        <td>Incident Response Plan</td>
+                        <td>Develop and maintain a plan to respond quickly and effectively to security breaches or incidents.</td>
+                        <td>Create and test an incident response plan, assign roles for incident handling, and ensure regular backups.</td>
+                      </tr>
+                      <tr>
+                        <td>Secure Configuration Management</td>
+                        <td>Ensure that the web application, servers, and all infrastructure components are securely configured.</td>
+                        <td>Disable unused services, apply security hardening guides, and minimize attack surface.</td>
+                      </tr>
+                      <tr>
+                        <td>Secure Deployment Pipeline</td>
+                        <td>Integrate security into the software development lifecycle (SDLC) to prevent vulnerabilities from reaching production.</td>
+                        <td>Implement DevSecOps, automate security checks in CI/CD pipelines, and use tools like container scanning.</td>
+                      </tr>
+                      <tr>
+                        <td>Content Security Policy (CSP)</td>
+                        <td>Implement a Content Security Policy to reduce the risk of XSS and data injection attacks.</td>
+                        <td>Define a strict CSP header, avoid inline JavaScript, and restrict third-party resources.</td>
+                      </tr>
+                      <tr>
+                        <td>Web Application Firewalls (WAF)</td>
+                        <td>Protect the web application from common attacks by using a WAF that filters out malicious traffic.</td>
+                        <td>Deploy a WAF to block SQLi, XSS, and other malicious inputs, and update its rule set regularly.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                </div>
+                
+                
+                <div class="q">> Security Controls em components</div>
+
+                <div class="a">
+                  <p>security controls are a core part of web application security strategy, and are often tied directly to compliance frameworks like OWASP ASVS or ISO 27001.</p>
+
+                  <p>Measures, policies, and tools implemented to reduce security risks, protect assets, and ensure confidentiality, integrity, and availability of systems and data. They are typically classified as preventive, detective, or corrective.</p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Component</th>
+                        <th>Security Controls</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Middleware</td>
+                        <td>
+                          - Authentication and Authorization<br>
+                          - Secure logging<br>
+                          - Data encryption in transit<br>
+                          - Input validation and sanitization<br>
+                          - Rate limiting and throttling<br>
+                          - Error handling without exposing internal logic
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Cache</td>
+                        <td>
+                          - Secure access to cache (e.g., password-protected Redis)<br>
+                          - Content expiration policies<br>
+                          - Encryption of sensitive cached data<br>
+                          - Cache segmentation by user/session<br>
+                          - Cache invalidation mechanisms
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>CDN</td>
+                        <td>
+                          - HTTPS enforcement<br>
+                          - Tokenized or signed URLs<br>
+                          - DDoS protection<br>
+                          - Rate limiting<br>
+                          - IP-based or token-based access control<br>
+                          - Access logging and anomaly detection
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Database</td>
+                        <td>
+                          - Encryption at rest and in transit<br>
+                          - Role-Based Access Control (RBAC)<br>
+                          - SQL Injection prevention (Prepared Statements / ORM)<br>
+                          - Regular backups and disaster recovery plans<br>
+                          - Activity logging and anomaly alerts<br>
+                          - Network access controls (e.g., IP allowlists)
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Web Server</td>
+                        <td>
+                          - Web Application Firewall (WAF)<br>
+                          - HTTPS with strong TLS configuration<br>
+                          - Regular security patches<br>
+                          - Secure HTTP headers (CSP, X-Content-Type-Options, etc.)<br>
+                          - Access logging and monitoring<br>
+                          - Directory and file access controls
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Frontend</td>
+                        <td>
+                          - Content Security Policy (CSP)<br>
+                          - HTTPS enforced<br>
+                          - Input validation and output escaping<br>
+                          - Secure use of cookies (HttpOnly, Secure, SameSite)<br>
+                          - Avoid exposing sensitive logic in client code<br>
+                          - Safe use of third-party libraries
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Login (Authentication)</td>
+                        <td>
+                          - Multi-Factor Authentication (MFA)<br>
+                          - Secure password hashing (e.g., bcrypt, Argon2)<br>
+                          - Login attempt limits / brute-force protection<br>
+                          - Secure session management with expiration<br>
+                          - Secure token handling (e.g., signed JWTs with expiry)<br>
+                          - CAPTCHA and bot protection<br>
+                          - Login anomaly notifications
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  </div>
+
+
+                  <div class="q">> Security Controls Types</div>
+                  <div class="a">
+                    Security controls are mechanisms implemented to prevent, detect, or mitigate security risks in web applications. They are typically grouped into four main types:
+               
+                  
+                  <div class="q">Preventive Controls (block attacks)</div>
+                  <div class="a">
+                    <ul>
+                      <li><strong>Input Validation</strong> – Blocks malicious inputs to prevent SQL Injection, XSS, etc.</li>
+                      <li><strong>Access Controls</strong> – Enforces rules like Role-Based Access Control (RBAC) or Attribute-Based Access Control (ABAC).</li>
+                      <li><strong>Authentication Mechanisms</strong> – Use of Multi-Factor Authentication (MFA) and Single Sign-On (SSO).</li>
+                      <li><strong>HTTPS with TLS</strong> – Ensures data is encrypted in transit.</li>
+                      <li><strong>Secure Session Management</strong> – Proper use of secure cookies and token expiration.</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="q">Detective Controls (detect threats)</div>
+                  <div class="a">
+                    <ul>
+                      <li><strong>Security Logging & Monitoring</strong> – Centralized logs for access and errors.</li>
+                      <li><strong>Intrusion Detection Systems (IDS)</strong> – Monitors network/app for malicious activity.</li>
+                      <li><strong>Alerting Systems</strong> – Detects anomalies such as multiple failed logins.</li>
+                      <li><strong>Tamper Detection</strong> – Ensures integrity of client-side code or stored data.</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="q">Corrective Controls (fix issues)</div>
+                  <div class="a">
+                    <ul>
+                      <li><strong>WAF Rule Updates</strong> – Block new attack patterns.</li>
+                      <li><strong>Patch Management</strong> – Fix vulnerabilities quickly after detection.</li>
+                      <li><strong>Account Lockout</strong> – Prevent brute-force login attempts.</li>
+                      <li><strong>Graceful Error Handling</strong> – Avoid leaking sensitive system info.</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="q">Deterrent Controls (discourage attacks)</div>
+                  <div class="a">
+                    <ul>
+                      <li><strong>Legal Notices & Banners</strong> – Warn attackers of monitoring and consequences.</li>
+                      <li><strong>Login Rate Limits</strong> – Discourage brute-force attacks.</li>
+                      <li><strong>Honeypots</strong> – Fake endpoints to detect unauthorized probing.</li>
+                    </ul>
+                  </div>
+                  
+                  <div class="q">Examples</div>
+                  <div class="a">
+                    <ul>
+                      <li>Using <strong>Content Security Policy (CSP)</strong> headers – Preventive</li>
+                      <li>Logging 500 errors with stack traces – Detective</li>
+                      <li>Resetting user tokens after a session hijack – Corrective</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
 
               <div class="q">AV</div>
               <div class="a">
@@ -1177,6 +2326,233 @@ Response: 200 OK, { "token": "jwt-token" }</pre>
 </div>
 
               <div style="background-color:rgb(222, 222, 222); border: 2px; color: rgb(132, 1, 1); font-size: 20px;">C</div>
+<!--- COOKIES-->
+<div class="q">Cookies & Tokens</div>
+<div class="a">
+
+
+    <p>A <strong>cookie </strong>is a small piece of data stored on the user's device by a web browser when a user visits a website. Cookies are used to store information about the user's interaction with the site, such as preferences, authentication details, or tracking information for analytics or advertising purposes.</p>
+      <!-- Table of SQLi Types -->
+
+      <div class="q">> Best Practices | Flags</div>
+<div class="a">
+
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Security Practice</th>
+            <th>Description</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>HttpOnly</td>
+            <td>Prevents client-side scripts (JavaScript) from accessing the cookie, protecting against XSS.</td>
+            <td>Set-Cookie: sessionId=abc123; HttpOnly;</td>
+          </tr>
+          <tr>
+            <td>Secure</td>
+            <td>Ensures cookies are only transmitted over HTTPS, preventing exposure in HTTP requests.</td>
+            <td>Set-Cookie: sessionId=abc123; Secure;</td>
+          </tr>
+          <tr>
+            <td>SameSite</td>
+            <td>Protects against CSRF attacks by restricting cookies to same-site requests.</td>
+            <td>Set-Cookie: sessionId=abc123; SameSite=Strict;</td>
+          </tr>
+          <tr>
+            <td>Expiration Time</td>
+            <td>Limits the lifetime of the cookie to reduce the impact of hijacking.</td>
+            <td>Set-Cookie: sessionId=abc123; Max-Age=3600;</td>
+          </tr>
+          <tr>
+            <td>Encryption</td>
+            <td>Encrypt sensitive data stored in cookies to prevent unauthorized access.</td>
+            <td>Use encryption libraries to encrypt the cookie value before setting it.</td>
+          </tr>
+          <tr>
+            <td>Avoid Storing Sensitive Data</td>
+            <td>Never store sensitive data like passwords directly in cookies.</td>
+            <td>Store only session IDs or non-sensitive tokens.</td>
+          </tr>
+          <tr>
+            <td>Subdomain-Specific Cookies</td>
+            <td>Limit cookies to specific subdomains to reduce exposure.</td>
+            <td>Set-Cookie: sessionId=abc123; Domain=sub.example.com;</td>
+          </tr>
+          <tr>
+            <td>Limit Cookie Scope</td>
+            <td>Set the cookie's scope to a specific path to minimize its exposure.</td>
+            <td>Set-Cookie: sessionId=abc123; Path=/dashboard;</td>
+          </tr>
+          <tr>
+            <td>Where Cookies Are Stored</td>
+            <td>Cookies are stored in the user's browser (client-side) in cookie storage files or internal browser databases.</td>
+            <td>Access via browser dev tools → Application → Cookies</td>
+          </tr>
+          <tr>
+            <td>Cookie Impersonation Tools</td>
+            <td>Used during legal penetration testing to simulate session hijacking or replay attacks using stolen cookies.</td>
+            <td>Burp Suite, Postman, Cookie Editor, HackBar, browser plugins (e.g., EditThisCookie)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      </div>
+      <table border="1" cellpadding="10">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>Cookies</th>
+            <th>Tokens</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Storage</td>
+            <td>Stored in the browser (cookies).</td>
+            <td>Stored in client-side storage (e.g., LocalStorage, SessionStorage) or sent via headers.</td>
+          </tr>
+          <tr>
+            <td>Usage</td>
+            <td>Used for session management and persistence (e.g., login state).</td>
+            <td>Used for authentication and authorization (e.g., JWT).</td>
+          </tr>
+          <tr>
+            <td>Sending</td>
+            <td>Automatically sent with every HTTP request to the server (same domain).</td>
+            <td>Manually sent via HTTP headers (e.g., `Authorization: Bearer token`).</td>
+          </tr>
+          <tr>
+            <td>Security</td>
+            <td>Susceptible to XSS and CSRF if not properly configured (e.g., `HttpOnly`, `Secure`, `SameSite`).</td>
+            <td>Less susceptible to CSRF but vulnerable to XSS if stored insecurely.</td>
+          </tr>
+          <tr>
+            <td>Example</td>
+            <td>Used for login persistence in web apps (e.g., `sessionid`).</td>
+            <td>Used in modern web apps for API requests (e.g., JWT in the `Authorization` header).</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <h4>Cookie Types</h4>
+      <table>
+          <thead>
+              <tr>
+                  <th>Cookie Type</th>
+                  <th>Description</th>
+                  <th>Use Case</th>
+                  <th>Expiration</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>Session Cookie</td>
+                  <td>A cookie that is temporary and is erased when the browser is closed.</td>
+                  <td>Used for session management (e.g., keeping users logged in).</td>
+                  <td>Expires when the browser is closed.</td>
+              </tr>
+              <tr>
+                  <td>Persistent Cookie</td>
+                  <td>A cookie that is stored for a specific period, even after the browser is closed.</td>
+                  <td>Used for remembering login credentials, preferences, or tracking users across sessions.</td>
+                  <td>Has a set expiration date (e.g., 30 days).</td>
+              </tr>
+              <tr>
+                  <td>Secure Cookie</td>
+                  <td>A cookie that is only sent over HTTPS connections, ensuring the cookie's data is encrypted.</td>
+                  <td>Used for security purposes, especially for sensitive data like login tokens.</td>
+                  <td>Expires after a set period or session.</td>
+              </tr>
+              <tr>
+                  <td>HttpOnly Cookie</td>
+                  <td>A cookie that can only be accessed by the server, not JavaScript running in the browser. This reduces the risk of XSS attacks.</td>
+                  <td>Used to store authentication tokens or other sensitive information.</td>
+                  <td>Expires after a set period or session.</td>
+              </tr>
+              <tr>
+                  <td>SameSite Cookie</td>
+                  <td>A cookie that restricts how cookies are sent with cross-site requests. It can be set to `Strict`, `Lax`, or `None` to control cross-site behavior.</td>
+                  <td>Used to prevent Cross-Site Request Forgery (CSRF) attacks.</td>
+                  <td>Expires after a set period or session.</td>
+              </tr>
+              <tr>
+                  <td>Third-Party Cookie</td>
+                  <td>A cookie set by a domain other than the one being visited by the user (usually by advertisers or analytics services).</td>
+                  <td>Used for tracking and targeted advertising across websites.</td>
+                  <td>Expires after a set period, depending on the third party.</td>
+              </tr>
+              <tr>
+                  <td>Flash Cookie (Local Shared Object)</td>
+                  <td>A cookie stored by Adobe Flash, similar to a persistent cookie but used by Flash content.</td>
+                  <td>Used for storing user preferences or game progress in Flash applications.</td>
+                  <td>Can persist until manually deleted by the user.</td>
+              </tr>
+          </tbody>
+      </table>
+
+      <h3>Vulnerabilities</h3>
+
+      <table>
+          <thead>
+            <tr>
+              <th>Vulnerability</th>
+              <th>Description</th>
+              <th>Mitigation</th>
+              <th>How to Detect</th>
+              <th>Tools Used for Attack</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Session Hijacking</td>
+              <td>Attackers steal session cookies to impersonate users.</td>
+              <td>Use the `Secure` flag and implement `HttpOnly` cookies.</td>
+              <td>Check if cookies are sent over HTTP (not HTTPS), inspect cookies.</td>
+              <td>Burp Suite, OWASP ZAP</td>
+            </tr>
+            <tr>
+              <td>Cross-Site Scripting (XSS)</td>
+              <td>If cookies are not marked as `HttpOnly`, they are vulnerable to theft via JavaScript.</td>
+              <td>Implement `HttpOnly` flag, validate user input to prevent XSS.</td>
+              <td>Manual testing, Burp Suite, OWASP ZAP</td>
+              <td>Burp Suite, Cookie Cadger</td>
+            </tr>
+            <tr>
+              <td>Cross-Site Request Forgery (CSRF)</td>
+              <td>Cookies can be used to perform unauthorized actions when the user is authenticated.</td>
+              <td>Use anti-CSRF tokens, validate the `SameSite` cookie attribute.</td>
+              <td>Analyze cookie behavior, check if cookies are sent on cross-origin requests.</td>
+              <td>Burp Suite, OWASP ZAP</td>
+            </tr>
+            <tr>
+              <td>Insecure Cookie Storage</td>
+              <td>Storing sensitive data in cookies without encryption.</td>
+              <td>Avoid storing sensitive information in cookies, encrypt sensitive data.</td>
+              <td>Inspect cookies for sensitive data in plaintext.</td>
+              <td>Wireshark, Fiddler</td>
+            </tr>
+            <tr>
+              <td>Cookie Poisoning</td>
+              <td>Attackers tamper with cookie values to modify session data.</td>
+              <td>Use secure signing (e.g., HMAC) and encryption of cookies.</td>
+              <td>Intercept cookies, check if cookies are tampered with during requests.</td>
+              <td>Burp Suite, OWASP ZAP</td>
+            </tr>
+            <tr>
+              <td>Cookie Replay Attack</td>
+              <td>Attackers capture and reuse cookies to impersonate users.</td>
+              <td>Implement session expiration, use `Secure` and `SameSite` flags.</td>
+              <td>Analyze session cookie lifespan, inspect cookies for expiration dates.</td>
+              <td>Wireshark, Burp Suite</td>
+            </tr>
+          </tbody>
+        </table>
+</div>
+
+
 
               <div class="q">Compromised System</div>
               <div class="a"> 
@@ -1592,166 +2968,7 @@ Response: 200 OK, { "token": "jwt-token" }</pre>
                   </table>
 
                 </div>
-              <!--- COOKIES-->
-              <div class="q">Cookies & Tokens</div>
-              <div class="a">
-
-
-                  <p>A <strong>cookie </strong>is a small piece of data stored on the user's device by a web browser when a user visits a website. Cookies are used to store information about the user's interaction with the site, such as preferences, authentication details, or tracking information for analytics or advertising purposes.</p>
-                    <!-- Table of SQLi Types -->
-
-                    <table border="1" cellpadding="10">
-                      <thead>
-                        <tr>
-                          <th>Aspect</th>
-                          <th>Cookies</th>
-                          <th>Tokens</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Storage</td>
-                          <td>Stored in the browser (cookies).</td>
-                          <td>Stored in client-side storage (e.g., LocalStorage, SessionStorage) or sent via headers.</td>
-                        </tr>
-                        <tr>
-                          <td>Usage</td>
-                          <td>Used for session management and persistence (e.g., login state).</td>
-                          <td>Used for authentication and authorization (e.g., JWT).</td>
-                        </tr>
-                        <tr>
-                          <td>Sending</td>
-                          <td>Automatically sent with every HTTP request to the server (same domain).</td>
-                          <td>Manually sent via HTTP headers (e.g., `Authorization: Bearer token`).</td>
-                        </tr>
-                        <tr>
-                          <td>Security</td>
-                          <td>Susceptible to XSS and CSRF if not properly configured (e.g., `HttpOnly`, `Secure`, `SameSite`).</td>
-                          <td>Less susceptible to CSRF but vulnerable to XSS if stored insecurely.</td>
-                        </tr>
-                        <tr>
-                          <td>Example</td>
-                          <td>Used for login persistence in web apps (e.g., `sessionid`).</td>
-                          <td>Used in modern web apps for API requests (e.g., JWT in the `Authorization` header).</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    
-                    <h4>Cookie Types</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Cookie Type</th>
-                                <th>Description</th>
-                                <th>Use Case</th>
-                                <th>Expiration</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Session Cookie</td>
-                                <td>A cookie that is temporary and is erased when the browser is closed.</td>
-                                <td>Used for session management (e.g., keeping users logged in).</td>
-                                <td>Expires when the browser is closed.</td>
-                            </tr>
-                            <tr>
-                                <td>Persistent Cookie</td>
-                                <td>A cookie that is stored for a specific period, even after the browser is closed.</td>
-                                <td>Used for remembering login credentials, preferences, or tracking users across sessions.</td>
-                                <td>Has a set expiration date (e.g., 30 days).</td>
-                            </tr>
-                            <tr>
-                                <td>Secure Cookie</td>
-                                <td>A cookie that is only sent over HTTPS connections, ensuring the cookie's data is encrypted.</td>
-                                <td>Used for security purposes, especially for sensitive data like login tokens.</td>
-                                <td>Expires after a set period or session.</td>
-                            </tr>
-                            <tr>
-                                <td>HttpOnly Cookie</td>
-                                <td>A cookie that can only be accessed by the server, not JavaScript running in the browser. This reduces the risk of XSS attacks.</td>
-                                <td>Used to store authentication tokens or other sensitive information.</td>
-                                <td>Expires after a set period or session.</td>
-                            </tr>
-                            <tr>
-                                <td>SameSite Cookie</td>
-                                <td>A cookie that restricts how cookies are sent with cross-site requests. It can be set to `Strict`, `Lax`, or `None` to control cross-site behavior.</td>
-                                <td>Used to prevent Cross-Site Request Forgery (CSRF) attacks.</td>
-                                <td>Expires after a set period or session.</td>
-                            </tr>
-                            <tr>
-                                <td>Third-Party Cookie</td>
-                                <td>A cookie set by a domain other than the one being visited by the user (usually by advertisers or analytics services).</td>
-                                <td>Used for tracking and targeted advertising across websites.</td>
-                                <td>Expires after a set period, depending on the third party.</td>
-                            </tr>
-                            <tr>
-                                <td>Flash Cookie (Local Shared Object)</td>
-                                <td>A cookie stored by Adobe Flash, similar to a persistent cookie but used by Flash content.</td>
-                                <td>Used for storing user preferences or game progress in Flash applications.</td>
-                                <td>Can persist until manually deleted by the user.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <h3>Vulnerabilities</h3>
-
-                    <table>
-                        <thead>
-                          <tr>
-                            <th>Vulnerability</th>
-                            <th>Description</th>
-                            <th>Mitigation</th>
-                            <th>How to Detect</th>
-                            <th>Tools Used for Attack</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Session Hijacking</td>
-                            <td>Attackers steal session cookies to impersonate users.</td>
-                            <td>Use the `Secure` flag and implement `HttpOnly` cookies.</td>
-                            <td>Check if cookies are sent over HTTP (not HTTPS), inspect cookies.</td>
-                            <td>Burp Suite, OWASP ZAP</td>
-                          </tr>
-                          <tr>
-                            <td>Cross-Site Scripting (XSS)</td>
-                            <td>If cookies are not marked as `HttpOnly`, they are vulnerable to theft via JavaScript.</td>
-                            <td>Implement `HttpOnly` flag, validate user input to prevent XSS.</td>
-                            <td>Manual testing, Burp Suite, OWASP ZAP</td>
-                            <td>Burp Suite, Cookie Cadger</td>
-                          </tr>
-                          <tr>
-                            <td>Cross-Site Request Forgery (CSRF)</td>
-                            <td>Cookies can be used to perform unauthorized actions when the user is authenticated.</td>
-                            <td>Use anti-CSRF tokens, validate the `SameSite` cookie attribute.</td>
-                            <td>Analyze cookie behavior, check if cookies are sent on cross-origin requests.</td>
-                            <td>Burp Suite, OWASP ZAP</td>
-                          </tr>
-                          <tr>
-                            <td>Insecure Cookie Storage</td>
-                            <td>Storing sensitive data in cookies without encryption.</td>
-                            <td>Avoid storing sensitive information in cookies, encrypt sensitive data.</td>
-                            <td>Inspect cookies for sensitive data in plaintext.</td>
-                            <td>Wireshark, Fiddler</td>
-                          </tr>
-                          <tr>
-                            <td>Cookie Poisoning</td>
-                            <td>Attackers tamper with cookie values to modify session data.</td>
-                            <td>Use secure signing (e.g., HMAC) and encryption of cookies.</td>
-                            <td>Intercept cookies, check if cookies are tampered with during requests.</td>
-                            <td>Burp Suite, OWASP ZAP</td>
-                          </tr>
-                          <tr>
-                            <td>Cookie Replay Attack</td>
-                            <td>Attackers capture and reuse cookies to impersonate users.</td>
-                            <td>Implement session expiration, use `Secure` and `SameSite` flags.</td>
-                            <td>Analyze session cookie lifespan, inspect cookies for expiration dates.</td>
-                            <td>Wireshark, Burp Suite</td>
-                          </tr>
-                        </tbody>
-                      </table>
-              </div>
-
+              
 
               <div class="q"><strong> Cryptography</strong></div>
               <div class="a">
@@ -3700,131 +4917,6 @@ Response: 200 OK, { "token": "jwt-token" }</pre>
                 <strong>Closed Source</strong> can be more secure if it's a well-established, professionally maintained product with strong security protocols </div>
 
 
-            
-                <div class="q"><strong>OWASP & OWASP Top 10</strong></div>
-                <div class="a">
-                <h4>OWASP</h4>
-
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>Phase</th>
-                            <th>Description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1. Information Gathering</td>
-                            <td>Identify technologies, entry points, and gather data about the application.</td>
-                          </tr>
-                          <tr>
-                            <td>2. Configuration & Deployment Management Testing</td>
-                            <td>Check for misconfigurations and insecure setups.</td>
-                          </tr>
-                          <tr>
-                            <td>3. Identity Management Testing</td>
-                            <td>Test how users are identified and authenticated (e.g., session handling).</td>
-                          </tr>
-                          <tr>
-                            <td>4. Authentication Testing</td>
-                            <td>Evaluate login mechanisms, password policies, multi-factor auth, etc.</td>
-                          </tr>
-                          <tr>
-                            <td>5. Authorization Testing</td>
-                            <td>Ensure users cannot access data or functions they shouldn’t (access control).</td>
-                          </tr>
-                          <tr>
-                            <td>6. Session Management Testing</td>
-                            <td>Test for session token handling, expiration, and fixation vulnerabilities.</td>
-                          </tr>
-                          <tr>
-                            <td>7. Input Validation Testing</td>
-                            <td>Check for input-related flaws like XSS, SQL injection, and command injection.</td>
-                          </tr>
-                          <tr>
-                            <td>8. Error Handling</td>
-                            <td>Look for verbose error messages that reveal sensitive information.</td>
-                          </tr>
-                          <tr>
-                            <td>9. Cryptography Testing</td>
-                            <td>Assess proper use of encryption (data in transit, at rest, key management).</td>
-                          </tr>
-                          <tr>
-                            <td>10. Business Logic Testing</td>
-                            <td>Test app-specific workflows for flaws not found with generic testing.</td>
-                          </tr>
-                          <tr>
-                            <td>11. Client-Side Testing</td>
-                            <td>Examine JavaScript, DOM-based XSS, local storage, and browser-related issues.</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <h4>OWASP Top 10 – 2021</h4>
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>Code</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>A01:2021</td>
-                            <td>Broken Access Control</td>
-                            <td>Restrictions on what authenticated users are allowed to do are not properly enforced.</td>
-                          </tr>
-                          <tr>
-                            <td>A02:2021</td>
-                            <td>Cryptographic Failures</td>
-                            <td>Previously known as “Sensitive Data Exposure.” Failures related to cryptography or data protection.</td>
-                          </tr>
-                          <tr>
-                            <td>A03:2021</td>
-                            <td>Injection</td>
-                            <td>Including SQL, NoSQL, OS, and LDAP injection vulnerabilities that occur when untrusted data is executed.</td>
-                          </tr>
-                          <tr>
-                            <td>A04:2021</td>
-                            <td>Insecure Design</td>
-                            <td>Flaws in design and architecture rather than implementation issues (e.g., lack of security controls).</td>
-                          </tr>
-                          <tr>
-                            <td>A05:2021</td>
-                            <td>Security Misconfiguration</td>
-                            <td>Insecure default configurations, incomplete setups, or open cloud storage.</td>
-                          </tr>
-                          <tr>
-                            <td>A06:2021</td>
-                            <td>Vulnerable and Outdated Components</td>
-                            <td>Using components with known vulnerabilities (e.g., libraries, frameworks, etc.).</td>
-                          </tr>
-                          <tr>
-                            <td>A07:2021</td>
-                            <td>Identification and Authentication Failures</td>
-                            <td>Previously “Broken Authentication.” Issues with user identity and session management.</td>
-                          </tr>
-                          <tr>
-                            <td>A08:2021</td>
-                            <td>Software and Data Integrity Failures</td>
-                            <td>Failures related to software updates, CI/CD pipelines, and trust boundaries.</td>
-                          </tr>
-                          <tr>
-                            <td>A09:2021</td>
-                            <td>Security Logging and Monitoring Failures</td>
-                            <td>Lack of logging, detection, and alerting needed to respond to breaches.</td>
-                          </tr>
-                          <tr>
-                            <td>A10:2021</td>
-                            <td>Server-Side Request Forgery (SSRF)</td>
-                            <td>When a server fetches a remote resource without validating the user-supplied URL.</td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-      
-                    </div>
-
                 <div class="q"><strong>OAuth</strong></div>
                 <div class="a">
                   <p><strong>OAuth</strong> is an open standard for access delegation, allowing third-party applications to access user data without exposing credentials.</p>
@@ -4066,317 +5158,7 @@ Response: 200 OK, { "token": "jwt-token" }</pre>
 
                 </div>
 
-              <div class="q"> Pentest</div>
-                <div class="a">
-
-                  <h2 class="mb-4">Pentest</h2>
-                  <h4>Types of Penetration Tests</h4>
-                  <ul>
-                    <li><strong>Black Box</strong>: No prior knowledge (e.g. URL, IP).</li>
-                    <li><strong>White Box</strong>: Full knowledge</li>
-                    <li><strong>Grey Box</strong>: Limited knowledge (e.g.,  target object architecture, user access, source code).</li>
-                    <br>
-                    <li><strong>External</strong>: Focus on external assets (e.g., website, DNS).</li>
-                    <li><strong>Internal</strong>: Focus on internal systems (e.g., network, servers).</li>
-                    <li><strong>Web App</strong>: Tests web vulnerabilities (e.g., SQL injection, XSS).</li>
-                    <li><strong>Social Engineering</strong>: Tests human factors (e.g., phishing, pretexting).</li>
-                    <li><strong>Wireless</strong>: Tests wireless security (e.g., weak Wi-Fi encryption).</li>
-                    <li><strong>Physical</strong>: Tests physical security (e.g., bypassing locks, cameras).</li>
-                  </ul>
-  
-  
-                  <h4>PTES methodology</h4>
-  
-                  <img src="images/PTES.png" alt="" width="800" >
-                  <h4>OWASP vs PTES</h4>
-                  <table>
-                   
-                    <thead>
-                      <tr>
-                        <th>Aspect</th>
-                        <th>OWASP (Open Web Application Security Project)</th>
-                        <th>PTES (Penetration Testing Execution Standard)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Focus</td>
-                        <td>Web application security</td>
-                        <td>Full penetration testing lifecycle (beyond just web)</td>
-                      </tr>
-                      <tr>
-                        <td>Scope</td>
-                        <td>Web apps, APIs, mobile apps</td>
-                        <td>Networks, infrastructure, web apps, physical security</td>
-                      </tr>
-                      <tr>
-                        <td>Main Output</td>
-                        <td>OWASP Top 10, ASVS, Cheat Sheets, Testing Guide</td>
-                        <td>Methodology standard for professional pentesting</td>
-                      </tr>
-                      <tr>
-                        <td>Approach</td>
-                        <td>Risk-based, vulnerability-focused</td>
-                        <td>Process-based, structured engagement</td>
-                      </tr>
-                      <tr>
-                        <td>Use Case</td>
-                        <td>Developers, AppSec teams, bug bounty hunters</td>
-                        <td>Penetration testers, red teams, consultants</td>
-                      </tr>
-                      <tr>
-                        <td>Phases Covered</td>
-                        <td>Mostly testing and prevention</td>
-                        <td>Full engagement: pre-engagement, threat modeling, exploitation, reporting</td>
-                      </tr>
-                      <tr>
-                        <td>Examples</td>
-                        <td>OWASP Top 10 (e.g., Injection, XSS, Auth failures)</td>
-                        <td>PTES steps (e.g., Intelligence Gathering, Threat Modeling, Post-Exploitation)</td>
-                      </tr>
-                      <tr>
-                        <td>Level of Detail</td>
-                        <td>High for web-specific issues</td>
-                        <td>High for the overall pentesting process</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <h2>Penetration Testing Phases (PTES)</h2>
-                      <table>
-                      <thead>
-                          <tr>
-                          <th>Phase</th>
-                          <th>Key Points</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                          <td><strong>Engagement</strong></td>
-                          <td>Test fees, understanding client needs, ensuring permission for testing, having an incident handling procedure, and addressing legal responsibilities.</td>
-                          </tr>
-                          <tr>
-                          <td><strong>Intelligence gathering</strong></td>
-                          <td>Target Information - google dorking; scans (services, open ports, vulnerabilities), firewalls ensuring a validated and controlled approach to testing.  </td>
-                          </tr>
-                          <tr>
-                          <td><strong>Footprinting and Scanning</strong></td>
-                          <td>live hosts, fingerprints the operating system, performs port scanning, and analyzes services running on those ports to map the network and assess potential vulnerabilities.</td>
-                          </tr>
-                          <tr>
-                          <td><strong>Vulnerability analysis</strong></td>
-                          <td>Process of discovering flaws in a system or an application. 3 different mechanisms: Testing (active and passive tests), validation (dropping the false positives) and research (verifying and confirming)</td>
-                          </tr>
-                          <tr>
-                          <td><strong> Exploitation and post-exploitation</strong></td>
-                          <td>Taking advantage of the previously discovered vulnerabilities. Post-exploitation (priv. escalation; lateral movement; pivoting)</td>
-                          </tr>
-                          <tr>
-                          <tr>
-                          <td><strong>Reporting</strong></td>
-                          <td>Generate a comprehensive report including vulnerabilities, risks, charts, graphs, and remediation suggestions.</td>
-                          </tr>
-                      </tbody>
-                      </table>
-
-                      <h4>OWASP</h4>
-
-                      <table>
-                        <thead>
-                          <tr>
-                            <th>Phase</th>
-                            <th>Description</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>1. Information Gathering</td>
-                            <td>Identify technologies, entry points, and gather data about the application.</td>
-                          </tr>
-                          <tr>
-                            <td>2. Configuration & Deployment Management Testing</td>
-                            <td>Check for misconfigurations and insecure setups.</td>
-                          </tr>
-                          <tr>
-                            <td>3. Identity Management Testing</td>
-                            <td>Test how users are identified and authenticated (e.g., session handling).</td>
-                          </tr>
-                          <tr>
-                            <td>4. Authentication Testing</td>
-                            <td>Evaluate login mechanisms, password policies, multi-factor auth, etc.</td>
-                          </tr>
-                          <tr>
-                            <td>5. Authorization Testing</td>
-                            <td>Ensure users cannot access data or functions they shouldn’t (access control).</td>
-                          </tr>
-                          <tr>
-                            <td>6. Session Management Testing</td>
-                            <td>Test for session token handling, expiration, and fixation vulnerabilities.</td>
-                          </tr>
-                          <tr>
-                            <td>7. Input Validation Testing</td>
-                            <td>Check for input-related flaws like XSS, SQL injection, and command injection.</td>
-                          </tr>
-                          <tr>
-                            <td>8. Error Handling</td>
-                            <td>Look for verbose error messages that reveal sensitive information.</td>
-                          </tr>
-                          <tr>
-                            <td>9. Cryptography Testing</td>
-                            <td>Assess proper use of encryption (data in transit, at rest, key management).</td>
-                          </tr>
-                          <tr>
-                            <td>10. Business Logic Testing</td>
-                            <td>Test app-specific workflows for flaws not found with generic testing.</td>
-                          </tr>
-                          <tr>
-                            <td>11. Client-Side Testing</td>
-                            <td>Examine JavaScript, DOM-based XSS, local storage, and browser-related issues.</td>
-                          </tr>
-                        </tbody>
-                      </table>
-
-                      <h4>Report</h4>
-                      <table border="1" cellpadding="10" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th><strong>Field</strong></th>
-                            <th><strong>Description</strong></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td><strong>Vulnerability Name</strong></td>
-                            <td>The name of the security flaw or vulnerability found (e.g., "SQL Injection", "Cross-Site Scripting (XSS)").</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Description</strong></td>
-                            <td>Explanation of how the vulnerability occurs and what attack mechanisms are involved.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Vulnerability Code (CVE)</strong></td>
-                            <td>Reference to the vulnerability code if applicable (e.g., CVE-ID or other specific identifier).</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Impact</strong></td>
-                            <td>Description of the impact if the vulnerability is exploited (e.g., data loss, total system control, exposure of sensitive information).</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Risk</strong></td>
-                            <td>Evaluation of the risk of the vulnerability, typically combining the likelihood of exploitation and the impact.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>SLA (Service Level Agreement)</strong></td>
-                            <td>The response or resolution time agreed upon to fix the vulnerability. Examples: "Fix in 24 hours", "Fix in the next patch cycle", etc.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>CVSS (Common Vulnerability Scoring System)</strong></td>
-                            <td>The CVSS score assigned to the vulnerability, which quantifies its severity. The CVSS score ranges from 0 (lowest severity) to 10 (highest severity).</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Exploitability</strong></td>
-                            <td>How easy is it to exploit the vulnerability? Example: "Easy", "Moderate", "Difficult". Indicates whether it is simple for an attacker to exploit this vulnerability.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Exploitation</strong></td>
-                            <td>Step-by-step or a brief description of how the vulnerability can be exploited, with details of the PoC (Proof of Concept) if applicable.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Evidence</strong></td>
-                            <td>Screenshots, logs, or other documentation proving that the vulnerability was exploited or can be exploited.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Recommendation</strong></td>
-                            <td>Specific instructions on how to mitigate or fix the vulnerability, such as software updates, security configuration, or patch application.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Data Sensitivity</strong></td>
-                            <td>The sensitivity of the data impacted by the vulnerability. Examples: "Personal Data", "Financial Information", "Access Credentials". Indicates the severity of the exposure of confidential data.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Vulnerability Status</strong></td>
-                            <td>The current state of the vulnerability, such as "Open", "In Progress", "Fixed", etc.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>References</strong></td>
-                            <td>Links to documents, reference pages, or related CVEs for the vulnerability.</td>
-                          </tr>
-                          <tr>
-                            <td><strong>Severity</strong></td>
-                            <td>The severity classification of the vulnerability, typically based on CVSS (Common Vulnerability Scoring System) score.</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                </div>
-
-
-                <div class="q">Pentest vs Vulnerability Scan vs Risk Analysis vs Security Audit vs Read Team</div>
-                <div class="a"> 
-                  <table border="1">
-                    <thead>
-                      <tr>
-                        <th>Methodology</th>
-                        <th>Description</th>
-                        <th>Primary Goal</th>
-                        <th>Scope</th>
-                        <th>Tools/Techniques</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Penetration Test</td>
-                        <td>A simulated cyberattack to identify and exploit vulnerabilities.</td>
-                        <td>Find exploitable vulnerabilities and assess their impact.</td>
-                        <td>Focused on exploiting vulnerabilities in a controlled manner.</td>
-                        <td>Manual testing, Metasploit, Burp Suite, social engineering.</td>
-                      </tr>
-                      <tr>
-                        <td>Vulnerability Scan</td>
-                        <td>Automated scanning to identify known vulnerabilities.</td>
-                        <td>Identify vulnerabilities and misconfigurations in systems.</td>
-                        <td>Comprehensive scan of systems, networks, and devices.</td>
-                        <td>Nessus, OpenVAS, Qualys, Nexpose.</td>
-                      </tr>
-                      <tr>
-                        <td>Vulnerability Assessment</td>
-                        <td>Systematic process of identifying and prioritizing vulnerabilities in IT systems.</td>
-                        <td>Identify and assess the severity of vulnerabilities in a system.</td>
-                        <td>Broad scan for known vulnerabilities across the environment.</td>
-                        <td>Nessus, OpenVAS, Qualys, Nexpose.</td>
-                      </tr>
-                      <tr>
-                        <td>Vulnerability Management</td>
-                        <td>The ongoing process of identifying, evaluating, and addressing vulnerabilities.</td>
-                        <td>Manage and mitigate vulnerabilities over time.</td>
-                        <td>Continuous monitoring and patching of vulnerabilities.</td>
-                        <td>Patch management tools, vulnerability scanners, risk management software.</td>
-                      </tr>
-                      <tr>
-                        <td>Risk Analysis</td>
-                        <td>Identifying, assessing, and managing risks to assets and operations.</td>
-                        <td>Prioritize and manage risks based on likelihood and impact.</td>
-                        <td>Focuses on risk exposure, threats, and vulnerability impacts.</td>
-                        <td>Qualitative and quantitative analysis, threat modeling.</td>
-                      </tr>
-                      <tr>
-                        <td>Security Audit</td>
-                        <td>Thorough review of systems, policies, and controls to ensure compliance.</td>
-                        <td>Ensure systems meet security standards, policies, and regulations.</td>
-                        <td>Covers policies, procedures, and security controls.</td>
-                        <td>Manual review, compliance checks, system configuration reviews.</td>
-                      </tr>
-                      <tr>
-                        <td>Red Team</td>
-                        <td>Simulated real-world attack to test organization's defenses and readiness.</td>
-                        <td>Test defenses against a variety of attack vectors, including APTs.</td>
-                        <td>Realistic, ongoing attack simulations.</td>
-                        <td>Advanced penetration techniques, social engineering, physical security tests, phishing.</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  
-                  
-
-                </div>
+             
 
                 <div class="q">Pivoting</div>
                 <div class="a"> 
@@ -4674,6 +5456,99 @@ Response: 200 OK, { "token": "jwt-token" }</pre>
             </table>
            </div>
 
+           <div style="background-color:rgb(222, 222, 222); border: 2px; color: rgb(132, 1, 1); font-size: 20px;">R</div>
+
+           <div class="q">Risk Management</div>
+           <div class="a">
+            <table border="1" style="width:100%; border-collapse: collapse; text-align: left;">
+              <thead>
+                <tr>
+                  <th style="background-color: #f2f2f2; padding: 10px;">Step</th>
+                  <th style="background-color: #f2f2f2; padding: 10px;">Objective</th>
+                  <th style="background-color: #f2f2f2; padding: 10px;">How to Do It</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 10px;">Risk Identification</td>
+                  <td style="padding: 10px;">Identify potential threats and vulnerabilities that could impact assets.</td>
+                  <td style="padding: 10px;">
+                    <ul>
+                      <li>Conduct interviews with stakeholders</li>
+                      <li>Use vulnerability scanners</li>
+                      <li>Identify risks such as software flaws, human error, cyberattacks, etc.</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Risk Assessment and Classification</td>
+                  <td style="padding: 10px;">Evaluate the likelihood and impact of identified risks.</td>
+                  <td style="padding: 10px;">
+                    <ul>
+                      <li>Classify likelihood (low, medium, high)</li>
+                      <li>Assess financial, reputational, and operational impact</li>
+                      <li>Use a risk matrix (Impact vs. Likelihood)</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Risk Mitigation Strategy Development</td>
+                  <td style="padding: 10px;">Define ways to minimize or control risks.</td>
+                  <td style="padding: 10px;">
+                    <ul>
+                      <li>Avoid, Mitigate, Transfer, or Accept the risk</li>
+                      <li>Example: Implement firewalls, use encryption, purchase insurance</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Implement Containment Measures</td>
+                  <td style="padding: 10px;">Apply actions to reduce the identified risks.</td>
+                  <td style="padding: 10px;">
+                    <ul>
+                      <li>Technical controls: Firewalls, antivirus, encryption</li>
+                      <li>Operational controls: Employee training, audits</li>
+                      <li>Physical controls: Strengthen physical access to critical systems</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Continuous Monitoring and Review</td>
+                  <td style="padding: 10px;">Monitor the effectiveness of the mitigation strategies and review risks periodically.</td>
+                  <td style="padding: 10px;">
+                    <ul>
+                      <li>Pentest, attack simulations</li>
+                      <li>Implement KPIs (Key Performance Indicators)</li>
+                      <li>Continuous reviews and adjustments as new risks emerge</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Documentation and Reporting</td>
+                  <td style="padding: 10px;">Document the risk management process.</td>
+                  <td style="padding: 10px;">
+                    <ul>
+                      <li>Keep records of risk assessments and actions taken</li>
+                      <li>Generate periodic reports for senior management</li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px;">Security Culture</td>
+                  <td style="padding: 10px;">Promote a security-conscious organizational culture and raise risk awareness.</td>
+                  <td style="padding: 10px;">
+                    <ul>
+                      <li>Engage leadership in security practices</li>
+                      <li>Provide continuous training on risks and security</li>
+                      <li>Maintain constant communication about emerging risks</li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            
+          </div>
+
 
 
               <div style="background-color:rgb(222, 222, 222); border: 2px; color: rgb(132, 1, 1); font-size: 20px;">S</div>
@@ -4775,98 +5650,7 @@ Response: 200 OK, { "token": "jwt-token" }</pre>
               </div>
   
   
-                <div class="q"><strong>Security Controls</strong></div>
-                <div class="a">
-                  <p>Measures, policies, and tools implemented to reduce security risks, protect assets, and ensure confidentiality, integrity, and availability of systems and data. They are typically classified as preventive, detective, or corrective.</p>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Component</th>
-                        <th>Security Controls</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Middleware</td>
-                        <td>
-                          - Authentication and Authorization<br>
-                          - Secure logging<br>
-                          - Data encryption in transit<br>
-                          - Input validation and sanitization<br>
-                          - Rate limiting and throttling<br>
-                          - Error handling without exposing internal logic
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Cache</td>
-                        <td>
-                          - Secure access to cache (e.g., password-protected Redis)<br>
-                          - Content expiration policies<br>
-                          - Encryption of sensitive cached data<br>
-                          - Cache segmentation by user/session<br>
-                          - Cache invalidation mechanisms
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>CDN</td>
-                        <td>
-                          - HTTPS enforcement<br>
-                          - Tokenized or signed URLs<br>
-                          - DDoS protection<br>
-                          - Rate limiting<br>
-                          - IP-based or token-based access control<br>
-                          - Access logging and anomaly detection
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Database</td>
-                        <td>
-                          - Encryption at rest and in transit<br>
-                          - Role-Based Access Control (RBAC)<br>
-                          - SQL Injection prevention (Prepared Statements / ORM)<br>
-                          - Regular backups and disaster recovery plans<br>
-                          - Activity logging and anomaly alerts<br>
-                          - Network access controls (e.g., IP allowlists)
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Web Server</td>
-                        <td>
-                          - Web Application Firewall (WAF)<br>
-                          - HTTPS with strong TLS configuration<br>
-                          - Regular security patches<br>
-                          - Secure HTTP headers (CSP, X-Content-Type-Options, etc.)<br>
-                          - Access logging and monitoring<br>
-                          - Directory and file access controls
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Frontend</td>
-                        <td>
-                          - Content Security Policy (CSP)<br>
-                          - HTTPS enforced<br>
-                          - Input validation and output escaping<br>
-                          - Secure use of cookies (HttpOnly, Secure, SameSite)<br>
-                          - Avoid exposing sensitive logic in client code<br>
-                          - Safe use of third-party libraries
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Login (Authentication)</td>
-                        <td>
-                          - Multi-Factor Authentication (MFA)<br>
-                          - Secure password hashing (e.g., bcrypt, Argon2)<br>
-                          - Login attempt limits / brute-force protection<br>
-                          - Secure session management with expiration<br>
-                          - Secure token handling (e.g., signed JWTs with expiry)<br>
-                          - CAPTCHA and bot protection<br>
-                          - Login anomaly notifications
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  </div>
-
+               
 
                   <div class="q">System Vulnerable</div>
                   <div class="a"> 
@@ -5028,6 +5812,69 @@ Response: 200 OK, { "token": "jwt-token" }</pre>
                           <td>Ransomware (via Social Engineering)</td>
                           <td>Malware that encrypts files and demands payment to unlock. Delivered often via phishing or infected links.</td>
                           <td>A malicious email attachment triggers encryption of all system files.</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    
+                  </div>
+
+                  <div class="q">Security Posture</div>
+                  <div class="a"> 
+                    <table border="1">
+                      <thead>
+                        <tr>
+                          <th>Component</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Risk Management</td>
+                          <td>Identifying, assessing, and managing risks to minimize impact from cyber threats.</td>
+                        </tr>
+                        <tr>
+                          <td>Security Policies & Frameworks</td>
+                          <td>Establishing security policies and guidelines (e.g., ISO 27001, NIST) to ensure consistent practices.</td>
+                        </tr>
+                        <tr>
+                          <td>Access Control</td>
+                          <td>Implementing identity and access management (IAM) and enforcing least privilege to limit access.</td>
+                        </tr>
+                        <tr>
+                          <td>Endpoint Protection</td>
+                          <td>Securing devices with antivirus, firewalls, and encryption to prevent breaches.</td>
+                        </tr>
+                        <tr>
+                          <td>Network Security</td>
+                          <td>Using firewalls, VPNs, and intrusion detection/prevention systems (IDS/IPS) to protect network infrastructure.</td>
+                        </tr>
+                        <tr>
+                          <td>Incident Response & Recovery</td>
+                          <td>Creating and testing plans to respond and recover from cybersecurity incidents.</td>
+                        </tr>
+                        <tr>
+                          <td>Vulnerability Management</td>
+                          <td>Regular scanning, patching, and updating systems to close security gaps.</td>
+                        </tr>
+                        <tr>
+                          <td>Employee Training & Awareness</td>
+                          <td>Training staff on security best practices, phishing risks, and reporting incidents.</td>
+                        </tr>
+                        <tr>
+                          <td>Data Protection & Encryption</td>
+                          <td>Encrypting sensitive data and ensuring its integrity and confidentiality.</td>
+                        </tr>
+                        <tr>
+                          <td>Third-party Risk Management</td>
+                          <td>Ensuring third-party vendors adhere to the organization’s security standards.</td>
+                        </tr>
+                        <tr>
+                          <td>Security Monitoring & Analytics</td>
+                          <td>Constant monitoring of systems for suspicious activity using SIEM tools and analytics.</td>
+                        </tr>
+                        <tr>
+                          <td>Compliance</td>
+                          <td>Adhering to relevant laws, regulations, and standards (e.g., GDPR, HIPAA, PCI DSS).</td>
                         </tr>
                       </tbody>
                     </table>

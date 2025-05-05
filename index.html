@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <style>
+
+    
     .pdf-container {
       position: relative;
       width: 100%;
@@ -31,6 +33,7 @@
         margin: 0;
         padding: 0;
         color: #333;
+        background-color: #838080;
     }
     header {
         background-color: #333;
@@ -229,6 +232,97 @@
                                 </p>
 
                 <h5>Web App Penetration Testing</h5>
+                <div class="q">🌐 Web Application Penetration Test (RESTful API + JWT) – Key Points</div>
+                <div class="a">
+                  <h3>Project Overview</h3>
+                  <p><strong>Architecture:</strong> React frontend, Node.js/Express backend, JWT-based authentication.</p>
+                  <p><strong>Testing Methodology:</strong> PTES, focused on OWASP Top 10 2021.</p>
+                
+                  <h3>🔍 Phase 1: Planning & Preparation</h3>
+                  <ul>
+                    <li><strong>Objectives:</strong> Define the scope, goals, and constraints of the test.</li>
+                    <li><strong>Activities:</strong> 
+                      <ul>
+                        <li>Identify targets (subdomains, endpoints, technologies).</li>
+                        <li>Get necessary permissions and approvals.</li>
+                        <li>Establish testing rules and limitations.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                
+                  <h3>🔎 Phase 2: Reconnaissance & Mapping</h3>
+                  <ul>
+                    <li><strong>Tools:</strong> Amass, Nmap, Burp Suite.</li>
+                    <li><strong>Objectives:</strong> Discover subdomains, open ports, fingerprint technologies.</li>
+                    <li><strong>Results:</strong> Identified public and private API endpoints.</li>
+                  </ul>
+                
+                  <h3>📂 Phase 3: Enumeration & Vulnerability Identification</h3>
+                  <ul>
+                    <li><strong>Tools:</strong> Burp Scanner, ffuf, manual testing.</li>
+                    <li><strong>Focus:</strong> OWASP Top 10 vulnerabilities.</li>
+                  </ul>
+                
+                  <h4>✅ Key OWASP Top 10 Vulnerabilities Identified:</h4>
+                  <ul>
+                    <li><strong>A01 - Broken Access Control:</strong> IDOR in /api/files/:id (exploited using Python/JWT decoding).</li>
+                    <li><strong>A02 - Cryptographic Failures:</strong> Token replay attacks due to missing JWT expiration field.</li>
+                    <li><strong>A03 - Injection:</strong> NoSQL Injection in MongoDB API endpoint.</li>
+                    <li><strong>A04 - Insecure Design:</strong> Admin APIs without access scope validation.</li>
+                    <li><strong>A05 - Security Misconfiguration:</strong> Missing HTTP security headers; public staging environment.</li>
+                    <li><strong>A06 - Vulnerable Components:</strong> Outdated Express version; vulnerable react-scripts@2.x.</li>
+                    <li><strong>A07 - Authentication Failures:</strong> No brute-force protection; missing JWT fields (aud, iss).</li>
+                    <li><strong>A08 - Data Integrity Failures:</strong> Unvalidated file upload (e.g., PHP, JSP files).</li>
+                    <li><strong>A09 - Logging Failures:</strong> No login attempt logs; lack of alerting mechanisms.</li>
+                    <li><strong>A10 - SSRF:</strong> Vulnerable SSRF on /preview?url= endpoint leaking AWS metadata.</li>
+                  </ul>
+                
+                  <h3>🧪 Phase 4: Exploitation</h3>
+                  <ul>
+                    <li><strong>Activities:</strong>
+                      <ul>
+                        <li>Exploiting identified vulnerabilities, such as IDOR and injection flaws.</li>
+                        <li>Verifying impact of vulnerabilities using attack tools and manual exploitation.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                
+                  <h3>🧪 Phase 5: Post-Exploitation</h3>
+                  <ul>
+                    <li>Evidence collection through logs, screenshots, and proof-of-concept (PoC) exploitation (e.g., IDOR exploitation).</li>
+                    <li>Real-world impact demonstrated through JWT token reuse and document access.</li>
+                  </ul>
+                
+                  <h3>🔐 Phase 6: Privilege Escalation</h3>
+                  <ul>
+                    <li><strong>Activities:</strong>
+                      <ul>
+                        <li>Escalate privileges from user-level to admin/root, if possible.</li>
+                        <li>Use exploited vulnerabilities to gain further access within the system.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                
+                  <h3>📊 Phase 7: Reporting</h3>
+                  <ul>
+                    <li><strong>Delivered:</strong> A comprehensive technical report with severity ratings, risk impact, and step-by-step PoCs.</li>
+                    <li><strong>Recommendations:</strong>
+                      <ul>
+                        <li>Implement Role-Based Access Control (RBAC).</li>
+                        <li>Include expiration in JWTs and rotate tokens.</li>
+                        <li>Mitigate SSRF via input validation and allowlists.</li>
+                        <li>Enable HTTP security headers and segregate environments.</li>
+                      </ul>
+                    </li>
+                  </ul>
+                
+                  <h3>💡 Phase 8: Clean-Up</h3>
+                  <ul>
+                    <li><strong>Activities:</strong> Ensure no backdoors or artifacts are left behind in the system. Restore the environment to its original state.</li>
+                  </ul>
+                </div>
+                
+
                 <div class="q">🌐 Web Application Penetration Testing – Key Points</div>
                 <div class="a">
                   <ul>
